@@ -58,12 +58,14 @@ class LetterFaction extends FactionBase {
       sum += Math.pow(26,dig);
       dig++;
     }while(sum <= n); // confusion
-    console.log(dig)
+    
     //Deconstruct n using its ceil(bijectiveLog--)
     for(let i = dig--; i != 0; i--) {
-      let diff = (Math.pow(26,i+1)*Math.floor(n/Math.pow(26,i+1)))
-      i-1
-      out.concat((num+9).toString(36));
+      let num=0;
+      for(let j = n; j >= Math.pow(26,i); j-=Math.pow(26,i)) {
+        num++;
+      }
+      out = out.concat((num+9).toString(36));
     }
     
     return out;
