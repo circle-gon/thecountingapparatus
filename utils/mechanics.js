@@ -13,5 +13,3 @@ export function updateMilestoneReduction() {
 export function getAverage(){
   
 }
-
-export function 
