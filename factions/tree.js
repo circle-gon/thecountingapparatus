@@ -49,7 +49,6 @@ class TreeFaction extends FactionBase {
   get slowmode() {
     return 86400 * Math.pow(0.75, onesCount.milestones);
   }
-
   updateGrid() {
     this.grid = Math.ceil(Math.sqrt(this.count));
 
