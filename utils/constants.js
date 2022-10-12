@@ -33,7 +33,7 @@ const RULES = {
     "3)  Challenge C unlock when the average of all factions and their challenges hits the Cth multiple of 500.",
     "3a) Your base game, and all odd numbered challenges, are calculated in degrees rather than radians.",
     "3b) Challenge Counts dynamically reduce global milestone scaling, which is weakened based on effective milestones.\n",
-    "C1: X = 0"
+    "C1: X = 0",
   ],
   
   Ones: [
