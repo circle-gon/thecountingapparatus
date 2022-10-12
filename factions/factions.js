@@ -1,13 +1,18 @@
+//Imports 
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
 import { updateAverage, updateTotalMilestones, updateEffectiveMilestones } from "../utils/mechanics.js";
 
+//Factions Objects
 const factions = {};
+export { factions };
+
+//Global vars
 export let totalMilestones = 0;
 export let effectiveMilestones = 0;
 export let avg = 0;
-export { factions };
 
+//Faction superclass
 export class FactionBase {
   constructor(name, msReq) {
     this.name = name;

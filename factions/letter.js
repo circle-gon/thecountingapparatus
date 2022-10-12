@@ -18,7 +18,7 @@ class LetterFaction extends FactionBase {
     this.usedStock = 0;
   }
   get nextCount() {
-    return this.NumberToLetter(this.LetterToNumber(this.count) + 1);
+    return this.NumberToLetter(this.count+1);
   }
   
   isCorrectCount(count) {
@@ -32,13 +32,19 @@ class LetterFaction extends FactionBase {
   }
   
   NumberToLetter(n) {
-    if(n < 26) return (n+9).toString(36)
+    if(n < 26) return (n+9).toString(36).toUpperCase();
     if(n > 36) return n.toString(36).split("").map(n => this.NumberToLetter(n)).reduce()
     return n.toString(36); 
   }
   
-  LetterToNumber(a) {
-    let 
+  LetterToNumber(a) { // WHY IS THIS BEING FED 0
+    let temp = a.toLowerCase()
+    while(temp.indexOf("z") !== -1) {
+      temp = temp.replace(/.z/g,(match)=>{
+        return (parseInt(match[0],35)+1).toString(35)+"a"
+      })
+    }
+    return parseInt(temp,35)
   }  
 
   get letterStock() {

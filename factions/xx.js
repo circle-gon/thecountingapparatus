@@ -1,4 +1,4 @@
-import { FactionBase } from "./factions.js";
+import { FactionBase, avg, effectiveMilestones } from "./factions.js";
 
 class XxFaction extends FactionBase {
   constructor() {
@@ -11,7 +11,7 @@ class XxFaction extends FactionBase {
       () => this.rawX >= 4,
       () => this.challenges[0] >= 100,
       () => this.challenges[7] >= 314,
-      () => 1 /*Average of all R1 factions/challenges*/ >= 5000,
+      () => avg >= 5000,
       () => this.rawX >= 10
     ];
   }
@@ -20,16 +20,16 @@ class XxFaction extends FactionBase {
     return this.count + 1;
   }
 
-  get milestoneReduction() {
-    return 1; // placeholder for now
+  get milestoneReduction(){
+    return 1;
   }
-
+  
   get challengeReward() {
     let logProd = 1;
     for (const chal of this.challenges) {
       logProd *= Math.log10(chal + 1) + 1;
     }
-    return Math.Pow(1 / logProd, 1 /*/effectiveMilestones*/);
+    return Math.Pow(1/logProd, Math.max(1/(1+effectiveMilestones),1));
   }
 }
 export const xxCount = new XxFaction();
