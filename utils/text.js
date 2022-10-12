@@ -42,7 +42,7 @@ export class TextChannel {
   on(func, type) {
     this.handlers.push({
       type,
-      func
+      func,
     });
   }
   isSupportedHandler(type, item) {
@@ -73,7 +73,7 @@ export class TextChannel {
       msg,
       num: this.msgCounter,
       bot,
-      ...this.extraData(msg)
+      ...this.extraData(msg),
     });
     this.invokeHandlers("message", msg);
     if (this.messages.length > this.max) {
@@ -100,7 +100,7 @@ class TextChannelDisp extends HTMLElement {
     });
     [...this.texts.childNodes].at(-1).scrollIntoView({
       behavior: "smooth",
-      block: "end"
+      block: "end",
     });
   }
   sendText() {
