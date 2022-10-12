@@ -1,4 +1,4 @@
-import {letterCount} from './letter.js';
+import {letterCount} from '../factions/letter.js';
 
 export class FunctionBase {
   constructor (name, unlock, syntax, evaluate){

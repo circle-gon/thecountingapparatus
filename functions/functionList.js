@@ -1,5 +1,5 @@
 import { FunctionBase } from "./functionClass.js";
-import { gamma } from "./factorial.js";
+import { gamma } from "../factions/factorial.js";
 
 //Subclasses
 class NChooseR extends FunctionBase {
@@ -37,16 +37,24 @@ const FUNCTIONS = {
       case 3:
         return 2 ** (y + 3) - 3;
       case 4:
-        if ((y = 0)) {
+        if (y === 0) {
           return 13;
-        } else return Infinity;
+        } else if (y === 1) {
+          return 65533;
+        } else {
+          return Infinity;
+        }
+      case 5:
+        if (y === 0) {
+          return 65533;
+        } else {
+          return Infinity;
+        }
       default:
         return Infinity;
     }
-  }), // that is not going to be good, just use the explicit versions and have anything above be Infinity
-  // Is that better?
-  // trole
-  // what about 3? :torl:
+  }),
+  B: new FunctionBase("Beta", "B"),
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin), //i hope this works
   T: new FunctionBase(
     "Triangular Numbers",
