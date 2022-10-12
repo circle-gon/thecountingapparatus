@@ -24,16 +24,9 @@ class LetterFaction extends FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      this.avg = this.updateAverage;
-      this.updateGrid();
       this.updateMilestones();
       this.updateGoals();
     }
-  }
-  isCorrectCount(count) {
-    return (
-      this.nextCount === this.parseCount(count)
-    );
   }
   
   parseCount(count) {

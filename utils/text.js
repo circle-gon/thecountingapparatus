@@ -118,7 +118,6 @@ class TextChannelDisp extends HTMLElement {
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
-    console.log(JSON.stringify(channels), this.getAttribute("name"));
     this.textInstance = channels[this.getAttribute("name")];
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 

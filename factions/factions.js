@@ -57,6 +57,8 @@ export class FactionBase {
   spireBoost() {} //All Factions
 
   onMilestone() {}
+  
+  isValidCount() {return true}
 
   get milestoneRewards() {
     return {};

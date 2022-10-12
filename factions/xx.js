@@ -29,7 +29,7 @@ class XxFaction extends FactionBase {
     for (const chal of this.challenges) {
       logProd *= Math.log10(chal + 1) + 1;
     }
-    return Math.Pow(1/logProd, Math.max(1/(1+this.effectiveMilestones),1));
+    return Math.pow(1/logProd, Math.max(1/(1+this.effectiveMilestones),1));
   }
 }
 export const xxCount = new XxFaction();

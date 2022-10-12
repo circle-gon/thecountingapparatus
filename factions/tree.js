@@ -15,7 +15,6 @@ class TreeFaction extends FactionBase {
       () => this.rewardUsed >= 50,
       () => this.grid >= 10
     ];
-    this.grid = 0;
     this.textBox.max = 1;
   }
 
@@ -26,13 +25,10 @@ class TreeFaction extends FactionBase {
   parseCount(count) {
     return Number(count)
   }
-  isCorrectCount(count) {
-    return count === this.nextCount.toString();
-  }
+
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      this.avg = this.updateAverage;
       this.updateGrid();
       this.updateMilestones();
       this.updateGoals();
@@ -58,8 +54,10 @@ class TreeFaction extends FactionBase {
     return 86400 * Math.pow(0.75, onesCount.milestones);
   }
   
+  get grid() {
+    return Math.ceil(Math.sqrt(this.count))
+  }
   updateGrid() {
-    this.grid = Math.ceil(Math.sqrt(this.count));
     for (const value of Object.values(factions)) {
       value.textBox.length = (this.grid + 1) * (onesCount.milestones + 1);
     }
