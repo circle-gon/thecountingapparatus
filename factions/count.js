@@ -5,7 +5,7 @@ class CountFaction extends FactionBase {
   //Constructor
   constructor() {
     super("Classic", (x) =>
-      Math.pow(10, Math.pow(x + 1, xxCount.milestoneReduction))
+      Math.ceil(Math.pow(10, Math.pow(x + 1, xxCount.milestoneReduction)))
     );
     this.hasChal = false;
     this.rewardOneUsed = 0;

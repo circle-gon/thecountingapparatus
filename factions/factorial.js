@@ -30,7 +30,7 @@ export function gamma(z) {
 class FactorialFaction extends FactionBase {
   constructor() {
     super("Factorial", (x) =>
-      gamma(Math.pow(x + 1, xxCount.milestoneReduction))
+      Math.ceil(gamma(Math.pow(x + 2, xxCount.milestoneReduction))-0.000000001)
     );
     this.challenges = [0, 0, 0];
     this.hasChal = true;
@@ -44,6 +44,9 @@ class FactorialFaction extends FactionBase {
   }
   get nextCount() {
     return this.count + 1;
+  }
+  parseCount(count) {
+    return Number(count)
   }
 }
 export const factorialCount = new FactorialFaction();

@@ -2,7 +2,7 @@ import { FactionBase } from "./factions.js";
 
 class XxFaction extends FactionBase {
   constructor() {
-    super("X X", (x) => Math.pow(x, Math.pow(x, this.milestoneReduction)));
+    super("X X", (x) => Math.pow(x+1, Math.pow(x+1, this.milestoneReduction)));
     this.challenges = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.hasChal = true;
     this.rawX = 1;
@@ -23,7 +23,9 @@ class XxFaction extends FactionBase {
   get milestoneReduction(){
     return 1;
   }
-  
+  parseCount(count) {
+    return Number(count)
+  }
   get challengeReward() {
     let logProd = 1;
     for (const chal of this.challenges) {

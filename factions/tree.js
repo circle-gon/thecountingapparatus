@@ -5,7 +5,7 @@ import { onesCount } from "./ones.js";
 
 class TreeFaction extends FactionBase {
   constructor() {
-    super("Tree", (x) => Math.pow(x+1, Math.pow(2, xxCount.milestoneReduction)));
+    super("Tree", (x) => Math.ceil(Math.pow(x+1, Math.pow(2, xxCount.milestoneReduction))));
     this.hasChal = false;
     this.rewardUsed = 0;
     this.goals = [

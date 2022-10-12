@@ -5,10 +5,10 @@ import { factorialCount } from "./factorial.js";
 
 class LetterFaction extends FactionBase {
   constructor() {
-    super(
-      "Letter",
-      (x) =>
-        ((Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1)/25)-1
+    super("Letter", (x) =>
+      Math.ceil(
+        (Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1) / 25 - 1
+      )
     );
     this.baseCount = this.count;
     this.extensionCount = this.count;
@@ -16,10 +16,14 @@ class LetterFaction extends FactionBase {
     //this.letterStock = 0;
     this.usedStock = 0;
   }
-  
+
   //Counting Logic
   get nextCount() {
-    return this.NumberToLetter(this.LetterToNumber(this.count)+1).toUpperCase();
+    return this.count + 1
+  }
+  
+  isCorrectCount(count) {
+    return count === this.NumberToLetter(this.nextCount)
   }
   doCount(count) {
     if (this.isCorrectCount(count)) {
@@ -28,33 +32,33 @@ class LetterFaction extends FactionBase {
       this.updateGoals();
     }
   }
-  
-  parseCount(count) {
-    return count.toString();
+  countToDisplay(count) {
+    return this.NumberToLetter(count)
   }
-  
+
   //Letter-Number Conversion
-  NumberToLetter(n){
-    let str = ""
-    while(n>0){
-      let mod = n%26
-      if(mod==0){
-        mod = 26
-        n-=26
+  NumberToLetter(n) {
+    let str = "";
+    while (n > 0) {
+      let mod = n % 26;
+      if (mod === 0) {
+        mod = 26;
+        n -= 26;
       }
-      str = String.fromCharCode(mod+64)+str
-      n=Math.floor(n/26)
+      str = String.fromCharCode(mod + 64) + str;
+      n = Math.floor(n / 26);
     }
-    return str
+    return str;
   }
-  
-  LetterToNumber(a) { // WHY IS THIS BEING FED 0
-    let out = 0
-    for(let i = 0; i < a.length; i++) {
-      out = out * 26 + parseInt(a.substr(i,1),36)-9
+
+  LetterToNumber(a) {
+    // WHY IS THIS BEING FED 0
+    let out = 0;
+    for (let i = 0; i < a.length; i++) {
+      out = out * 26 + parseInt(a.substr(i, 1), 36) - 9;
     }
-    return out
-  }  
+    return out;
+  }
 
   //Letter Stock Mechanics
   get letterStock() {
@@ -88,9 +92,8 @@ class LetterFaction extends FactionBase {
       return false;
     }
   }*/
-  
+
   //Spire Boost
-  
 }
 
 export const letterCount = new LetterFaction();

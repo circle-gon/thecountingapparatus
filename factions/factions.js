@@ -63,6 +63,8 @@ export class FactionBase {
   get milestoneRewards() {
     return {};
   }
+  
+  countToDisplay(c) {return c}
 
   //Count & Milestones
   updateMilestones() {
@@ -144,13 +146,14 @@ export class FactionBase {
 }
 
 class FactionDisplay extends HTMLElement {
-  updateHTML(count) {
-    this.info.innerHTML = `Count: ${this.faction.count}<br>
-    Next count: ${this.faction.nextCount}<br>
-    Next milestone: ${this.faction.milestoneNextAt}<br>
+  updateHTML() {
+    const c = (co) => this.faction.countToDisplay(co)
+    this.info.innerHTML = `Count: ${c(this.faction.count)}<br>
+    Next count: ${c(this.faction.nextCount)}<br>
+    Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
-      this.c.style.border = "solid";
+      if (factions.Tree.count > 0) this.c.style.border = "solid";
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;
       const ctx = this.c.getContext("2d");
@@ -191,30 +194,10 @@ class FactionDisplay extends HTMLElement {
     this.shadowRoot.append(root);
     if (name === "Tree") {
       this.c = ce("canvas");
-      const c = this.c;
-      //c.style.border = "solid";
-      c.width = factions.Tree.grid * 10;
-      c.height = factions.Tree.grid * 10;
-      /*const ctx = c.getContext("2d");
-      ctx.fillStyle = "gray";
-      ctx.fillRect(0, 0, c.width, c.height);
-      ctx.fillStyle = "white"; //create randomColor function
-      ctx.fillRect(
-        0,
-        0,
-        c.width,
-        Math.floor(factions.Tree.count / factions.Tree.grid) * 10
-      );
-      ctx.fillRect(
-        0,
-        Math.floor(factions.Tree.count / factions.Tree.grid) * 10,
-        (factions.Tree.count % factions.Tree.grid) * 10,
-        Math.floor(factions.Tree.count / factions.Tree.grid) * 10 + 10
-      );*/
-      root.append(c);
+      root.append(this.c);
     }
-    this.faction.textBox.on((i) => this.updateHTML(i), "message");
-    this.updateHTML("");
+    this.faction.textBox.on(() => this.updateHTML(), "message");
+    this.updateHTML();
   }
 }
 

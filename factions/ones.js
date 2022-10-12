@@ -5,7 +5,7 @@ class OnesFaction extends FactionBase {
   constructor() {
     super(
       "Ones",
-      (x) => Math.pow(10, Math.pow(x, xxCount.milestoneReduction)) / 9
+      (x) => Math.floor(Math.pow(10, Math.pow(x+1, xxCount.milestoneReduction)) / 9)
     );
     this.challenges = [0, 0, 0];
     this.hasChal = true;
@@ -18,6 +18,9 @@ class OnesFaction extends FactionBase {
   }
   get nextCount() {
     return this.count + 1;
+  }
+  parseCount(count) {
+    return Number(count)
   }
 }
 
