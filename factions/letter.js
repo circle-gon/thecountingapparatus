@@ -20,7 +20,7 @@ class LetterFaction extends FactionBase {
   
   //Counting Logic
   get nextCount() {
-    return this.NumberToLetter(this.count+1);
+    return this.NumberToLetter(this.count+1).toUpperCase();
   }
   
   isCorrectCount(count) {
@@ -30,7 +30,7 @@ class LetterFaction extends FactionBase {
   }
   
   parseCount(count) {
-    return Number(count);
+    return count.toString();
   }
   
   updateMilestones() {
@@ -51,18 +51,17 @@ class LetterFaction extends FactionBase {
     let out = ""; 
     let dig = 0
     let sum=0
-    
+
     //Calculating ceiling of bijective log of n
     do{
-      
       sum += Math.pow(26,dig);
       dig++;
     }while(sum <= n); // confusion
     
     //Deconstruct n using its ceil(bijectiveLog--)
-    for(let i = dig--; i != 0; i--) {
-      let num=0;
-      for(let j = n; j >= this.LetterToNumber("A".repeat(i-1)); j-=Math.pow(26,i)) {
+    for(let i = dig-1; i != 0; i--) {
+      let num=0; // still doesn't work :trol:
+      for(let j = n; j >= 0; j-=Math.pow(26,i)) {
         num++;
       }
       out = out.concat((num+9).toString(36));
