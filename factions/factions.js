@@ -100,6 +100,16 @@ class FactionDisplay extends HTMLElement {
     Next count: ${this.faction.nextCount}<br>
     Next milestone: ${this.faction.milestoneNextAt}<br>
     Current amount of milestones: ${this.faction.milestones}`;
+    this.c.style.border = "solid"
+    this.c.width = factions.Tree.grid*10
+    this.c.height = factions.Tree.grid*10
+    const ctx = this.c.getContext("2d")
+    ctx.clearRect(0,0,this.c.width,this.c.height)
+    ctx.fillStyle = "gray"
+    ctx.fillRect(0,0,this.c.width,this.c.height)
+    ctx.fillStyle = "white"
+    ctx.fillRect(0,0,this.c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
+    ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,Math.floor(factions.Tree.count/factions.Tree.grid)*10+10)
   }
   connectedCallback() {
     if (!this.isConnected) return;
@@ -119,7 +129,8 @@ class FactionDisplay extends HTMLElement {
     root.append(chatInstance, this.info);
     this.shadowRoot.append(root);
     if(name === "Tree") {
-      const c = ce("canvas")
+      this.c = ce("canvas")
+      const c = this.c
       c.style.border = "solid"
       c.width = factions.Tree.grid*10
       c.height = factions.Tree.grid*10
@@ -128,7 +139,7 @@ class FactionDisplay extends HTMLElement {
       ctx.fillRect(0,0,c.width,c.height)
       ctx.fillStyle = "white"
       ctx.fillRect(0,0,c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
-      ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10)
+      ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,Math.floor(factions.Tree.count/factions.Tree.grid)*10+10)
       root.append(c)
     }
     this.faction.textBox.on((i) => this.updateHTML(i), "message");

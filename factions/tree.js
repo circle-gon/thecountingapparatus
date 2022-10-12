@@ -5,7 +5,7 @@ import { onesCount } from "./ones.js";
 import { factions } from "./factions.js";
 class TreeFaction extends FactionBase {
   constructor() {
-    super("Tree", (x) => Math.pow(x, Math.pow(2, xxCount.milestoneReduction)));
+    super("Tree", (x) => Math.pow(x+1, Math.pow(2, xxCount.milestoneReduction)));
     this.rewardUsed = 0;
     this.goals = [
       () => this.milestones >= 25,
@@ -15,13 +15,19 @@ class TreeFaction extends FactionBase {
       () => this.grid >= 10
     ];
     this.grid = 0;
+    this.textBox.max = 1;
   }
 
   //Counts & Milestones
   get nextCount() {
     return this.count + 1;
   }
-
+  parseCount(count) {
+    return Number(count)
+  }
+  isCorrectCount(count) {
+    return count === this.nextCount.toString();
+  }
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
