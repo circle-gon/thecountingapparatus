@@ -47,25 +47,30 @@ class LetterFaction extends FactionBase {
   
   //Letter-Number Conversion
   NumberToLetter(n) {
+    //Necessary vars
     let out = ""; 
     let dig = 0
     let sum;
+    
+    //Calculating ceiling of bijective log of n
     do{
       sum = 0;
       sum += Math.pow(26,dig);
+      dig++;
     }while(sum <= n); // confusion
-    for(let i = 0/*Bijective Log of n*/; i != 0; i--) {
+    
+    //Deconstruct n using its ceil(bijectiveLog--)
+    for(let i = dig--; i != 0; i--) {
       let num=0;
-      for(let j = n; j <= 0;j-=Math.pow(26,i)) {
+      for(let j = n; j >= 0;j-=Math.pow(26,i)) {
         num++;
       }
-      out.append((num+9).toString(36));
+      out.concat((num+9).toString(36));
     }
+    
     return out;
-  } // hey hey hey can't you just use floor + div + mod to get each individual digit
-    // oh... That still requires we know how many digits we need.
-    // it is just the 1+26+26^2+... for req
-    // So we have a do-while with i predefined and run sum += Math.pow(26,i) until sum >= n
+  }
+  
   LetterToNumber(a) { // WHY IS THIS BEING FED 0
     let out = 0
     for(let i = 0; i < a.length; i++) {
