@@ -21,19 +21,19 @@ export function updateTotalMilestones(){
 }
 
 export function updateAverage(){
-  let avg = 0;
+  let average = 0;
   let counter = 0;
   for (const value in Object.values(factions)){
-    avg += value.count
+    average += value.count
     counter++
     if(value.hasChal){
       for(let i = 0;i<value.challenges.length;i++){
-        avg += value.challenges[i];
+        average += value.challenges[i];
         counter++;
       }
     }
   }
-  return avg/counter;
+  return average/counter;
 }
 
 export function getBaseLog(x, y){
