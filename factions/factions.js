@@ -109,7 +109,8 @@ class FactionDisplay extends HTMLElement {
     ctx.fillRect(0,0,this.c.width,this.c.height)
     ctx.fillStyle = "white"
     ctx.fillRect(0,0,this.c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
-    ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,Math.floor(factions.Tree.count/factions.Tree.grid)*10+10)
+    ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,10)
+    //ctx.fillRect(0,20,30,20)
   }
   connectedCallback() {
     if (!this.isConnected) return;
