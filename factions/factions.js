@@ -121,7 +121,7 @@ class FactionDisplay extends HTMLElement {
     ctx.clearRect(0,0,this.c.width,this.c.height)
     ctx.fillStyle = "gray"
     ctx.fillRect(0,0,this.c.width,this.c.height)
-    ctx.fillStyle = "white"
+    ctx.fillStyle = "white" //create randomColor function
     ctx.fillRect(0,0,this.c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
     ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,10)
     //ctx.fillRect(0,20,30,20)
@@ -153,7 +153,7 @@ class FactionDisplay extends HTMLElement {
       const ctx = c.getContext("2d")
       ctx.fillStyle = "gray"
       ctx.fillRect(0,0,c.width,c.height)
-      ctx.fillStyle = "white"
+      ctx.fillStyle = "white" //create randomColor function
       ctx.fillRect(0,0,c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
       ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,Math.floor(factions.Tree.count/factions.Tree.grid)*10+10)
       root.append(c)

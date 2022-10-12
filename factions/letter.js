@@ -9,7 +9,7 @@ class LetterFaction extends FactionBase {
     super(
       "Letter",
       (x) =>
-        (Math.pow(26, Math.pow(x + 1, xxCount.milestoneReduction)) - 1) / 25
+        ((Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1)/25)-1
     );
     this.baseCount = this.count;
     this.extensionCount = this.count;
@@ -17,6 +17,8 @@ class LetterFaction extends FactionBase {
     //this.letterStock = 0;
     this.usedStock = 0;
   }
+  
+  //Counting Logic
   get nextCount() {
     return this.NumberToLetter(this.count+1);
   }
@@ -31,22 +33,24 @@ class LetterFaction extends FactionBase {
     return Number(count);
   }
   
+  //Letter-Number Conversion
   NumberToLetter(n) {
-    if(n < 26) return (n+9).toString(36).toUpperCase();
-    if(n > 36) return n.toString(36).split("").map(n => this.NumberToLetter(n)).reduce()
-    return n.toString(36); 
+    let temp = n.toString(35).split("").map(n => parseInt(n,35)-9)
+    
   }
-  
+
   LetterToNumber(a) { // WHY IS THIS BEING FED 0
-    let temp = a.toLowerCase()
+    let temp = "9"+a.toLowerCase()
     while(temp.indexOf("z") !== -1) {
       temp = temp.replace(/.z/g,(match)=>{
         return (parseInt(match[0],35)+1).toString(35)+"a"
       })
     }
-    return parseInt(temp,35)
+    console.log(temp)
+    return parseInt(temp.replace("9","").split("").map(n => (parseInt(n,35)-9).toString(35)).join(""),26)
   }  
 
+  
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
