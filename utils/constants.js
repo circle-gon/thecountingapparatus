@@ -15,12 +15,12 @@ const RULES = {
   Tree: [
     "1) Count as high as possible with a 1 day slowmode", //1 day should be modifiable
     "2) Milestones occur every perfect square and yield unbans.",
-    "3) Grid size "
+    "3) Grid size increases every perfect square and increases character limit of messages.",
     "4) Type \"unban <function_name>\" to unban a function (one function at a time). This counts as a post."
   ],
   
   Letter: [
-    
+    "1) Count as high as possible using letters instead of numbers"
   ],
   
   X_X: [
