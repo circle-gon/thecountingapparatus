@@ -1,3 +1,2 @@
-# Get Started!
-
-Add files and start typing 🎉
+# game
+The Counting Apparatus Game
