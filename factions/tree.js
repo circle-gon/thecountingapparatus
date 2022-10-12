@@ -32,7 +32,7 @@ class TreeFaction extends FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      this.avg = this.updateAverage();
+      this.avg = this.updateAverage;
       this.updateGrid();
       this.updateMilestones();
       this.updateGoals();

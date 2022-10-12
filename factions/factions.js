@@ -1,7 +1,6 @@
 //Imports 
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
-import { getBaseLog } from "../utils/mechanics.js";
 
 //Factions Objects
 const factions = {};
@@ -71,8 +70,8 @@ export class FactionBase {
     }
     if (this.milestones > oldMilestone) {
       this.onMilestone();
-      this.totalMilestones = this.updateTotalMilestones();
-      this.effectiveMilestones = this.updateEffectiveMilestones();
+      this.totalMilestones = this.updateTotalMilestones;
+      this.effectiveMilestones = this.updateEffectiveMilestones;
     }
   }
 
@@ -85,7 +84,7 @@ export class FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      this.avg = this.updateAverage();
+      this.avg = this.updateAverage;
       this.updateMilestones();
       this.updateGoals();
     }
