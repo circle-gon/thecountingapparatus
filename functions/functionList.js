@@ -20,7 +20,23 @@ import {gamma} from './factorial.js';
   }
 //Functions (organize by unlock)
   const FUNCTIONS = {
-    "A": new Function("Ackermann Function", "A", "A(x,y)", function ),
+    "A": new Function("Ackermann Function", "A", "A(x,y)", function A(x,y){
+      switch (x){
+        case 0:
+          return y+1;
+        case 1:
+          return y+2;
+        case 2:
+          return 2*y+3;
+        case 3:
+          return 2**(y+3)-3
+      }
+    }), // that is not going to be good, just use the explicit versions and have anything above be Infinity
+    // Is that better?
+    // trole
+    // what about 3? :torl:
+    "SIN": new Function("Sine", "SIN", "sin(x)", Math.sin), //i hope this works
+    "T": new Function("Triangular Numbers", "TN", "T(x)", (x) => (x*x/2+x/2)),
     "LN": new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
     "LOG10": new Logarithm("Logarithm", "LOG", "log10(x)", 10),
     "LOG2": new Logarithm("Binary Logarithm", "BL", "log2(x)", 2),
@@ -36,7 +52,7 @@ import {gamma} from './factorial.js';
     "EIGHT": new SingleNumSeq("All Eights Sequence", "EIGHT","eight(x)",8),
     "NINE": new SingleNumSeq("All Nines Sequence", "NINE","nine(x)",9),
     "TEN": new SingleNumSeq("All Tens Sequence", "TEN","ten(x)",10),
-    "ELEVEN": new SingleNumSeq("All 11 Albanias", "ELEVEN", ":flag_al:(x)", 11),
-    "TWELVE": new SingleNumSeq("Those 12 bees", "TWELVE", ":bee:(x)", 12),
+    "ELEVEN": new SingleNumSeq("All 11 Albanias", "ELEVEN", "🇦🇱(x)", 11),
+    "TWELVE": new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
   }
 // trole !
