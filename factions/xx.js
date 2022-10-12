@@ -4,6 +4,7 @@ class XxFaction extends FactionBase {
   constructor() {
     super("X X", (x) => Math.pow(x, Math.pow(x, this.milestoneReduction)));
     this.challenges = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.hasChal = true;
     this.rawX = 1;
     this.effectiveX = 1;
     this.goals = [

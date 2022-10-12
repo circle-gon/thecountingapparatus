@@ -8,6 +8,7 @@ class OnesFaction extends FactionBase {
       (x) => Math.pow(10, Math.pow(x, xxCount.milestoneReduction)) / 9
     );
     this.challenges = [0, 0, 0];
+    this.hasChal = true;
     this.challengeReward = Math.floor(
       Math.pow(
         this.challenges[0] + this.challenges[1] + this.challenges[2],

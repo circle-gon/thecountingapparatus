@@ -13,6 +13,7 @@ class LetterFaction extends FactionBase {
     );
     this.baseCount = this.count;
     this.extensionCount = this.count;
+    this.hasChal = false;
     //this.letterStock = 0;
     this.usedStock = 0;
   }

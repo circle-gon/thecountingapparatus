@@ -1,27 +1,32 @@
 import { factions } from "../factions/factions.js";
-import { basicCount } from "../factions/count.js";
-import { treeCount } from "../factions/tree.js";
-import { letterCount } from "../factions/letter.js";
-import { xxCount } from "../factions/xx.js";
-import { onesCount } from "../factions/ones.js";
-import { factorialCount } from "../factions/factorial.js";
 
-export function getEffectiveMilestones(){
-
+export function updateEffectiveMilestones(){
+  let stoneCount = 0;
+  for (const value in Object.values(factions)){
+    if(value.name == "Letter" || value.name == "Factorial"){
+      stoneCount -= 
+    }
+  }
 }
 
-export function getTotalMilestones(){
-
-}
-
-export function updateMilestoneReduction() {
-
+export function updateTotalMilestones(){
+  let stoneCount = 0;
 }
 
 export function updateAverage(){
   let avg = 0;
   let counter = 0;
-  for (const values in )
+  for (const value in Object.values(factions)){
+    avg += value.count
+    counter++
+    if(value.hasChal){
+      for(let i = 0;i<value.challenges.length;i++){
+        avg += value.challenges[i];
+        counter++;
+      }
+    }
+  }
+  return avg/counter;
 }
 
 export function getBaseLog(x, y){

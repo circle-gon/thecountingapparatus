@@ -1,7 +1,12 @@
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
+import { updateAverage } from "../utils/mechanics.js";
 
 const factions = {};
+let totalMilestones = 0;
+let effectiveMilestones = 0;
+let avg = 0;
+
 export { factions };
 export class FactionBase {
   constructor(name, msReq) {
@@ -76,6 +81,7 @@ export class FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
+      avg = updateAverage();
       this.updateMilestones();
       this.updateGoals();
     }

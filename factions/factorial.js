@@ -33,6 +33,7 @@ class FactorialFaction extends FactionBase {
       gamma(Math.pow(x + 1, xxCount.milestoneReduction))
     );
     this.challenges = [0, 0, 0];
+    this.hasChal = true;
     this.challengeReward = Math.floor(
       Math.pow(
         this.challenges[0] + this.challenges[1] + this.challenges[2],
