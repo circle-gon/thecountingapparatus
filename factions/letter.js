@@ -1,8 +1,7 @@
-import { FactionBase, totalMilestones, effectiveMilestones, avg } from "./factions.js";
+import { FactionBase } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
-import { getBaseLog, updateTotalMilestones, updateEffectiveMilestones, updateAverage } from "../utils/mechanics.js";
 
 class LetterFaction extends FactionBase {
   constructor() {

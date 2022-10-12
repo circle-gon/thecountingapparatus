@@ -1,8 +1,7 @@
-import { FactionBase, avg, factions } from "./factions.js";
+import { FactionBase, factions } from "./factions.js";
 import { basicCount } from "./count.js";
 import { xxCount } from "./xx.js";
 import { onesCount } from "./ones.js";
-import { updateAverage } from "../utils/mechanics.js"
 
 class TreeFaction extends FactionBase {
   constructor() {
@@ -33,7 +32,7 @@ class TreeFaction extends FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      avg = updateAverage();
+      this.avg = this.updateAverage();
       this.updateGrid();
       this.updateMilestones();
       this.updateGoals();

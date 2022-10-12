@@ -1,20 +1,16 @@
 //Imports 
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
-import { updateAverage, updateTotalMilestones, updateEffectiveMilestones } from "../utils/mechanics.js";
+import { getBaseLog } from "../utils/mechanics.js";
 
 //Factions Objects
 const factions = {};
 export { factions };
 
-//Global vars
-export var totalMilestones = 0;
-export var effectiveMilestones = 0;
-export var avg = 0;
-
 //Faction superclass
 export class FactionBase {
   constructor(name, msReq) {
+    //Constant data
     this.name = name;
     this.msReq = msReq;
     this.milestones = 0;
@@ -22,6 +18,8 @@ export class FactionBase {
     this.goals = [];
     this.goalsCompleted = [];
     console.log("init");
+    
+    //Text box logic
     this.textBox = new TextChannel(
       name,
       name,
@@ -47,7 +45,13 @@ export class FactionBase {
     );
     this.textBox.on((i) => this.doCount(i), "message");
     factions[name] = this;
+    
+    //Global data
+    this.avg = 0;
+    this.totalMilestones = 0;
+    this.effectiveMilestones = 0;
   }
+  
   // abstracts
   isValidCount(count) {} //XX, Ones, Factorial
 
@@ -59,7 +63,7 @@ export class FactionBase {
 
   onMilestone() {}
 
-  //defined
+  //Count & Milestones
   updateMilestones() {
     const oldMilestone = this.milestones;
     while (this.count >= this.milestoneNextAt) {
@@ -67,8 +71,8 @@ export class FactionBase {
     }
     if (this.milestones > oldMilestone) {
       this.onMilestone();
-      totalMilestones = updateTotalMilestones();
-      effectiveMilestones = updateEffectiveMilestones();
+      this.totalMilestones = this.updateTotalMilestones();
+      this.effectiveMilestones = this.updateEffectiveMilestones();
     }
   }
 
@@ -78,17 +82,10 @@ export class FactionBase {
     );
   }
 
-  updateGoals() {
-    for (const [key, goal] of this.goals.entries()) {
-      if (goal() && !this.goalsCompleted.includes(key))
-        this.goalsCompleted.push(key);
-    }
-  }
-
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      avg = updateAverage();
+      this.avg = this.updateAverage();
       this.updateMilestones();
       this.updateGoals();
     }
@@ -102,8 +99,53 @@ export class FactionBase {
     return {};
   }
 
+  //Goals & Spires
+  updateGoals() {
+    for (const [key, goal] of this.goals.entries()) {
+      if (goal() && !this.goalsCompleted.includes(key))
+        this.goalsCompleted.push(key);
+    }
+  }
+  
   get isSpire() {
     return this.goalsCompleted.length === this.goals.length;
+  }
+  
+  //Global Data
+  get updateEffectiveMilestones(){
+    let stoneCount = 0;
+    for (const value in Object.values(factions)){
+      if(value.name == "Letter" || value.name == "Factorial"){
+        stoneCount -= value.milestones;
+      }else{
+        stoneCount += value.milestones;
+      }
+    }
+    return stoneCount;
+  }
+  
+  get updateTotalMilestones(){
+    let stoneCount = 0;
+    for (const value in Object.values(factions)){
+      stoneCount += value.milestones;
+    }
+    return stoneCount;
+  }
+  
+  get updateAverage(){
+    let average = 0;
+    let counter = 0;
+    for (const value in Object.values(factions)){
+      average += value.count
+      counter++
+      if(value.hasChal){
+        for(let i = 0;i<value.challenges.length;i++){
+          average += value.challenges[i];
+          counter++;
+        }
+      }
+    }
+    return average/counter;
   }
 }
 
