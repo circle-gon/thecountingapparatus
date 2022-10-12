@@ -2,6 +2,7 @@ import { FactionBase } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
+import { getBaseLog } from "../utils/mechanics.js";
 
 class LetterFaction extends FactionBase {
   constructor() {
@@ -12,23 +13,40 @@ class LetterFaction extends FactionBase {
     );
     this.baseCount = this.count;
     this.extensionCount = this.count;
-    this.letterStock = 0;
+    //this.letterStock = 0;
     this.usedStock = 0;
   }
-  nextCount() {
+  get nextCount() {
     return this.NumberToLetter(this.LetterToNumber(this.count) + 1);
   }
+  
+  isCorrectCount(count) {
+    return (
+      this.nextCount === this.parseCount(count)
+    );
+  }
+  
+  parseCount(count) {
+    return Number(count);
+  }
+  
   NumberToLetter(n) {
-    return n.toString(36);
+    if(n < 26) return (n+9).toString(36)
+    if(n > 36) return n.toString(36).split("").map(n => this.NumberToLetter(n)).reduce()
+    return n.toString(36); 
   }
+  
   LetterToNumber(a) {
-    return parseInt(a, 36);
-  }
+    let arr = a.split("").reverse()
+    return a.split("").reverse().map(n => {
+      Math.pow(26,n))
+  } // wait i don't think tis works, sadge 
+  // wait does it? 
 
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
-  useStock(index, amount, countText) {
+  /*useStock(index, amount, countText) {
     if (
       getBaseLog(this.baseCount + 1, 26) > index ||
       getBaseLog(this.extensionCount + 1, 26) > index
@@ -55,7 +73,7 @@ class LetterFaction extends FactionBase {
     } else {
       return false;
     }
-  }
+  }*/
 }
 
 export const letterCount = new LetterFaction();

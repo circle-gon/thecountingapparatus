@@ -100,6 +100,7 @@ class FactionDisplay extends HTMLElement {
     Next count: ${this.faction.nextCount}<br>
     Next milestone: ${this.faction.milestoneNextAt}<br>
     Current amount of milestones: ${this.faction.milestones}`;
+    if(this.getAttribute("name") === "Tree") {
     this.c.style.border = "solid"
     this.c.width = factions.Tree.grid*10
     this.c.height = factions.Tree.grid*10
@@ -111,6 +112,7 @@ class FactionDisplay extends HTMLElement {
     ctx.fillRect(0,0,this.c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
     ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,10)
     //ctx.fillRect(0,20,30,20)
+    }
   }
   connectedCallback() {
     if (!this.isConnected) return;
