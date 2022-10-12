@@ -23,6 +23,18 @@ class XxFaction extends FactionBase {
   get milestoneReduction(){
     return 1;
   }
+  updateMilestones() {
+    const oldMilestone = this.milestones;
+    while (this.count >= this.milestoneNextAt) {
+      this.milestones++;
+      
+    }
+    if (this.milestones > oldMilestone) {
+      this.onMilestone();
+    }
+    this.effectiveX = this.milestones+1;
+    this.rawX = this.milestones+1;
+  }
   parseCount(count) {
     return Number(count)
   }

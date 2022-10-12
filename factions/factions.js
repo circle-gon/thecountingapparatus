@@ -1,10 +1,9 @@
 //Imports
 import { ce, TextChannel } from "../utils/text.js";
-import { escapeHtml } from "../utils/utils.js";
+import { escapeHtml, randomColor } from "../utils/utils.js";
 
 //Factions Objects
-const factions = {};
-export { factions };
+export const factions = {};
 
 //Faction superclass
 export class FactionBase {
@@ -153,14 +152,14 @@ class FactionDisplay extends HTMLElement {
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
-      if (factions.Tree.count > 0) this.c.style.border = "solid";
+      this.c.style.display = this.faction.count === 0 ? "none" : "block" 
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;
       const ctx = this.c.getContext("2d");
       ctx.clearRect(0, 0, this.c.width, this.c.height);
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, this.c.width, this.c.height);
-      ctx.fillStyle = "white"; //create randomColor function
+      ctx.fillStyle = randomColor(); //create randomColor function
       ctx.fillRect(
         0,
         0,
@@ -191,11 +190,13 @@ class FactionDisplay extends HTMLElement {
     // RE: why do we need setAttribute?
     chatInstance.setAttribute("name", name);
     root.append(chatInstance, this.info);
-    this.shadowRoot.append(root);
     if (name === "Tree") {
       this.c = ce("canvas");
+      this.c.style.border = "solid";
       root.append(this.c);
     }
+    root.append(ce("br"))
+    this.shadowRoot.append(root);
     this.faction.textBox.on(() => this.updateHTML(), "message");
     this.updateHTML();
   }

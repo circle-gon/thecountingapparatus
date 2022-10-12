@@ -30,7 +30,7 @@ export function gamma(z) {
 class FactorialFaction extends FactionBase {
   constructor() {
     super("Factorial", (x) =>
-      Math.ceil(gamma(Math.pow(x + 2, xxCount.milestoneReduction))-0.000000001)
+      Math.ceil(gamma(Math.pow(x + 2, xxCount.milestoneReduction))-0.0000001)//gamma isn't exact so the -0.0000001 prevents weird floating point things
     );
     this.challenges = [0, 0, 0];
     this.hasChal = true;
