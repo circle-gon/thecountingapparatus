@@ -50,21 +50,19 @@ class LetterFaction extends FactionBase {
     //Necessary vars
     let out = ""; 
     let dig = 0
-    let sum;
+    let sum=0
     
     //Calculating ceiling of bijective log of n
     do{
-      sum = 0;
+      
       sum += Math.pow(26,dig);
       dig++;
     }while(sum <= n); // confusion
-    
+    console.log(dig)
     //Deconstruct n using its ceil(bijectiveLog--)
     for(let i = dig--; i != 0; i--) {
-      let num=0;
-      for(let j = n; j >= 0;j-=Math.pow(26,i)) {
-        num++;
-      }
+      let diff = (Math.pow(26,i+1)*Math.floor(n/Math.pow(26,i+1)))
+      i-1
       out.concat((num+9).toString(36));
     }
     
