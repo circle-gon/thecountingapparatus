@@ -192,10 +192,10 @@ class FactionDisplay extends HTMLElement {
     if (name === "Tree") {
       this.c = ce("canvas");
       const c = this.c;
-      c.style.border = "solid";
+      //c.style.border = "solid";
       c.width = factions.Tree.grid * 10;
       c.height = factions.Tree.grid * 10;
-      const ctx = c.getContext("2d");
+      /*const ctx = c.getContext("2d");
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, c.width, c.height);
       ctx.fillStyle = "white"; //create randomColor function
@@ -210,7 +210,7 @@ class FactionDisplay extends HTMLElement {
         Math.floor(factions.Tree.count / factions.Tree.grid) * 10,
         (factions.Tree.count % factions.Tree.grid) * 10,
         Math.floor(factions.Tree.count / factions.Tree.grid) * 10 + 10
-      );
+      );*/
       root.append(c);
     }
     this.faction.textBox.on((i) => this.updateHTML(i), "message");
