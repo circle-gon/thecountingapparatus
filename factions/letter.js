@@ -62,7 +62,7 @@ class LetterFaction extends FactionBase {
     //Deconstruct n using its ceil(bijectiveLog--)
     for(let i = dig--; i != 0; i--) {
       let num=0;
-      for(let j = n; j >= Math.pow(26,i); j-=Math.pow(26,i)) {
+      for(let j = n; j >= this.LetterToNumber("A".repeat(i-1)); j-=Math.pow(26,i)) {
         num++;
       }
       out = out.concat((num+9).toString(36));
