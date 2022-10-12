@@ -1,4 +1,4 @@
-//Imports 
+//Imports
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
 
@@ -16,8 +16,7 @@ export class FactionBase {
     this.count = 0;
     this.goals = [];
     this.goalsCompleted = [];
-    console.log("init");
-    
+
     //Text box logic
     this.textBox = new TextChannel(
       name,
@@ -26,7 +25,7 @@ export class FactionBase {
       1,
       (msg) => {
         return {
-          isCorrect: this.isCorrectCount(msg)
+          isCorrect: this.isCorrectCount(msg),
         };
       },
       (i) => {
@@ -44,13 +43,10 @@ export class FactionBase {
     );
     this.textBox.on((i) => this.doCount(i), "message");
     factions[name] = this;
-    
+
     //Global data
-    this.avg = 0;
-    this.totalMilestones = 0;
-    this.effectiveMilestones = 0;
   }
-  
+
   // abstracts
   isValidCount(count) {} //XX, Ones, Factorial
 
@@ -62,6 +58,10 @@ export class FactionBase {
 
   onMilestone() {}
 
+  get milestoneRewards() {
+    return {};
+  }
+
   //Count & Milestones
   updateMilestones() {
     const oldMilestone = this.milestones;
@@ -70,8 +70,6 @@ export class FactionBase {
     }
     if (this.milestones > oldMilestone) {
       this.onMilestone();
-      this.totalMilestones = this.updateTotalMilestones;
-      this.effectiveMilestones = this.updateEffectiveMilestones;
     }
   }
 
@@ -84,7 +82,6 @@ export class FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
-      this.avg = this.updateAverage;
       this.updateMilestones();
       this.updateGoals();
     }
@@ -94,10 +91,6 @@ export class FactionBase {
     return this.msReq(this.milestones);
   }
 
-  get milestoneRewards() {
-    return {};
-  }
-
   //Goals & Spires
   updateGoals() {
     for (const [key, goal] of this.goals.entries()) {
@@ -105,46 +98,46 @@ export class FactionBase {
         this.goalsCompleted.push(key);
     }
   }
-  
+
   get isSpire() {
     return this.goalsCompleted.length === this.goals.length;
   }
-  
+
   //Global Data
-  get updateEffectiveMilestones(){
+  static get effectiveMilestones() {
     let stoneCount = 0;
-    for (const value in Object.values(factions)){
-      if(value.name == "Letter" || value.name == "Factorial"){
+    for (const value of Object.values(factions)) {
+      if (value.name === "Letter" || value.name === "Factorial") {
         stoneCount -= value.milestones;
-      }else{
+      } else {
         stoneCount += value.milestones;
       }
     }
     return stoneCount;
   }
-  
-  get updateTotalMilestones(){
+
+  static get totalMilestones() {
     let stoneCount = 0;
-    for (const value in Object.values(factions)){
+    for (const value of Object.values(factions)) {
       stoneCount += value.milestones;
     }
     return stoneCount;
   }
-  
-  get updateAverage(){
+
+  static get average() {
     let average = 0;
     let counter = 0;
-    for (const value in Object.values(factions)){
-      average += value.count
-      counter++
-      if(value.hasChal){
-        for(let i = 0;i<value.challenges.length;i++){
-          average += value.challenges[i];
+    for (const value of Object.values(factions)) {
+      average += value.count;
+      counter++;
+      if (value.hasChal) {
+        for (let chal of value.challenges) {
+          average += chal;
           counter++;
         }
       }
     }
-    return average/counter;
+    return average / counter;
   }
 }
 
@@ -154,18 +147,28 @@ class FactionDisplay extends HTMLElement {
     Next count: ${this.faction.nextCount}<br>
     Next milestone: ${this.faction.milestoneNextAt}<br>
     Current amount of milestones: ${this.faction.milestones}`;
-    if(this.getAttribute("name") === "Tree") {
-    this.c.style.border = "solid"
-    this.c.width = factions.Tree.grid*10
-    this.c.height = factions.Tree.grid*10
-    const ctx = this.c.getContext("2d")
-    ctx.clearRect(0,0,this.c.width,this.c.height)
-    ctx.fillStyle = "gray"
-    ctx.fillRect(0,0,this.c.width,this.c.height)
-    ctx.fillStyle = "white" //create randomColor function
-    ctx.fillRect(0,0,this.c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
-    ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,10)
-    //ctx.fillRect(0,20,30,20)
+    if (this.getAttribute("name") === "Tree") {
+      this.c.style.border = "solid";
+      this.c.width = factions.Tree.grid * 10;
+      this.c.height = factions.Tree.grid * 10;
+      const ctx = this.c.getContext("2d");
+      ctx.clearRect(0, 0, this.c.width, this.c.height);
+      ctx.fillStyle = "gray";
+      ctx.fillRect(0, 0, this.c.width, this.c.height);
+      ctx.fillStyle = "white"; //create randomColor function
+      ctx.fillRect(
+        0,
+        0,
+        this.c.width,
+        Math.floor(factions.Tree.count / factions.Tree.grid) * 10
+      );
+      ctx.fillRect(
+        0,
+        Math.floor(factions.Tree.count / factions.Tree.grid) * 10,
+        (factions.Tree.count % factions.Tree.grid) * 10,
+        10
+      );
+      //ctx.fillRect(0,20,30,20)
     }
   }
   connectedCallback() {
@@ -182,22 +185,31 @@ class FactionDisplay extends HTMLElement {
 
     // RE: why do we need setAttribute?
     chatInstance.setAttribute("name", name);
-    console.log("faction go boom");
     root.append(chatInstance, this.info);
     this.shadowRoot.append(root);
-    if(name === "Tree") {
-      this.c = ce("canvas")
-      const c = this.c
-      c.style.border = "solid"
-      c.width = factions.Tree.grid*10
-      c.height = factions.Tree.grid*10
-      const ctx = c.getContext("2d")
-      ctx.fillStyle = "gray"
-      ctx.fillRect(0,0,c.width,c.height)
-      ctx.fillStyle = "white" //create randomColor function
-      ctx.fillRect(0,0,c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
-      ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10,Math.floor(factions.Tree.count/factions.Tree.grid)*10+10)
-      root.append(c)
+    if (name === "Tree") {
+      this.c = ce("canvas");
+      const c = this.c;
+      c.style.border = "solid";
+      c.width = factions.Tree.grid * 10;
+      c.height = factions.Tree.grid * 10;
+      const ctx = c.getContext("2d");
+      ctx.fillStyle = "gray";
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.fillStyle = "white"; //create randomColor function
+      ctx.fillRect(
+        0,
+        0,
+        c.width,
+        Math.floor(factions.Tree.count / factions.Tree.grid) * 10
+      );
+      ctx.fillRect(
+        0,
+        Math.floor(factions.Tree.count / factions.Tree.grid) * 10,
+        (factions.Tree.count % factions.Tree.grid) * 10,
+        Math.floor(factions.Tree.count / factions.Tree.grid) * 10 + 10
+      );
+      root.append(c);
     }
     this.faction.textBox.on((i) => this.updateHTML(i), "message");
     this.updateHTML("");

@@ -19,9 +19,17 @@ class LetterFaction extends FactionBase {
   
   //Counting Logic
   get nextCount() {
-    return this.NumberToLetter(this.count+1).toUpperCase();
+    return this.NumberToLetter(this.LetterToNumber(this.count)+1).toUpperCase();
   }
-  
+  doCount(count) {
+    if (this.isCorrectCount(count)) {
+      this.count = this.nextCount;
+      this.avg = this.updateAverage;
+      this.updateGrid();
+      this.updateMilestones();
+      this.updateGoals();
+    }
+  }
   isCorrectCount(count) {
     return (
       this.nextCount === this.parseCount(count)
