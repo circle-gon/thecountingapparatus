@@ -55,9 +55,9 @@ class TreeFaction extends FactionBase {
   get slowmode() {
     return 86400 * Math.pow(0.75, onesCount.milestones);
   }
+  
   updateGrid() {
     this.grid = Math.ceil(Math.sqrt(this.count));
-
     for (const value of Object.values(factions)) {
       value.textBox.length = (this.grid + 1) * (onesCount.milestones + 1);
     }
