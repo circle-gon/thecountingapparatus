@@ -1,8 +1,9 @@
-import { FactionBase } from "./factions.js";
+import { FactionBase, avg, factions } from "./factions.js";
 import { basicCount } from "./count.js";
 import { xxCount } from "./xx.js";
 import { onesCount } from "./ones.js";
-import { factions } from "./factions.js";
+import { updateAverage } from "../utils/mechanics.js"
+
 class TreeFaction extends FactionBase {
   constructor() {
     super("Tree", (x) => Math.pow(x+1, Math.pow(2, xxCount.milestoneReduction)));

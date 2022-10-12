@@ -33,18 +33,6 @@ class LetterFaction extends FactionBase {
     return count.toString();
   }
   
-  updateMilestones() {
-    const oldMilestone = this.milestones;
-    while (this.count >= this.milestoneNextAt) {
-      this.milestones++;
-    }
-    if (this.milestones > oldMilestone) {
-      this.onMilestone();
-      totalMilestones = updateTotalMilestones();
-      effectiveMilestones = updateEffectiveMilestones();
-    }
-  }
-  
   //Letter-Number Conversion
   NumberToLetter(n){
     let str = ""

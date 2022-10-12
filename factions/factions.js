@@ -8,9 +8,9 @@ const factions = {};
 export { factions };
 
 //Global vars
-export let totalMilestones = 0;
-export let effectiveMilestones = 0;
-export let avg = 0;
+export var totalMilestones = 0;
+export var effectiveMilestones = 0;
+export var avg = 0;
 
 //Faction superclass
 export class FactionBase {
