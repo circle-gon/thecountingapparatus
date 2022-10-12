@@ -47,11 +47,15 @@ class LetterFaction extends FactionBase {
   
   //Letter-Number Conversion
   NumberToLetter(n) {
-    let out = 0;
-    for(let i = n; i > getLogBase(n);i--) {
-      
+    let out = "";
+    for(let i = 4/*some number*/; i != 0; i--) {
+      let num=0;
+      for(j = n; ; ) {
+        out = out.append()
+      }
+      out.append((num+9).toString(36);
     }
-    
+    // okay if you find the correct amount of digits this should be easy enough
   }
 
   LetterToNumber(a) { // WHY IS THIS BEING FED 0
