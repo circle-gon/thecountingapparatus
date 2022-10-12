@@ -1,3 +1,5 @@
+import {EMOJI} from './constants.js'
+ 
 const channels = {};
 
 export class TextChannel {
@@ -87,6 +89,12 @@ export function ce(n) {
   return document.createElement(n);
 }
 
+export function addEmoji(safeString) {
+  for (const emoji of EMOJI) {
+    const regex = new RegExp()
+    safeString = safeString.replace()
+  }
+}
 class TextChannelDisp extends HTMLElement {
   updateText() {
     // oh shoot js injection

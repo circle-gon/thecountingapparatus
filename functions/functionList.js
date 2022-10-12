@@ -1,26 +1,26 @@
-import {Function} from './functionClass.js';
+import {FunctionBase} from './functionClass.js';
 import {gamma} from './factorial.js';
 
 //Subclasses
-  class NChooseR extends Function {
+  class NChooseR extends FunctionBase {
     constructor (name, unlock, syntax, input1, input2){
       super(name, unlock, syntax, (input1, input2)=>gamma(input1+1)/(gamma(input2+1)*gamma(input1-input2+1))); //n!/ (r! (n−r)!)
     }
   }
 
-  class Logarithm extends Function {
+  class Logarithm extends FunctionBase {
     constructor (name, unlock, syntax, base){
       super(name, unlock, syntax, (input)=>Math.log(input)/Math.log(base));
     }
   }
-  class SingleNumSeq extends Function {
+  class SingleNumSeq extends FunctionBase {
     constructor (name, unlock, syntax, num) {
       super(name, unlock, syntax, (input)=>num)
     }
   }
 //Functions (organize by unlock)
   const FUNCTIONS = {
-    "A": new Function("Ackermann Function", "A", "A(x,y)", function A(x,y){
+    "A": new FunctionBase("Ackermann Function", "A", "A(x,y)", function A(x,y){
       switch (x){
         case 0:
           return y+1;
@@ -29,14 +29,20 @@ import {gamma} from './factorial.js';
         case 2:
           return 2*y+3;
         case 3:
-          return 2**(y+3)-3
+          return 2**(y+3)-3;
+        case 4:
+          if (y=0) {
+            return 13;
+          } else return Infinity;
+        default:
+          return Infinity;
       }
     }), // that is not going to be good, just use the explicit versions and have anything above be Infinity
     // Is that better?
     // trole
     // what about 3? :torl:
-    "SIN": new Function("Sine", "SIN", "sin(x)", Math.sin), //i hope this works
-    "T": new Function("Triangular Numbers", "TN", "T(x)", (x) => (x*x/2+x/2)),
+    "SIN": new FunctionBase("Sine", "SIN", "sin(x)", Math.sin), //i hope this works
+    "T": new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => (x*x/2+x/2)),
     "LN": new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
     "LOG10": new Logarithm("Logarithm", "LOG", "log10(x)", 10),
     "LOG2": new Logarithm("Binary Logarithm", "BL", "log2(x)", 2),

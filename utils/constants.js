@@ -80,3 +80,10 @@ const RULES_ABRIDGED = {
     
   ]
 }
+
+export const EMOJI = [
+  {
+    name: "gwa",
+    src: "https://cdn.glitch.global/c4b4c3c5-22da-4237-8d6f-f6335452d8b5/gwa.png?v=1665428837632"
+  }
+]

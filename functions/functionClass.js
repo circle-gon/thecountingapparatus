@@ -1,6 +1,6 @@
 import {letterCount} from './letter.js';
 
-export class Function {
+export class FunctionBase {
   constructor (name, unlock, syntax, evaluate){
     this.name = name;            // Name of function
     this.unlock = unlock;        // Letter unlock string
