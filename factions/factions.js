@@ -120,12 +120,15 @@ class FactionDisplay extends HTMLElement {
     this.shadowRoot.append(root);
     if(name === "Tree") {
       const c = ce("canvas")
+      c.style.border = "solid"
       c.width = factions.Tree.grid*10
       c.height = factions.Tree.grid*10
       const ctx = c.getContext("2d")
       ctx.fillStyle = "gray"
       ctx.fillRect(0,0,c.width,c.height)
-      
+      ctx.fillStyle = "white"
+      ctx.fillRect(0,0,c.width,Math.floor(factions.Tree.count/factions.Tree.grid)*10)
+      ctx.fillRect(0,Math.floor(factions.Tree.count/factions.Tree.grid)*10,(factions.Tree.count%factions.Tree.grid)*10)
       root.append(c)
     }
     this.faction.textBox.on((i) => this.updateHTML(i), "message");

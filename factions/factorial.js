@@ -1,5 +1,5 @@
 import { xxCount } from "./xx.js";
-import { FactionBase } from "./faction.js";
+import { FactionBase } from "./factions.js";
 
 export function gamma(z) {
   const g = 7;

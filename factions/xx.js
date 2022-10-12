@@ -1,4 +1,4 @@
-import { FactionBase } from "./faction.js";
+import { FactionBase } from "./factions.js";
 
 class XxFaction extends FactionBase {
   constructor() {

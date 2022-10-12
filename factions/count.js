@@ -1,4 +1,4 @@
-import { FactionBase } from "./faction.js";
+import { FactionBase } from "./factions.js";
 import { xxCount } from "./xx.js";
 
 class CountFaction extends FactionBase {

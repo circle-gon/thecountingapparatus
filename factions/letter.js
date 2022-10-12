@@ -1,4 +1,4 @@
-import { FactionBase } from "./faction.js";
+import { FactionBase } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
