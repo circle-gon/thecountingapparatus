@@ -1,13 +1,13 @@
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml } from "../utils/utils.js";
-import { updateAverage } from "../utils/mechanics.js";
+import { updateAverage, updateTotalMilestones, updateEffectiveMilestones } from "../utils/mechanics.js";
 
 const factions = {};
-let totalMilestones = 0;
-let effectiveMilestones = 0;
-let avg = 0;
-
+export let totalMilestones = 0;
+export let effectiveMilestones = 0;
+export let avg = 0;
 export { factions };
+
 export class FactionBase {
   constructor(name, msReq) {
     this.name = name;
@@ -62,6 +62,8 @@ export class FactionBase {
     }
     if (this.milestones > oldMilestone) {
       this.onMilestone();
+      totalMilestones = updateTotalMilestones();
+      effectiveMilestones = updateEffectiveMilestones();
     }
   }
 

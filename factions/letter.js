@@ -38,12 +38,7 @@ class LetterFaction extends FactionBase {
   }
   
   LetterToNumber(a) {
-    let arr = a.split("")
-    return a.split("").map((n,i) => {
-      if(i == 0) return (parseInt(n,36)+9)*Math.pow(26, (a.length-i))
-      return 
-    }) // wait shit let me check something
-    
+    let 
   }  
 
   get letterStock() {

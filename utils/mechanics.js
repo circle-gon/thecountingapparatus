@@ -4,13 +4,20 @@ export function updateEffectiveMilestones(){
   let stoneCount = 0;
   for (const value in Object.values(factions)){
     if(value.name == "Letter" || value.name == "Factorial"){
-      stoneCount -= 
+      stoneCount -= value.milestones;
+    }else{
+      stoneCount += value.milestones;
     }
   }
+  return stoneCount;
 }
 
 export function updateTotalMilestones(){
   let stoneCount = 0;
+  for (const value in Object.values(factions)){
+    stoneCount += value.milestones;
+  }
+  return stoneCount;
 }
 
 export function updateAverage(){
