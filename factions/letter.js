@@ -1,8 +1,8 @@
-import { FactionBase, totalMilestones, effectiveMilestones } from "./factions.js";
+import { FactionBase, totalMilestones, effectiveMilestones, avg } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
-import { getBaseLog, updateTotalMilestones, updateEffectiveMilestones } from "../utils/mechanics.js";
+import { getBaseLog, updateTotalMilestones, updateEffectiveMilestones, updateAverage } from "../utils/mechanics.js";
 
 class LetterFaction extends FactionBase {
   constructor() {
@@ -46,28 +46,18 @@ class LetterFaction extends FactionBase {
   }
   
   //Letter-Number Conversion
-  NumberToLetter(n) {
-    //Necessary vars
-    let out = ""; 
-    let dig = 0
-    let sum=0
-
-    //Calculating ceiling of bijective log of n
-    do{
-      sum += Math.pow(26,dig);
-      dig++;
-    }while(sum <= n); // confusion
-    
-    //Deconstruct n using its ceil(bijectiveLog--)
-    for(let i = dig-1; i != 0; i--) {
-      let num=0; // still doesn't work :trol:
-      for(let j = n; j >= 0; j-=Math.pow(26,i)) {
-        num++;
+  NumberToLetter(n){
+    let str = ""
+    while(n>0){
+      let mod = n%26
+      if(mod==0){
+        mod = 26
+        n-=26
       }
-      out = out.concat((num+9).toString(36));
+      str = String.fromCharCode(mod+64)+str
+      n=Math.floor(n/26)
     }
-    
-    return out;
+    return str
   }
   
   LetterToNumber(a) { // WHY IS THIS BEING FED 0
