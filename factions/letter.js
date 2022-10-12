@@ -1,8 +1,8 @@
-import { FactionBase } from "./factions.js";
+import { FactionBase, totalMilestones, effectiveMilestones } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
-import { getBaseLog } from "../utils/mechanics.js";
+import { getBaseLog, updateTotalMilestones, updateEffectiveMilestones } from "../utils/mechanics.js";
 
 class LetterFaction extends FactionBase {
   constructor() {
@@ -33,24 +33,36 @@ class LetterFaction extends FactionBase {
     return Number(count);
   }
   
+  updateMilestones() {
+    const oldMilestone = this.milestones;
+    while (this.count >= this.milestoneNextAt) {
+      this.milestones++;
+    }
+    if (this.milestones > oldMilestone) {
+      this.onMilestone();
+      totalMilestones = updateTotalMilestones();
+      effectiveMilestones = updateEffectiveMilestones();
+    }
+  }
+  
   //Letter-Number Conversion
   NumberToLetter(n) {
-    let temp = n.toString(35).split("").map(n => parseInt(n,35)-9)
+    let out = 0;
+    for(let i = n; i > getLogBase(n);i--) {
+      
+    }
     
   }
 
   LetterToNumber(a) { // WHY IS THIS BEING FED 0
-    let temp = "9"+a.toLowerCase()
-    while(temp.indexOf("z") !== -1) {
-      temp = temp.replace(/.z/g,(match)=>{
-        return (parseInt(match[0],35)+1).toString(35)+"a"
-      })
+    let out = 0
+    for(let i = 0; i < a.length; i++) {
+      out = out * 26 + parseInt(a.substr(i,1),36)-9
     }
-    console.log(temp)
-    return parseInt(temp.replace("9","").split("").map(n => (parseInt(n,35)-9).toString(35)).join(""),26)
+    return out
   }  
 
-  
+  //Letter Stock Mechanics
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
@@ -82,6 +94,9 @@ class LetterFaction extends FactionBase {
       return false;
     }
   }*/
+  
+  //Spire Boost
+  
 }
 
 export const letterCount = new LetterFaction();
