@@ -118,7 +118,16 @@ class FactionDisplay extends HTMLElement {
     console.log("faction go boom");
     root.append(chatInstance, this.info);
     this.shadowRoot.append(root);
-
+    if(name === "Tree") {
+      const c = ce("canvas")
+      c.width = factions.Tree.grid*10
+      c.height = factions.Tree.grid*10
+      const ctx = c.getContext("2d")
+      ctx.fillStyle = "gray"
+      ctx.fillRect(0,0,c.width,c.height)
+      
+      root.append(c)
+    }
     this.faction.textBox.on((i) => this.updateHTML(i), "message");
     this.updateHTML("");
   }
