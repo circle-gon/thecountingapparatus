@@ -91,9 +91,10 @@ export function ce(n) {
 
 export function addEmoji(safeString) {
   for (const emoji of EMOJI) {
-    const regex = new RegExp()
-    safeString = safeString.replace()
+    const regex = new RegExp(`:${emoji.name}:`, "g")
+    safeString = safeString.replace(regex, emoji.src)
   }
+  return safeString
 }
 class TextChannelDisp extends HTMLElement {
   updateText() {
