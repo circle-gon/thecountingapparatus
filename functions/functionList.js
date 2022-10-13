@@ -25,9 +25,15 @@ class SingleNumSeq extends FunctionBase {
   }
 }
 class Integral extends FunctionBase {
-  constructor(name, unlock, syntax, integrand) {
-    function integral(integrand) {
-      h
+  constructor(name, unlock, syntax, integrand, upper, lower) {
+    function integral(f, a, b) {
+      var n = 1000
+      var h = (b-a)/n
+      var output = 0;
+      for (var j=1;j<=n/2;j++) {
+        output += f(a+(2*j-2)*h) + 4*f(a+(2*j-1)*h) + f(a+2*j*h)
+      }
+      return output*h/3;
     }
     super(name, unlock, syntax, integral);
   }
