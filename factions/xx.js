@@ -22,10 +22,10 @@ class XxFaction extends FactionBase {
     return this.count + 1;
   }
 
-  doCount(count) {// uhhh what.
+  doCount(count) {
     let msg = count;
-    for (const functionCheck in Object.values(Functions)){ // doesn't for in get the indices? No it gets the entire Function Object.
-      if (msg.includes(functionCheck.syntax)){
+    for (const functionCheck of Object.values(Functions)){ 
+      if (msg.includes(functionCheck.syntax)){ 
         if (functionCheck.isUnlocked){
           let msgIndex = 0;
           let tmpIndex;
@@ -52,7 +52,13 @@ class XxFaction extends FactionBase {
             switch (msg[msgIndex]){
               case "]":
                 break;
-              
+              case ",":
+                break;
+              case ")":
+                break;
+              default:
+                break;
+              //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
             }
           }else{
             break;

@@ -56,6 +56,14 @@ const FUNCTIONS = {
   }),
   B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x)*gamma(y)/gamma(x+y)),
   C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x)/gamma(x+1)/gamma(x)),
+  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function H(a,b){
+    var output = 0;
+    for(var i=1;i<=a;i++){
+      output += 1/(i**b);
+    }
+    return output;
+  }),
+  L: new FunctionBase("Lucas Numbers", "L", "L(x)", (x) => ((1+Math.sqrt(5))/2)**x+((1+Math.sqrt(5))/2)**x)
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
