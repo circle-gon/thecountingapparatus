@@ -24,7 +24,7 @@ class SingleNumSeq extends FunctionBase {
     super(name, unlock, syntax, (input) => num);
   }
 }
-//Functions (organize by unlock)
+//Functions (organize by Order of Operations)
 const FUNCTIONS = {
   A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function A(a, b) {
     switch (a) {

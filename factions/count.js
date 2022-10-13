@@ -24,6 +24,14 @@ class CountFaction extends FactionBase {
     return this.count + Math.max(xxCount.effectiveX, 1);
   }
 
+  doCount(count) {
+    if (this.isCorrectCount(count)) {
+      this.count = this.nextCount;
+      this.updateMilestones();
+      this.updateGoals();
+    }
+  }
+  
   parseCount(count) {
     return Number(count);
   }

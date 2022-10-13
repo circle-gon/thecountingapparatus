@@ -81,9 +81,13 @@ export class FactionBase {
       this.isValidCount(count) && this.nextCount === this.parseCount(count)
     );
   }
-
+  
   doCount(count) {
-    if (this.isCorrectCount(count)) {
+    let msg = count;
+    for (const syntaxes in Object.values(Functions)){
+      
+    }
+    if (this.isCorrectCount(msg)) {
       this.count = this.nextCount;
       this.updateMilestones();
       this.updateGoals();
