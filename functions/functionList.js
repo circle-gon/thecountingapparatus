@@ -34,7 +34,7 @@ class Integral extends FunctionBase {
         output += integrand(a+(2*j-2)*h) + 4*integrand(a+(2*j-1)*h) + integrand(a+2*j*h);
       }
       return output*h/3;
-      //CompsoSimpson's Rule
+      //Composite Simpson's Rule
     });
   }
 }
@@ -70,7 +70,7 @@ const FUNCTIONS = {
   }),
   B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x+1)*gamma(y+1)/gamma(x+y+1)),
   C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x+1)/gamma(x+2)/gamma(x+1)),
-  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function H(a,b){
+  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function (a,b){
     var output = 0;
     for(var i=1;i<=a;i++){
       output += 1/(i**b);
