@@ -56,14 +56,8 @@ const FUNCTIONS = {
   }),
   B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x)*gamma(y)/gamma(x+y)),
   C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x)/gamma(x+1)/gamma(x)),
-  
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
-  T: new FunctionBase(
-    "Triangular Numbers",
-    "TN",
-    "T(x)",
-    (x) => (x * x) / 2 + x / 2
-  ),
+  T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
   LOG10: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
   LOG2: new Logarithm("Binary Logarithm", "BL", "log2(x)", 2),
