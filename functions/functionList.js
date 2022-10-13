@@ -39,10 +39,11 @@ class Integral extends FunctionBase {
     });
   }
 }
+
 class GaussianQuadrature extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {
-      weights = [[0.2025782419255613, 0.0000000000000000],
+      var points = [[0.2025782419255613, 0.0000000000000000],
 [0.1984314853271116,	-0.2011940939974345],
 [0.1984314853271116,	0.2011940939974345],
 [0.1861610000155622,	-0.3941513470775634],
@@ -56,7 +57,15 @@ class GaussianQuadrature extends FunctionBase {
 [0.0703660474881081,	-0.9372733924007060],
 [0.0703660474881081,	0.9372733924007060],
 [0.0307532419961173,	-0.9879925180204854],
-[0.0307532419961173,	0.9879925180204854]
+[0.0307532419961173,	0.9879925180204854]];
+      var output = 0;
+      function f(x) {
+        return integrand(x*(b-a)/2 + (a+b)/2)*(b-a)/2;
+      }
+      for(var i=0;i<=points.length;i++) {
+        output += points[i][0]*integrand(points[i][1]);
+      }
+      //15 point gaussian quadrature
     })
   }
 }
