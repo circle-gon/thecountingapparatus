@@ -125,9 +125,9 @@ const FUNCTIONS = {
   AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a,b,c) => Math.sqrt((-a+b+c)*(a-b+c)*(a+b-c)*(a+b+c))),
   
   CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function (x) {
-    var output = 0;
-    for (var i=1;i<=x-2;i++) {
-      for (var j=i+1;j<=x-1;j++) {
+    let output = 0;
+    for (let i=1;i<=x-2;i++) {
+      for (let j=i+1;j<=x-1;j++) {
         output += i**2 * j**2;
       }
     }
@@ -136,7 +136,7 @@ const FUNCTIONS = {
   
   DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (x) {
     var output = 1;
-    for(const i in x.toString()) {
+    for(const i of x.toString()) {
       output *= i.parseInt();
     }
     return output;

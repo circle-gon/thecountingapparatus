@@ -31,15 +31,3 @@ export class FunctionBase {
     
   }
 }
-
-export function toNumber(str) {
-  try {
-    return Function("proxy", `
-      with (proxy) {
-        ${str}
-      }
-    `)
-  } catch (e) {
-    throw e
-  }
-}

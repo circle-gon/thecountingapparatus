@@ -49,27 +49,31 @@ export class FactionBase {
   isValidCount(count) {} //XX, Ones, Factorial
 
   parseCount(count) {} //XX, Ones, Factorial
-  
+
   doCount(count) {}
 
   spireBoost() {} //All Factions
 
   onMilestone() {}
-  
-  isValidCount() {return true}
+
+  isValidCount() {
+    return true;
+  }
 
   get milestoneRewards() {
     return {};
   }
-  
-  countToDisplay(c) {return c}
+
+  countToDisplay(c) {
+    return c;
+  }
 
   //Count & Milestones
-  
+
   get nextCount() {
-    return this.count + 1
+    return this.count + 1;
   }
-  
+
   updateMilestones() {
     const oldMilestone = this.milestones;
     while (this.count >= this.milestoneNextAt) {
@@ -138,40 +142,38 @@ export class FactionBase {
     }
     return average / counter;
   }
-  
+
   //Function Parsing / Scanning
-  parseFunction(msg){
+  static parseFunction(msg) {
     let count = msg;
-    for (const functionCheck of Object.values(Functions)){ //List of all functions
-      if (!msg.includes(functionCheck.syntax))             //Find function in msg
-        continue;                                          //If not found, go to next function
-      
-      if (functionCheck.isUnlocked){                       //Check if unlocked
-        let msgIndex = 0;                                  //Initialize msgReader
-        let tmpIndex;                                      //Initialize substringSaver
-        let synCheck = true;                               //Initialize 
-        while(msg[msgIndex] !== functionCheck.syntax[0]){
+    for (const functionCheck of Object.values(Functions)) {
+      if (!msg.includes(functionCheck.syntax)) continue;
+
+      if (functionCheck.isUnlocked) {
+        let msgIndex = 0;
+        let tmpIndex;
+        let synCheck = true;
+        while (msg[msgIndex] !== functionCheck.syntax[0]) {
           msgIndex++;
         }
         let i = msgIndex;
-        for(i; functionCheck.syntax[i-msgIndex-1] !== "("; i++){
-          if(msg[msgIndex+i] === functionCheck.syntax[i-msgIndex]){
+        for (i; functionCheck.syntax[i - msgIndex - 1] !== "("; i++) {
+          if (msg[msgIndex + i] === functionCheck.syntax[i - msgIndex]) {
             synCheck = true;
-          }else{
+          } else {
             synCheck = false;
             break;
           }
         }
-        if(!synCheck)
-          break;
+        if (!synCheck) break;
 
         tmpIndex = msgIndex;
-        msgIndex+=i;
-        let inputVarInit = {};
-        for(msgIndex;Number.isInteger(+msg[msgIndex]);msgIndex++){
-          inputVarInit = inputVarInit.concat(msg[msgIndex]);
+        msgIndex += i;
+        // okay what is this empty for loop from
+        for (msgIndex; Number.isInteger(+msg[msgIndex]); msgIndex++) {
+          //In here, we have to concatenate to a new variable....?
         }
-        switch (msg[msgIndex]){
+        switch (msg[msgIndex]) {
           case "]":
             break;
           case ",":
@@ -180,7 +182,7 @@ export class FactionBase {
             break;
           default:
             break;
-        //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
+          //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
         }
       }
     }
@@ -189,13 +191,13 @@ export class FactionBase {
 
 class FactionDisplay extends HTMLElement {
   updateHTML() {
-    const c = (co) => this.faction.countToDisplay(co)
+    const c = (co) => this.faction.countToDisplay(co);
     this.info.innerHTML = `Count: ${c(this.faction.count)}<br>
     Next count: ${c(this.faction.nextCount)}<br>
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
-      this.c.style.display = this.faction.count === 0 ? "none" : "block" 
+      this.c.style.display = this.faction.count === 0 ? "none" : "block";
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;
       const ctx = this.c.getContext("2d");
@@ -238,7 +240,7 @@ class FactionDisplay extends HTMLElement {
       this.c.style.border = "solid";
       root.append(this.c);
     }
-    root.append(ce("br"))
+    root.append(ce("br"));
     this.shadowRoot.append(root);
     this.faction.textBox.on(() => this.updateHTML(), "message");
     this.updateHTML();
