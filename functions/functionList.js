@@ -70,7 +70,7 @@ const FUNCTIONS = {
       output += gamma(i)*((-1)**(x-i))
     }
   }),
-  AT: new FunctionBase("")
+  AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a,b,c) => Math.sqrt((-a+b+c)*(a-b+c)*(a+b-c)*(a+b+c))),
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
