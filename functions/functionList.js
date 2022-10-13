@@ -24,7 +24,7 @@ class SingleNumSeq extends FunctionBase {
     super(name, unlock, syntax, (input) => num);
   }
 }
-class Integral extends FunctionBase {
+/*class Integral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {
       var n = 10000
@@ -38,7 +38,7 @@ class Integral extends FunctionBase {
       //May improve later
     });
   }
-}
+}*/
 
 class QIntegral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
