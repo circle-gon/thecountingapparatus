@@ -25,6 +25,12 @@ class SingleNumSeq extends FunctionBase {
   }
 }
 
+class Operator extends FunctionBase{
+  constructor (name, unlock, symbol, evaluate){
+    super(name, unlock, symbol, evaluate);
+  }
+}
+
 class QIntegral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {

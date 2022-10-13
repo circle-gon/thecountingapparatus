@@ -142,10 +142,12 @@ export class FactionBase {
     }
     return average / counter;
   }
-
+  // tbd
+  static isPureMathEquation(msg) {}
   //Function Parsing / Scanning
   static parseFunction(msg) {
     msg = msg.replaceAll(" ", "");
+    let value = 0
     for (const functionCheck of Object.values(Functions)) {
       const name = functionCheck.syntax.substring(
         0,
@@ -155,23 +157,31 @@ export class FactionBase {
 
       //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
-        const start = msg.indexOf(functionCheck.syntax[0]) - 1; 
+        const indexOfEnd = functionCheck.syntax.indexOf(")");
+        const start = msg.indexOf(functionCheck.syntax[0]) - 1;
         const end = start + name.length + 2;
-        let args = msg
-          .substring(end, functionCheck.syntax.indexOf(")"))
-          .split(",");
+        let args = msg.substring(end, indexOfEnd).split(",");
         const correctArgs = functionCheck.syntax
-          .substring(name + 1, functionCheck.syntax.indexOf(")"))
+          .substring(name + 1, indexOfEnd)
           .split(",");
         if (args.length !== correctArgs.length)
           throw new TypeError(
             `Invalid number of arguments passed to ${name}: ${args.length}` +
-            `arguments passed, but ${correctArgs.length} arguments required.` + 
-            "Please check your syntax!"
+              `arguments passed, but ${correctArgs.length} arguments required.` +
+              "Please check your syntax!"
           );
+        for (let i = 0; i < args.length; i++) {
+          if (Number(args[i]) == NaN) {
+            args[i] = this.parseFunction(args[i]);
+          }
+        }
         const result = functionCheck.evaluate(...args);
-      } else throw new TypeError(`You used function ${name}, but it is not unlocked!`)
+      } else
+        throw new TypeError(
+          `You used function ${name}, but it is not unlocked!`
+        );
     }
+    //That can be placed right here
   }
 }
 
