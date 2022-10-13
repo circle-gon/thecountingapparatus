@@ -22,19 +22,20 @@ class XxFaction extends FactionBase {
     return this.count + 1;
   }
 
-  doCount(count) {
+  doCount(count) {// uhhh what.
     let msg = count;
-    for (const functionCheck in Object.values(Functions)){
+    for (const functionCheck in Object.values(Functions)){ // doesn't for in get the indices? No it gets the entire Function Object.
       if (msg.includes(functionCheck.syntax)){
         if (functionCheck.isUnlocked){
           let msgIndex = 0;
+          let tmpIndex;
           let synCheck = true;
           while(msg[msgIndex] !== functionCheck.syntax[0]){
             msgIndex++;
           }
           let i = msgIndex;
-          for(i; functionCheck.syntax[i-msgIndex]; i++){
-            if(msg[i] === functionCheck.syntax[i-msgIndex]){
+          for(i; functionCheck.syntax[i-msgIndex] !== "x"; i++){
+            if(msg[msgIndex+i] === functionCheck.syntax[i-msgIndex]){
               synCheck = true;
             }else{
               synCheck = false;
@@ -42,8 +43,17 @@ class XxFaction extends FactionBase {
             }
           }
           if(synCheck){
-            
+            tmpIndex = msgIndex;
             msgIndex+=i;
+            let inputVarInit = {};
+            for(msgIndex;Number.isInteger(+msg[msgIndex]);msgIndex++){
+              inputVarInit = inputVarInit.concat(msg[msgIndex]);
+            }
+            switch (msg[msgIndex]){
+              case "]":
+                break;
+              
+            }
           }else{
             break;
           }
