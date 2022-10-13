@@ -24,7 +24,14 @@ class SingleNumSeq extends FunctionBase {
     super(name, unlock, syntax, (input) => num);
   }
 }
-
+class Integral extends FunctionBase {
+  constructor(name, unlock, syntax, integrand) {
+    function integral(integrand) {
+      h
+    }
+    super(name, unlock, syntax, integral);
+  }
+}
 //Functions (organize by Order of Operations)
 const FUNCTIONS = {
   A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (a,b) {
