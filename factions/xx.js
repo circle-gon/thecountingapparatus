@@ -17,17 +17,41 @@ class XxFaction extends FactionBase {
     ];
   }
 
+  //Counting & Milestones
   get nextCount() {
     return this.count + 1;
   }
 
   doCount(count) {
     let msg = count;
-    for (const syntaxes in Object.values(Functions)){
-      if (msg.includes(syntaxes.syntax)){
-        if (syntaxes.isUnlocked){
-          
+    for (const functionCheck in Object.values(Functions)){
+      if (msg.includes(functionCheck.syntax)){
+        if (functionCheck.isUnlocked){
+          let msgIndex = 0;
+          let synCheck = true;
+          while(msg[msgIndex] !== functionCheck.syntax[0]){
+            msgIndex++;
+          }
+          let i = msgIndex;
+          for(i; functionCheck.syntax[i-msgIndex]; i++){
+            if(msg[i] === functionCheck.syntax[i-msgIndex]){
+              synCheck = true;
+            }else{
+              synCheck = false;
+              break;
+            }
+          }
+          if(synCheck){
+            
+            msgIndex+=i;
+          }else{
+            break;
+          }
+        }else{
+          break;
         }
+      }else{
+        continue;
       }
     }
     if (this.isCorrectCount(msg)) {
@@ -52,9 +76,11 @@ class XxFaction extends FactionBase {
     this.effectiveX = this.milestones+1;
     this.rawX = this.milestones+1;
   }
+  
   parseCount(count) {
     return Number(count)
   }
+  
   get challengeReward() {
     let logProd = 1;
     for (const chal of this.challenges) {
