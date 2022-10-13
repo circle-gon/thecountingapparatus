@@ -63,7 +63,14 @@ const FUNCTIONS = {
     }
     return output;
   }),
-  L: new FunctionBase("Lucas Numbers", "L", "L(x)", (x) => ((1+Math.sqrt(5))/2)**x+((1+Math.sqrt(5))/2)**x)
+  L: new FunctionBase("Lucas Numbers", "L", "L(x)", (x) => ((1+Math.sqrt(5))/2)**x+((1-Math.sqrt(5))/2)**x),
+  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function af(x) {
+    var output = 0;
+    for(var i=1;i<=x;i++){
+      output += gamma(i)*((-1)**(x-i))
+    }
+  }),
+  AT: new FunctionBase("")
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
