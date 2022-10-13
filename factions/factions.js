@@ -1,7 +1,8 @@
 //Imports
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import { Functions } from "../functions/functionClass.js";
+import { Functions, Operators } from "../functions/functionClass.js";
+
 
 //Factions Objects
 export const factions = {};
@@ -148,7 +149,7 @@ export class FactionBase {
   static parseFunction(msg) {
     msg = msg.replaceAll(" ", "");
     let value = 0;
-    for (const functionCheck of Object.values(Functions)) {
+    for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
       const name = functionCheck.syntax.substring(
         0,
         functionCheck.syntax.indexOf("(")

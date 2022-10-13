@@ -1,5 +1,6 @@
 //Function Objects
 export const Functions = {};
+export const Operators = {};
 
 export class FunctionBase {
   constructor(name, unlock, syntax, evaluate) {
@@ -23,13 +24,6 @@ export class FunctionBase {
     this.isUnlocked = false;
     /*this.isStunned = false;*/
   }
-
-  validate() {
-    // tentative function validation
-    return this.semantics(arguments);
-  }
-
-  increment() {}
 }
 
 export function integral(integrand, a, b) {

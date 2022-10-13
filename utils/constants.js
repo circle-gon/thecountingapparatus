@@ -3,8 +3,10 @@ import { treeCount } from "../factions/tree.js"
 import { letterCount } from "../factions/letter.js"
 import { xxCount } from "../factions/xx.js"
 import { onesCount } from "../factions/ones.js"
-import { factorialCount } from "../factions/factorial.js"
-*/
+import { factorialCount } from "../factions/factorial.js"*/
+
+
+//RULESETS
 const RULES = {
   Classic: [
     "1) Count as high as possible in increments of Effective X.",
@@ -44,7 +46,6 @@ const RULES = {
     
   ]
 }
-
 const RULES_ABRIDGED = {
   Classic: [
     "Standard counting",
