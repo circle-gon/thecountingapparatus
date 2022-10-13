@@ -40,7 +40,7 @@ class Integral extends FunctionBase {
   }
 }
 
-class GaussianQuadrature extends FunctionBase {
+class QIntegral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {
       var points = [[0.2025782419255613, 0.0000000000000000],
