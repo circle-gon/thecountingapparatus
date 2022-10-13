@@ -147,16 +147,17 @@ export class FactionBase {
   static parseFunction(msg) {
     let count = msg;
     for (const functionCheck of Object.values(Functions)) {
-      if (!msg.includes(functionCheck.syntax)) continue;
-
+      if (!msg.includes(functionCheck.syntax.substring(0,functionCheck.syntax.indexOf("(")))) continue;
+      
+      //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
-        let msgIndex = 0;
+        let msgIndex = msg.indexOf(functionCheck.syntax[0])
         let tmpIndex;
         let synCheck = true;
-        while (msg[msgIndex] !== functionCheck.syntax[0]) {
-          msgIndex++;
-        }
         let i = msgIndex;
+        // My guess is that this keeps iterating and checking if a string (ie. ABC) matches another string
+        // (ie. BCD)
+        //That is correct. It
         for (i; functionCheck.syntax[i - msgIndex - 1] !== "("; i++) {
           if (msg[msgIndex + i] === functionCheck.syntax[i - msgIndex]) {
             synCheck = true;
@@ -166,12 +167,15 @@ export class FactionBase {
           }
         }
         if (!synCheck) break;
-
+        
+        //conversion from function to output
         tmpIndex = msgIndex;
         msgIndex += i;
         // okay what is this empty for loop from
-        for (msgIndex; Number.isInteger(+msg[msgIndex]); msgIndex++) {
-          //In here, we have to concatenate to a new variable....?
+        for (msgIndex; Number(+msg[msgIndex]); msgIndex++) {
+          //In here, we are assuming that values are numbers. We concatenate them to a string
+          //Which will be converted to an integer and evaluated when we reach case ')'
+          //
         }
         switch (msg[msgIndex]) {
           case "]":
