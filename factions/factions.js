@@ -145,39 +145,22 @@ export class FactionBase {
 
   //Function Parsing / Scanning
   static parseFunction(msg) {
-    let count = msg;
+    msg = msg.replaceAll(" ", "") // should be fine? Reasonable, unless we are going to require "1 = " 
     for (const functionCheck of Object.values(Functions)) {
-      if (!msg.includes(functionCheck.syntax.substring(0,functionCheck.syntax.indexOf("(")))) continue;
-      
+      const name = functionCheck.syntax.substring(
+        0,
+        functionCheck.syntax.indexOf("(")
+      );
+      if (!msg.includes(name)) continue;
+
       //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
-        let msgIndex = msg.indexOf(functionCheck.syntax[0])
-        let tmpIndex;
-        let synCheck = true;
-        let i = msgIndex;
-        // My guess is that this keeps iterating and checking if a string (ie. ABC) matches another string
-        // (ie. BCD)
-        //That is correct. It
-        for (i; functionCheck.syntax[i - msgIndex - 1] !== "("; i++) {
-          if (msg[msgIndex + i] === functionCheck.syntax[i - msgIndex]) {
-            synCheck = true;
-          } else {
-            synCheck = false;
-            break;
-          }
+        let start = msg.indexOf(functionCheck.syntax[0]) - 1; //You already do that here
+        let end = start + name.length + 2;
+        for (let i = start; i <= end; i++) {
+          //Now we still have the issue of pulling the numbers from msg and porting them to a new string
         }
-        if (!synCheck) break;
-        
-        //conversion from function to output
-        tmpIndex = msgIndex;
-        msgIndex += i;
-        // okay what is this empty for loop from
-        for (msgIndex; Number(+msg[msgIndex]); msgIndex++) {
-          //In here, we are assuming that values are numbers. We concatenate them to a string
-          //Which will be converted to an integer and evaluated when we reach case ')'
-          //
-        }
-        switch (msg[msgIndex]) {
+        switch (msg[end]) {
           case "]":
             break;
           case ",":
