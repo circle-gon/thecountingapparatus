@@ -26,26 +26,26 @@ class SingleNumSeq extends FunctionBase {
 }
 //Functions (organize by unlock)
 const FUNCTIONS = {
-  A: new FunctionBase("Ackermann Function", "A", "A(x,y)", function A(x, y) {
-    switch (x) {
+  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function A(a, b) {
+    switch (a) {
       case 0:
-        return y + 1;
+        return b + 1;
       case 1:
-        return y + 2;
+        return b + 2;
       case 2:
-        return 2 * y + 3;
+        return 2 * b + 3;
       case 3:
-        return 2 ** (y + 3) - 3;
+        return 2 ** (b + 3) - 3;
       case 4:
-        if (y === 0) {
+        if (b === 0) {
           return 13;
-        } else if (y === 1) {
+        } else if (b === 1) {
           return 65533;
         } else {
           return Infinity;
         }
       case 5:
-        if (y === 0) {
+        if (b === 0) {
           return 65533;
         } else {
           return Infinity;
@@ -54,8 +54,10 @@ const FUNCTIONS = {
         return Infinity;
     }
   }),
-  B: new FunctionBase("Beta", "B"),
-  SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin), //i hope this works
+  B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x)*gamma(y)/gamma(x+y)),
+  C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x)/gamma(x+1)/gamma(x)),
+  
+  SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase(
     "Triangular Numbers",
     "TN",
