@@ -143,9 +143,12 @@ export class FactionBase {
     }
     return average / counter;
   }
-  // tbd
-  static isPureMathEquation(msg) {}
-  //Function Parsing / Scanning
+  
+  //Equation Parsing / Scanning
+  static isPureMathEquation(msg) {
+    
+  }
+  
   static parseFunction(msg) {
     msg = msg.replaceAll(" ", "");
     let value = 0;
@@ -174,15 +177,17 @@ export class FactionBase {
         for (const [i, arg] of args.entries()) {
           if (isNaN(Number(arg))) {
             args[i] = this.parseFunction(arg);
-          } else {
-            msg = msg.replace(
-              msg.substring(
-                start,
-                msg.indexOf(functionCheck.syntax[indexOfEnd])
-              ),
-              functionCheck.evaluate(...args)
-            );
+            for (const functionCheck of Object.values((Operators))){
+              
+            }
           }
+          msg = msg.replace(
+            msg.substring(
+              start,
+              msg.indexOf(functionCheck.syntax[indexOfEnd])
+            ),
+            functionCheck.evaluate(...args)
+          );
         }
       } else
         throw new TypeError(
