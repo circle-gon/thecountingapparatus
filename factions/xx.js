@@ -26,6 +26,7 @@ class XxFaction extends FactionBase {
     for (const syntaxes in Object.values(Functions)){
       if (msg.includes(syntaxes.syntax)){
         if (syntaxes.isUnlocked){
+          
         }
       }
     }
