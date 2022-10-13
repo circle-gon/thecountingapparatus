@@ -23,7 +23,7 @@ class XxFaction extends FactionBase {
   }
 
   doCount(count) {
-    if (this.isCorrectCount(msg)) {
+    if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
       this.updateMilestones();
       this.updateGoals();

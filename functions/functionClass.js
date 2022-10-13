@@ -1,5 +1,3 @@
-import {letterCount} from '../factions/letter.js';
-
 //Function Objects
 export const Functions = {}
 

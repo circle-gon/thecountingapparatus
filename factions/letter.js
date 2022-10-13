@@ -29,6 +29,7 @@ class LetterFaction extends FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
+      this.unlockFunction();
       this.updateMilestones();
       this.updateGoals();
     }
@@ -62,9 +63,11 @@ class LetterFaction extends FactionBase {
 
   //Function Mechanics
     unlockFunction(){
-    for (const unlockCheck of Object.values(Functions){
-      if (unlockCheck..isUnlocked || letterCount.baseCount === this.unlock) {
-      
+    for (const unlockCheck of Object.values(Functions)){
+      if (unlockCheck.isUnlocked || letterCount.baseCount === unlockCheck.unlock || letterCount.extensionCount === unlockCheck.unlock) {
+        unlockCheck.isUnlocked = true;
+      }else{
+        unlockCheck.isUnlocked = false;
       }
     }
   }

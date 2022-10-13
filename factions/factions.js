@@ -1,6 +1,7 @@
 //Imports
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
+import { Functions } from "../functions/functionClass.js";
 
 //Factions Objects
 export const factions = {};
