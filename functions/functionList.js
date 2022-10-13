@@ -62,9 +62,10 @@ class QIntegral extends FunctionBase {
       function f(x) {
         return integrand(x*(b-a)/2 + (a+b)/2)*(b-a)/2;
       }
-      for(var i=0;i<=points.length;i++) {
-        output += points[i][0]*integrand(points[i][1]);
+      for(var i=0;i<points.length;i++) {
+        output += points[i][0]*f(points[i][1]);
       }
+      return output;
       //15 point gaussian quadrature
     })
   }
