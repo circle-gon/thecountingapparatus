@@ -174,10 +174,9 @@ export class FactionBase {
           if (isNaN(Number(args[i]))) {
             args[i] = this.parseFunction(args[i]);
           }else{
-            msg.replace(msg.substring())
+            msg = msg.replace(msg.substring(start,msg.indexOf(functionCheck.syntax[indexOfEnd])),functionCheck.evaluate(...args));
           }
         }
-        const result = functionCheck.evaluate(...args);
       } else
         throw new TypeError(
           `You used function ${name}, but it is not unlocked!`
