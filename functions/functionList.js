@@ -71,6 +71,18 @@ const FUNCTIONS = {
     }
   }),
   AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a,b,c) => Math.sqrt((-a+b+c)*(a-b+c)*(a+b-c)*(a+b+c))),
+  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function CF(x) {
+    output = 0;
+    
+  })
+  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function DP(x) {
+    var output = 1;
+    for(const i in x.toString()) {
+      output *= i.parseInt();
+    }
+    return output;
+  }),
+  
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
