@@ -19,10 +19,6 @@ class LetterFaction extends FactionBase {
   }
 
   //Counting Logic
-  get nextCount() {
-    return this.count + 1
-  }
-  
   isCorrectCount(count) {
     return count === this.NumberToLetter(this.nextCount)
   }

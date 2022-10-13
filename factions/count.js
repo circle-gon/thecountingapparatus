@@ -31,10 +31,6 @@ class CountFaction extends FactionBase {
       this.updateGoals();
     }
   }
-  
-  parseCount(count) {
-    return Number(count);
-  }
 
   get milestoneRewards() {
     return {

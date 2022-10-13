@@ -16,12 +16,6 @@ class OnesFaction extends FactionBase {
       )
     );
   }
-  get nextCount() {
-    return this.count + 1;
-  }
-  parseCount(count) {
-    return Number(count)
-  }
 }
 
 export const onesCount = new OnesFaction();

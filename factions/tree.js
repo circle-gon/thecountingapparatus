@@ -19,12 +19,6 @@ class TreeFaction extends FactionBase {
   }
 
   //Counts & Milestones
-  get nextCount() {
-    return this.count + 1;
-  }
-  parseCount(count) {
-    return Number(count)
-  }
 
   doCount(count) {
     if (this.isCorrectCount(count)) {

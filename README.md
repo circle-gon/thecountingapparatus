@@ -1,2 +1,2 @@
 # game
-The Counting Apparatus Game
+The Counting Apparatus **game**

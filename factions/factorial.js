@@ -42,11 +42,5 @@ class FactorialFaction extends FactionBase {
     );
     
   }
-  get nextCount() {
-    return this.count + 1;
-  } //this
-  parseCount(count) {
-    return Number(count)
-  }
 }
 export const factorialCount = new FactorialFaction();

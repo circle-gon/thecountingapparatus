@@ -18,9 +18,6 @@ class XxFaction extends FactionBase {
   }
 
   //Counting & Milestones
-  get nextCount() {
-    return this.count + 1;
-  }
 
   doCount(count) {
     if (this.isCorrectCount(count)) {
@@ -33,6 +30,7 @@ class XxFaction extends FactionBase {
   get milestoneReduction(){
     return 1;
   }
+  
   updateMilestones() {
     const oldMilestone = this.milestones;
     while (this.count >= this.milestoneNextAt) {
@@ -44,10 +42,6 @@ class XxFaction extends FactionBase {
     }
     this.effectiveX = this.milestones+1;
     this.rawX = this.milestones+1;
-  }
-  
-  parseCount(count) {
-    return Number(count)
   }
   
   get challengeReward() {
