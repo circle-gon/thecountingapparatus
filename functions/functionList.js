@@ -24,9 +24,10 @@ class SingleNumSeq extends FunctionBase {
     super(name, unlock, syntax, (input) => num);
   }
 }
+
 //Functions (organize by Order of Operations)
 const FUNCTIONS = {
-  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function A(a, b) {
+  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (a,b) {
     switch (a) {
       case 0:
         return b + 1;
@@ -54,8 +55,8 @@ const FUNCTIONS = {
         return Infinity;
     }
   }),
-  B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x)*gamma(y)/gamma(x+y)),
-  C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x)/gamma(x+1)/gamma(x)),
+  B: new FunctionBase("Beta Function", "B", "B(x,y)", (x,y) => gamma(x+1)*gamma(y+1)/gamma(x+y+1)),
+  C: new FunctionBase("Catalan Numbers", "C", "C(x)", (x) => gamma(2*x+1)/gamma(x+2)/gamma(x+1)),
   H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function H(a,b){
     var output = 0;
     for(var i=1;i<=a;i++){
@@ -64,29 +65,30 @@ const FUNCTIONS = {
     return output;
   }),
   L: new FunctionBase("Lucas Numbers", "L", "L(x)", (x) => ((1+Math.sqrt(5))/2)**x+((1-Math.sqrt(5))/2)**x),
-  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function af(x) {
+  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function (x) {
     var output = 0;
     for(var i=1;i<=x;i++){
-      output += gamma(i)*((-1)**(x-i))
+      output += gamma(i+1)*((-1)**(x-i))
     }
   }),
   AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a,b,c) => Math.sqrt((-a+b+c)*(a-b+c)*(a+b-c)*(a+b+c))),
-  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function CF(x) {
+  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function (x) {
     var output = 0;
     for (var i=1;i<=x-2;i++) {
-      for (var j=i+1;j<=x-2;j++) {
-        output += i**2 + j**2;
+      for (var j=i+1;j<=x-1;j++) {
+        output += i**2 * j**2;
       }
     }
     return output;
   }),
-  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function DP(x) {
+  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (x) {
     var output = 1;
     for(const i in x.toString()) {
       output *= i.parseInt();
     }
     return output;
   }),
+  FF: new FunctionBase("Falling Factorial", "FF", "x_n", (x,n) => gamma(x+1)/gamma(x-n+1)),
   
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
   T: new FunctionBase("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
