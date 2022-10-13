@@ -169,21 +169,55 @@ const FUNCTIONS = {
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
+  
   LOG10: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
+  
   LOG2: new Logarithm("Binary Logarithm", "BL", "log2(x)", 2),
+  
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
+  
   ZERO: new SingleNumSeq("All Zeros Sequence", "ZERO", "zero(x)", 0),
+  
   ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
+  
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
+  
   THREE: new SingleNumSeq("All Threes Sequence", "THREE", "three(x)", 3),
+  
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
+  
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
+  
   SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
+  
   SEVEN: new SingleNumSeq("All Sevens Sequence", "SEVEN", "seven(x)", 7),
+  
   EIGHT: new SingleNumSeq("All Eights Sequence", "EIGHT", "eight(x)", 8),
+  
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
+  
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
+  
   ELEVEN: new SingleNumSeq("All 11 Albanias", "ELEVEN", "🇦🇱(x)", 11),
+  
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
+  
+  ADDITION: new Operator("Addition", "ADD", "+", (x,y) => x+y),
+  
+  SUBTRACTION: new Operator("Subtraction", "SUB", "-", (x,y) => x-y),
+
+  MULTIPLICATION: new Operator("Multiply", "MLT", "*", (x,y) => x*y),
+  
+  DIVISION: new Operator("Addition", "DIV", "/", (x,y) => x/y),
+  
+  EXPONENTIATION: new Operator("Power", "POW", "+", (x,y) => x**y),
+  
+  FACTORIAL: new Operator("Factorial", "PI", "!", (x) => gamma(x+1)),
+  
+  MODULO: new Operator("Modulo", "MOD", "%", (x,y) => x%y),
+  
+  PREDECESSOR: new Operator("Predecessor", "PRE", "--", (x,y) => --x),
+  
+  SUCCESSOR: new Operator("Successor", "ADD", "++", (x,y) => ++x),
 };
 // trole !

@@ -171,8 +171,10 @@ export class FactionBase {
               "Please check your syntax!"
           );
         for (let i = 0; i < args.length; i++) {
-          if (Number(args[i]) == NaN) {
+          if (isNaN(Number(args[i]))) {
             args[i] = this.parseFunction(args[i]);
+          }else{
+            msg.replace(msg.substring())
           }
         }
         const result = functionCheck.evaluate(...args);
