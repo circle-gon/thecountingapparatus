@@ -2,6 +2,7 @@ import { FactionBase } from "./factions.js";
 import { xxCount } from "./xx.js";
 import { basicCount } from "./count.js";
 import { factorialCount } from "./factorial.js";
+import { Functions } from "../functions/functionClass.js";
 
 class LetterFaction extends FactionBase {
   constructor() {
@@ -52,7 +53,6 @@ class LetterFaction extends FactionBase {
   }
 
   LetterToNumber(a) {
-    // WHY IS THIS BEING FED 0
     let out = 0;
     for (let i = 0; i < a.length; i++) {
       out = out * 26 + parseInt(a.substr(i, 1), 36) - 9;
@@ -60,6 +60,15 @@ class LetterFaction extends FactionBase {
     return out;
   }
 
+  //Function Mechanics
+    unlockFunction(){
+    for (const unlockCheck of Object.values(Functions){
+      if (unlockCheck..isUnlocked || letterCount.baseCount === this.unlock) {
+      
+      }
+    }
+  }
+  
   //Letter Stock Mechanics
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;

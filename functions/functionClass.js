@@ -23,13 +23,7 @@ export class FunctionBase {
     this.isUnlocked = false;    
     /*this.isStunned = false;*/
   }
-  
-  unlockFunction(){
-    if (this.isUnlocked || letterCount.baseCount === this.unlock) {
-      
-    }
-  }
-  
+
   validate(){
     // tentative function validation
     return this.semantics(arguments)
