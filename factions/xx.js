@@ -31,6 +31,10 @@ class XxFaction extends FactionBase {
     return 1;
   }
   
+  parseCount(count) {
+    return Number(count);
+  }
+  
   updateMilestones() {
     const oldMilestone = this.milestones;
     while (this.count >= this.milestoneNextAt) {

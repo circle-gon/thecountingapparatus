@@ -140,56 +140,52 @@ export class FactionBase {
   }
   
   //Function Parsing / Scanning
-  parseCount(msg){
-    if(msg.isInteger()){
-      return +msg;
-    }else{
-      let count = msg;
-      for (const functionCheck of Object.values(Functions)){ 
-        if (msg.includes(functionCheck.syntax)){ 
+  parseFunction(msg){
+    let count = msg;
+    for (const functionCheck of Object.values(Functions)){ 
+      if (msg.includes(functionCheck.syntax)){ 
         if (functionCheck.isUnlocked){
-        let msgIndex = 0;
-        let tmpIndex;
-        let synCheck = true;
-        while(msg[msgIndex] !== functionCheck.syntax[0]){
-          msgIndex++;
-        }
-        let i = msgIndex;
-        for(i; functionCheck.syntax[i-msgIndex] !== "x"; i++){
-          if(msg[msgIndex+i] === functionCheck.syntax[i-msgIndex]){
-            synCheck = true;
+          let msgIndex = 0;
+          let tmpIndex;
+          let synCheck = true;
+          while(msg[msgIndex] !== functionCheck.syntax[0]){
+            msgIndex++;
+          }
+          let i = msgIndex;
+          for(i; functionCheck.syntax[i-msgIndex-1] !== "(x)"; i++){
+            if(msg[msgIndex+i] === functionCheck.syntax[i-msgIndex]){
+              synCheck = true;
+            }else{
+              synCheck = false;
+              break;
+            }
+          }
+          if(synCheck){
+            tmpIndex = msgIndex;
+            msgIndex+=i;
+            let inputVarInit = {};
+            for(msgIndex;Number.isInteger(+msg[msgIndex]);msgIndex++){
+              inputVarInit = inputVarInit.concat(msg[msgIndex]);
+            }
+            switch (msg[msgIndex]){
+              case "]":
+                break;
+              case ",":
+                break;
+              case ")":
+                break;
+              default:
+                break;
+            //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
+              }
           }else{
-            synCheck = false;
             break;
           }
-        }
-        if(synCheck){
-          tmpIndex = msgIndex;
-          msgIndex+=i;
-          let inputVarInit = {};
-          for(msgIndex;Number.isInteger(+msg[msgIndex]);msgIndex++){
-            inputVarInit = inputVarInit.concat(msg[msgIndex]);
-          }
-          switch (msg[msgIndex]){
-            case "]":
-              break;
-            case ",":
-              break;
-            case ")":
-              break;
-            default:
-              break;
-            //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
-            }
-          }else{
-          break;
-          }
-          }else{
-          break;
-          }
         }else{
-          continue;
+          break;
         }
+      }else{
+        continue;
       }
     }
   }

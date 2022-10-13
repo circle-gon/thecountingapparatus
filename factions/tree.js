@@ -29,6 +29,10 @@ class TreeFaction extends FactionBase {
     }
   }
 
+  parseCount(count) {
+    return Number(count);
+  }
+  
   get milestoneRewards() {
     return {
       one: basicCount.spireEffect * this.milestones
