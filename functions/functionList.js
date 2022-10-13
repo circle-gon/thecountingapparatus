@@ -35,6 +35,7 @@ class Integral extends FunctionBase {
       }
       return output*h/3;
       //Composite Simpson's Rule
+      //May improve later
     });
   }
 }
