@@ -51,7 +51,7 @@ export class FactionBase {
 
   parseCount(count) {} //XX, Ones, Factorial
 
-  get nextCount() {} //???
+  get nextCount() {}
 
   spireBoost() {} //All Factions
 
