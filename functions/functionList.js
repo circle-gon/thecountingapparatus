@@ -133,6 +133,7 @@ const FUNCTIONS = {
     for (let i = 1; i <= x; i++) {
       output += gamma(i + 1) * (-1) ** (x - i);
     }
+    return output
   }),
 
   AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a, b, c) =>
@@ -166,7 +167,7 @@ const FUNCTIONS = {
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
-  TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => x--, 2),
+  TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
   
