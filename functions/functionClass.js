@@ -1,5 +1,8 @@
 import {letterCount} from '../factions/letter.js';
 
+//Function Objects
+export const Functions = {}
+
 export class FunctionBase {
   constructor (name, unlock, syntax, evaluate){
     this.name = name;            // Name of function
@@ -21,7 +24,7 @@ export class FunctionBase {
     /*this.isStunned = false;*/
   }
   
-  unlock(){
+  unlockFunction(){
     if (this.isUnlocked || letterCount.baseCount === this.unlock) {
       
     }

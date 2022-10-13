@@ -52,6 +52,8 @@ export class FactionBase {
   parseCount(count) {} //XX, Ones, Factorial
 
   get nextCount() {}
+  
+  doCount(count) {}
 
   spireBoost() {} //All Factions
 
@@ -80,18 +82,6 @@ export class FactionBase {
     return (
       this.isValidCount(count) && this.nextCount === this.parseCount(count)
     );
-  }
-  
-  doCount(count) {
-    let msg = count;
-    for (const syntaxes in Object.values(Functions)){
-      
-    }
-    if (this.isCorrectCount(msg)) {
-      this.count = this.nextCount;
-      this.updateMilestones();
-      this.updateGoals();
-    }
   }
 
   get milestoneNextAt() {

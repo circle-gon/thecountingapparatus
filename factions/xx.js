@@ -1,4 +1,5 @@
 import { FactionBase } from "./factions.js";
+import { Functions } from "../functions/functionClass.js";
 
 class XxFaction extends FactionBase {
   constructor() {
@@ -20,6 +21,18 @@ class XxFaction extends FactionBase {
     return this.count + 1;
   }
 
+  doCount(count) {
+    let msg = count;
+    for (const syntaxes in Object.values(Functions)){
+      
+    }
+    if (this.isCorrectCount(msg)) {
+      this.count = this.nextCount;
+      this.updateMilestones();
+      this.updateGoals();
+    }
+  }
+  
   get milestoneReduction(){
     return 1;
   }
