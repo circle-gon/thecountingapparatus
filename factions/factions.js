@@ -147,7 +147,7 @@ export class FactionBase {
   //Function Parsing / Scanning
   static parseFunction(msg) {
     msg = msg.replaceAll(" ", "");
-    let value = 0
+    let value = 0;
     for (const functionCheck of Object.values(Functions)) {
       const name = functionCheck.syntax.substring(
         0,
@@ -160,7 +160,7 @@ export class FactionBase {
         const indexOfEnd = functionCheck.syntax.indexOf(")");
         const start = msg.indexOf(functionCheck.syntax[0]) - 1;
         const end = start + name.length + 2;
-        let args = msg.substring(end, indexOfEnd).split(",");
+        const args = msg.substring(end, indexOfEnd).split(",");
         const correctArgs = functionCheck.syntax
           .substring(name + 1, indexOfEnd)
           .split(",");
@@ -170,11 +170,17 @@ export class FactionBase {
               `arguments passed, but ${correctArgs.length} arguments required.` +
               "Please check your syntax!"
           );
-        for (let i = 0; i < args.length; i++) {
-          if (isNaN(Number(args[i]))) {
-            args[i] = this.parseFunction(args[i]);
-          }else{
-            msg = msg.replace(msg.substring(start,msg.indexOf(functionCheck.syntax[indexOfEnd])),functionCheck.evaluate(...args));
+        for (const [i, arg] of args.entries()) {
+          if (isNaN(Number(arg))) {
+            args[i] = this.parseFunction(arg);
+          } else {
+            msg = msg.replace(
+              msg.substring(
+                start,
+                msg.indexOf(functionCheck.syntax[indexOfEnd])
+              ),
+              functionCheck.evaluate(...args)
+            );
           }
         }
       } else
