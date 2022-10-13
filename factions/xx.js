@@ -24,7 +24,10 @@ class XxFaction extends FactionBase {
   doCount(count) {
     let msg = count;
     for (const syntaxes in Object.values(Functions)){
-      
+      if (msg.includes(syntaxes.syntax)){
+        if (syntaxes.isUnlocked){
+        }
+      }
     }
     if (this.isCorrectCount(msg)) {
       this.count = this.nextCount;
