@@ -145,7 +145,7 @@ export class FactionBase {
 
   //Function Parsing / Scanning
   static parseFunction(msg) {
-    msg = msg.replaceAll(" ", "") // should be fine? Reasonable, unless we are going to require "1 = " 
+    msg = msg.replaceAll(" ", "");
     for (const functionCheck of Object.values(Functions)) {
       const name = functionCheck.syntax.substring(
         0,
@@ -155,23 +155,22 @@ export class FactionBase {
 
       //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
-        let start = msg.indexOf(functionCheck.syntax[0]) - 1; //You already do that here
-        let end = start + name.length + 2;
-        for (let i = start; i <= end; i++) {
-          //Now we still have the issue of pulling the numbers from msg and porting them to a new string
-        }
-        switch (msg[end]) {
-          case "]":
-            break;
-          case ",":
-            break;
-          case ")":
-            break;
-          default:
-            break;
-          //These will either be filled in when I get beck from school or when someone else figures out what the heck this method does. Whichever comes first.
-        }
-      }
+        const start = msg.indexOf(functionCheck.syntax[0]) - 1; 
+        const end = start + name.length + 2;
+        let args = msg
+          .substring(end, functionCheck.syntax.indexOf(")"))
+          .split(",");
+        const correctArgs = functionCheck.syntax
+          .substring(name + 1, functionCheck.syntax.indexOf(")"))
+          .split(",");
+        if (args.length !== correctArgs.length)
+          throw new TypeError(
+            `Invalid number of arguments passed to ${name}: ${args.length}` +
+            `arguments passed, but ${correctArgs.length} arguments required.` + 
+            "Please check your syntax!"
+          );
+        const result = functionCheck.evaluate(...args);
+      } else throw new TypeError(`You used function ${name}, but it is not unlocked!`)
     }
   }
 }

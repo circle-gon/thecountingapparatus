@@ -49,8 +49,8 @@ class QIntegral extends FunctionBase {
       function f(x) {
         if (b === Infinity) {
           //new integrand(x) = old integrand(1 / x - 1) / x ** 2, a=0, b=1
-          //new f = new integrand((x + 1) / 2) / 2
-          return integrand(2 / ((x+1)/2) - 1) / 2
+          //new f = new integrand((x + 1) / 2) / 2 = old integrand(1 / ((x+1)/2) - 1) ((x+1)/2)**2
+          integrand = (x) => integrand(1/x - 1) / x**2; a=0; b=1
         }
         return (integrand((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
       }
