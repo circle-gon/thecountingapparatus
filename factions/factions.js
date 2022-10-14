@@ -150,14 +150,12 @@ export class FactionBase {
       let op = msg.indexOf(opCheck.syntax)
       
     } 
-    // unaries always go first
-    // I think we should seperate unary and binary operators...
-    //...fuck did we do that in parseFunction?...
-  } // uh oh :trol:
+  }
   static testParseFunction(msg) {
     const parens = []
-    for (const char of msg) {
-      
+    for (let loc=0;loc<msg.length;loc++) {
+      const char = msg[loc]
+      if (char === "(") parens.push(loc)
     }
   }
   static parseFunction(msg, faction) {
@@ -171,11 +169,12 @@ export class FactionBase {
 
       //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
-        const indexOfEnd = functionCheck.syntax.indexOf(")");
         const start = msg.indexOf(functionCheck.syntax[0]) - 1; //hmm... So
-        // A(A(1,1),1)
-        // A(x,y)
-        // not same length, but stlil valid
+        let indexOfEnd = start;
+        let parenDepth = 0;
+        do{
+          
+        }while(parenDepth !== 0);
         const end = start + name.length + 2;
         const args = msg.substring(end, indexOfEnd).split(",");
         const correctArgs = functionCheck.syntax
