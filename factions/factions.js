@@ -169,8 +169,8 @@ export class FactionBase {
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
           const parenCheck = msg.substring(start);
-          let indexOfEnd = parenCheck + name.length;
-          let parenDepth = 0;
+          let indexOfEnd = start + name.length; // replaced parenCheck with start
+          let parenDepth = 0; 
           const args = [];
           let argsText = "";
           // also pushing every single time....
