@@ -25,7 +25,7 @@ class SingleNumSeq extends FunctionBase {
   }
 }
 
-export class Operator extends FunctionBase{
+class Operator extends FunctionBase{
   constructor (name, unlock, symbol, evaluate){
     super(name, unlock, symbol, evaluate);
   }
