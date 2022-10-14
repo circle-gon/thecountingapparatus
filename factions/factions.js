@@ -155,7 +155,7 @@ export class FactionBase {
     }
   } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
   static parseFunction(msg, faction) {
-    msg = msg.replaceAll(" ", "");/
+    msg = msg.replaceAll(" ", "");//
     for (const functionCheck of Object.values(Functions).filter(
       (i) => !(i instanceof Operator)
     )) {
@@ -163,8 +163,8 @@ export class FactionBase {
       const name = functionCheck.syntax.substring(
         0,
         functionCheck.syntax.indexOf("(")
-      );
-      while (!msg.includes(name)) {
+      ); // pretty sure no ! is supposed to be here
+      while (msg.includes(name)) {
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
           const parenCheck = msg.substring(start);
