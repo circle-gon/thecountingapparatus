@@ -181,7 +181,10 @@ export class FactionBase {
           const args = [];
           // arguments to the function
           let argsText = "";
-          // self explanatory
+          // text of what the argument is
+          // so for abc(1,2,3), it would take on 3 values: 1, 2, and 3
+          // and for abc(5*5,A(5,5),9999), it would have also 3 values: 5*5, A(5,5), and 9999
+          // note whitespace is stripped
           do {
             if (indexOfEnd > msg.length - 1)
               // we're past the end, the user inputted an invalid string
@@ -206,7 +209,7 @@ export class FactionBase {
             indexOfEnd++;
           } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
-            .substring(startOfArgs + 1, indexOfEnd)
+            .substring(functionCheck.syntax.indexOf("(") + 1, functionCheck.syntax.indexOf(")"))
             // this splits from the start of the inside of the function to 
             .split(",");
           if (args.length !== correctArgs.length)
@@ -226,7 +229,7 @@ export class FactionBase {
             msg = msg.replace(
               msg.substring(
                 start,
-                msg.indexOf(functionCheck.syntax[indexOfEnd])
+                msg.lastIndexOf(")") + 1
               ),
               functionCheck.evaluate(...args)
             );
