@@ -3,13 +3,18 @@
   grid-template-columns: 50% 50%;
 }
 .redText {
-  color:red;
+  color: red;
 }
 .greenText {
-  color:green;
+  color: green;
 }
-.blueText {
-  color:green;
+/* for frozen counts */
+.freezeText {
+  color: blue;
+}
+/* for counts that stun */
+.stunText {
+  color: yellow;
 }
 .center {
   text-align: center;
