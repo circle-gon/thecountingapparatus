@@ -50,10 +50,10 @@ export function integral(integrand, a, b) {
     if (b === Infinity) {
       
     } else {
-    
+      outf = x => (integrand((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
     }
   }
-  outf = x => (outf((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
+  outf = x => (integrand((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
   
   var output = 0;
   for (var i = 0; i < points.length; i++) {
