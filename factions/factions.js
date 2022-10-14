@@ -168,23 +168,27 @@ export class FactionBase {
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
           const parenCheck = msg.substring(start);
-          let indexOfEnd = start + parenCheck.indexOf("(");
+          let indexOfEnd = parenCheck + name.length
           let parenDepth = 0;
           const args = [];
           let argsText = "";
-          // can anyone explain what i is for?
           // also pushing every single time....
           // also I can't access discord so type it in here
           do {
-            if (indexOfEnd > )
-            if (indexOfEnd === "(") parenDepth++;
-            if (indexOfEnd === ")") parenDepth--;
+            if (indexOfEnd > msg.length - 1)
+              throw new ParserError(`You are missing ${parenDepth} closing parentheses. Please check your syntax!`);
+            const text = msg[indexOfEnd];
+            if (text === "(") parenDepth++;
+            if (text === ")") parenDepth--;
             if (parenDepth === 1) {
               if (indexOfEnd === ",") {
                 args.push(argsText);
                 argsText = "";
-              } else argsText += msg[indexOfEnd++];
+              } else {
+                argsText += text;
+              }
             }
+            indexOfEnd++;
           } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
             .substring(name + 1, indexOfEnd)
