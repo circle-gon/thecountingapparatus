@@ -39,24 +39,23 @@ export function integral(integrand, a, b) {
     [0.1069393259953184, 0.9041172563704749],
     [0.0471753363865118, -0.9815606342467192],
     [0.0471753363865118, 0.9815606342467192]];
-  const output = 0;
-  function f(x) {
-    var output = x => 0;
-    if (a === -Infinity) {
-      output = x => output(x) + integrand(-1/x - 1) / (x**2);
-      a=0; b=1;
-    }
-    if (b === Infinity) {
-      output = x => output(x) + integrand(1/x - 1) / (x**2);
-      a=0; b=1;
-    }
-    if (a !== -Infinity && b !== Infinity) {
-      output = x => integrand(x)
-    }
-    return (output((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
+  var outf = x => 0;
+  if (a === -Infinity) {
+    outf = x => outf(x) + integrand(-1/x - 1) / (x**2);
+    a=0; b=1;
   }
+  if (b === Infinity) {
+    outf = x => outf(x) + integrand(1/x - 1) / (x**2);
+    a=0; b=1;
+  }
+  if (a !== -Infinity && b !== Infinity) {
+    outf = x => integrand(x)
+  }
+  outf = x => (outf((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
+  
+  var output = 0;
   for (var i = 0; i < points.length; i++) {
-    output += points[i][0] * f(points[i][1]);
+    output += points[i][0] * outf(points[i][1]);
   }
   return output;
   //12 point gaussian quadrature
