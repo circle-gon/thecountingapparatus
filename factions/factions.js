@@ -161,48 +161,53 @@ export class FactionBase {
   static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
     for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
+      
+      //synCheck
       const name = functionCheck.syntax.substring(
         0,
         functionCheck.syntax.indexOf("(")
       );
-      if (!msg.includes(name)) continue;
-
-      //Unlock / Syntax Check
-      if (functionCheck.isUnlocked) {
-        const start = msg.indexOf(functionCheck.syntax[0]) - 1; //hmm... So
-        let indexOfEnd = start;
-        let parenDepth = 0;
-        do{
-          
-        }while(parenDepth !== 0);
-        const end = start + name.length + 2;
-        const args = msg.substring(end, indexOfEnd).split(",");
-        const correctArgs = functionCheck.syntax
-          .substring(name + 1, indexOfEnd)
-          .split(",");
-        if (args.length !== correctArgs.length)
+      while (!msg.includes(name)){
+        if (functionCheck.isUnlocked) {
+          const start = msg.indexOf(functionCheck.syntax[0]);
+          let indexOfEnd = start;
+          let parenDepth = 0;
+          let subMsg = "";
+          do{
+            if(indexOfEnd == start) parenDepth++;
+            subMsg = subMsg.concat(msg[start++]);
+          }while(parenDepth !== 0);
+          const end = start + name.length + 2;
+          const args = msg.substring(end, indexOfEnd).split(",");
+          const correctArgs = functionCheck.syntax
+            .substring(name + 1, indexOfEnd)
+            .split(",");
+          if (args.length !== correctArgs.length)
+            throw new TypeError(
+              `Invalid number of arguments passed to ${name}: ${args.length}` +
+                `arguments passed, but ${correctArgs.length} arguments required.` +
+                "Please check your syntax!"
+            );
+          for (const [i, arg] of args.entries()) {
+            if (isNaN(Number(arg))) {
+              arg = this.parseFunction(arg, faction);
+              arg = this.parseOperator(arg, faction);
+            }
+            msg = msg.replace(
+              msg.substring(
+                start,
+                msg.indexOf(functionCheck.syntax[indexOfEnd])
+              ),
+              functionCheck.evaluate(...args)
+            );
+          } 
+        }else{
           throw new TypeError(
-            `Invalid number of arguments passed to ${name}: ${args.length}` +
-              `arguments passed, but ${correctArgs.length} arguments required.` +
-              "Please check your syntax!"
+            `You used function ${name}, but it is not unlocked!`
           );
-        for (const [i, arg] of args.entries()) {
-          if (isNaN(Number(arg))) {
-            arg = this.parseFunction(arg, faction);
-            arg = this.parseOperator(arg, faction);
-          }
-          msg = msg.replace(
-            msg.substring(
-              start,
-              msg.indexOf(functionCheck.syntax[indexOfEnd])
-            ),
-            functionCheck.evaluate(...args)
-          );
-        } 
-      } else
-        throw new TypeError(
-          `You used function ${name}, but it is not unlocked!`
-        );
+          break;
+        }
+      }
     }
   }
 }
