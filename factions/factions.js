@@ -161,38 +161,53 @@ export class FactionBase {
       (i) => !(i instanceof Operator)
     )) {
       //synCheck
+      const startOfArgs = functionCheck.syntax.indexOf("(")
+      // first point where the ( is seen
+      // abc(x,y,z) yields 3 
       const name = functionCheck.syntax.substring(
         0,
-        functionCheck.syntax.indexOf("(")
-      ); // pretty sure no ! is supposed to be here
+        startOfArgs
+      ); // name of function
+      // yields abc
       while (msg.includes(name)) {
         if (functionCheck.isUnlocked) {
-          const start = msg.indexOf(functionCheck.syntax[0]);
-          const parenCheck = msg.substring(start);
-          let indexOfEnd = start + name.length; // replaced parenCheck with start
+          const start = msg.indexOf(functionCheck.syntax[0]); // start of where we see the syntax
+          // so abc(1,2,3) (with function defined as abc(x,y,z)) yields 0
+          let indexOfEnd = start + name.length;
+          // end of name
+          // abc(1,2,3) yields 3
           let parenDepth = 0; 
+          // how far we are in a function
           const args = [];
+          // arguments to the function
           let argsText = "";
-          // also pushing every single time....
-          // also I can't access discord so type it in here
+          // self explanatory
           do {
             if (indexOfEnd > msg.length - 1)
+              // we're past the end, the user inputted an invalid string
               throw new ParserError(
                 `You are missing ${parenDepth} closing parentheses. Please check your syntax!`
               );
             const text = msg[indexOfEnd];
+            // text at that point
             if (text === "(") parenDepth++;
+            // increase parenDepth because we see a (
             if (text === ")") parenDepth--;
+            // same as above but for decreasing
             if (parenDepth === 1 && text === ",") {
+              // this is an arg to the original
               args.push(argsText);
               argsText = "";
             } else {
+              // increment the text
               argsText += text;
             }
+            // increment string
             indexOfEnd++;
           } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
-            .substring(name + 1, indexOfEnd)
+            .substring(startOfArgs + 1, indexOfEnd)
+            // this splits from the start of the inside of the function to 
             .split(",");
           if (args.length !== correctArgs.length)
             // do it here to prevent people killing the program by adding 10000000 arguments
