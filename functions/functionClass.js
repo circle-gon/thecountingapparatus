@@ -39,17 +39,19 @@ export function integral(integrand, a, b) {
     [0.1069393259953184, 0.9041172563704749],
     [0.0471753363865118, -0.9815606342467192],
     [0.0471753363865118, 0.9815606342467192]];
-  var outf = x => 0;
+  var outf;
   if (a === -Infinity) {
-    outf = x => outf(x) + integrand(-1/x - 1) / (x**2);
-    a=0; b=1;
-  }
-  if (b === Infinity) {
-    outf = x => outf(x) + integrand(1/x - 1) / (x**2);
-    a=0; b=1;
-  }
-  if (a !== -Infinity && b !== Infinity) {
-    outf = x => integrand(x)
+    if (b === Infinity) {
+      
+    } else {
+    
+    }
+  } else {
+    if (b === Infinity) {
+      
+    } else {
+    
+    }
   }
   outf = x => (outf((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
   
@@ -58,5 +60,9 @@ export function integral(integrand, a, b) {
     output += points[i][0] * outf(points[i][1]);
   }
   return output;
+  
+  //outf = x => outf(x) + integrand(-1/x - 1) / (x**2);
+  //outf = x => outf(x) + integrand(1/x - 1) / (x**2);
+  //outf = x => integrand(x)
   //12 point gaussian quadrature
 }
