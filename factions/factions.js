@@ -149,9 +149,8 @@ export class FactionBase {
     
   }
   
-  static parseFunction(msg) {
+  static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
-    let value = 0;
     for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
       const name = functionCheck.syntax.substring(
         0,
@@ -188,7 +187,7 @@ export class FactionBase {
             ),
             functionCheck.evaluate(...args)
           );
-        }
+        } 
       } else
         throw new TypeError(
           `You used function ${name}, but it is not unlocked!`
