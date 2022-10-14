@@ -150,7 +150,7 @@ export class FactionBase {
       let op = msg.indexOf(opCheck.syntax)
       
     } 
-  }
+  } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
   static testParseFunction(msg) {
     const parens = []
     for (let loc=0;loc<msg.length;loc++) {
@@ -170,20 +170,18 @@ export class FactionBase {
       while (!msg.includes(name)){
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
-          let indexOfEnd = start;
+          const parenCheck = msg.substring(start);
+          let indexOfEnd = start+parenCheck.indexOf("(");
           let parenDepth = 0;
-          const
-          let subMsg = [];
+          let args = [];
           let i = 0;
           do{
-            if(indexOfEnd == start) parenDepth++;
             if(indexOfEnd == "(") parenDepth++;
             if(indexOfEnd == ")") parenDepth--;
             if(indexOfEnd == "," && parenDepth == 1) i++;
-            subMsg[i] = subMsg[i].concat(msg[indexOfEnd++]);
+            args[i] = args[i].concat(msg[indexOfEnd++]);
           }while(parenDepth !== 0);
-          const end = start + name.length + 2;
-          const args = msg.substring(end, indexOfEnd).split(",");
+          const end = --indexOfEnd;
           const correctArgs = functionCheck.syntax
             .substring(name + 1, indexOfEnd)
             .split(",");
