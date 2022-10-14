@@ -46,11 +46,19 @@ export function integral(integrand, a, b) {
   ];
   const output = 0;
   function f(x) {
+    var output = x => 0;
     if (a === -Infinity) {
+      output = x => output(x) + integrand(-1/x - 1) / (x**2);
+    }
+    if (b === Infinity) {
+        
+      } else {
+        
+      }
+      output = (x) => (integrand(1/x - 1) + integrand(-1/x - 1)) / (x**2);
       integrand = (x) => -integrand(x);
       a = b;
       b = Infinity;
-    }
     if (b === Infinity) {
       integrand = (x) => integrand(1 / x - 1) / x ** 2;
       a = 0;
