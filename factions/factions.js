@@ -235,7 +235,7 @@ class FactionDisplay extends HTMLElement {
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
-      let treeGridSize = factions.Tree.grid;
+      const treeGridSize = factions.Tree.grid;
       this.c.style.display = this.faction.count === 0 ? "none" : "block";
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;

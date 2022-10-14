@@ -145,7 +145,6 @@ class TextChannelDisp extends HTMLElement {
       if (e.key === "Enter") this.sendText();
     };
     this.input.style.width = "calc(100% -  85px)";
-    this.input.style.display = "inline";
 
     this.textInstance.updateText = () => this.updateText();
     this.textInstance.on((d) => {

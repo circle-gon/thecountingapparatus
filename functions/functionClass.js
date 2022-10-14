@@ -39,7 +39,7 @@ export function integral(integrand, a, b) {
     [0.1069393259953184, 0.9041172563704749],
     [0.0471753363865118, -0.9815606342467192],
     [0.0471753363865118, 0.9815606342467192]];
-  var outf;
+  let outf;
   if (a === -Infinity) {
     if (b === Infinity) {
       
@@ -55,8 +55,8 @@ export function integral(integrand, a, b) {
   }
   outf = x => (integrand((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
   
-  var output = 0;
-  for (var i = 0; i < points.length; i++) {
+  let output = 0;
+  for (let i = 0; i < points.length; i++) {
     output += points[i][0] * outf(points[i][1]);
   }
   return output;

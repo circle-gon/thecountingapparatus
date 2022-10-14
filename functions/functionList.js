@@ -34,7 +34,7 @@ class Operator extends FunctionBase{
 class QIntegral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {
-      var points = [
+      const points = [
         [0.2025782419255613, 0.0],
         [0.1984314853271116, -0.2011940939974345],
         [0.1984314853271116, 0.2011940939974345],
@@ -51,7 +51,7 @@ class QIntegral extends FunctionBase {
         [0.0307532419961173, -0.9879925180204854],
         [0.0307532419961173, 0.9879925180204854],
       ];
-      var output = 0;
+      let output = 0;
       function f(x) {
         if (b === Infinity) {
           //new integrand(x) = old integrand(1 / x - 1) / x ** 2, a=0, b=1
@@ -60,7 +60,7 @@ class QIntegral extends FunctionBase {
         }
         return (integrand((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
       }
-      for (var i = 0; i < points.length; i++) {
+      for (let i = 0; i < points.length; i++) {
         output += points[i][0] * f(points[i][1]);
       }
       return output;
