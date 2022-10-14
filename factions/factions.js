@@ -171,16 +171,20 @@ export class FactionBase {
           let indexOfEnd = start + parenCheck.indexOf("(");
           let parenDepth = 0;
           const args = [];
-          let i = 0;
-          let argsText = ""
+          let argsText = "";
           // can anyone explain what i is for?
           // also pushing every single time....
           // also I can't access discord so type it in here
           do {
+            if (indexOfEnd > )
             if (indexOfEnd === "(") parenDepth++;
             if (indexOfEnd === ")") parenDepth--;
-            if (indexOfEnd === "," && parenDepth === 1) i++;
-            argsText += msg[indexOfEnd++]
+            if (parenDepth === 1) {
+              if (indexOfEnd === ",") {
+                args.push(argsText);
+                argsText = "";
+              } else argsText += msg[indexOfEnd++];
+            }
           } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
             .substring(name + 1, indexOfEnd)
