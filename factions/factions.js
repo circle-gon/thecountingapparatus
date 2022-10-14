@@ -235,6 +235,7 @@ class FactionDisplay extends HTMLElement {
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
+      let treeGridSize = factions.Tree.grid;
       this.c.style.display = this.faction.count === 0 ? "none" : "block";
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;
@@ -242,13 +243,14 @@ class FactionDisplay extends HTMLElement {
       ctx.clearRect(0, 0, this.c.width, this.c.height);
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, this.c.width, this.c.height);
-      ctx.fillStyle = randomColor(); //create randomColor function
-      for (let x = 0; x < factions.Tree.count; x++) {
+      // ctx.fillStyle = randomColor(); //create randomColor function
+      for (let x = 0; x < factions.Tree.count; x++) { // random colour per cell
+        ctx.fillStyle = randomColor();
         ctx.fillRect(
-          0,
-          0,
-          this.c.width,
-          Math.floor(factions.Tree.count / factions.Tree.grid) * 10
+          (x % treeGridSize) * 10,
+          Math.floor(x / treeGridSize) * 10,
+          10,
+          10
         );
       }
       // ctx.fillRect(
