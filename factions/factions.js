@@ -146,11 +146,14 @@ export class FactionBase {
   
   //Equation Parsing / Scanning
   static parseOperator(msg, faction) {
-    for (const functionCheck of Object.values((Operators))){
+    for (const opCheck of Object.values((Operators))){ // 3+3+3 
+      let op = msg.indexOf(opCheck.syntax)
       
-    }
-  } // okay this is where the order of operations comes into play, right? We'll worry about OOP after we give this functionality
-  // 
+    } 
+    // unaries always go first
+    // I think we should seperate unary and binary operators...
+    //...fuck did we do that in parseFunction?...
+  } // uh oh :trol:
   static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
     for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
@@ -196,7 +199,6 @@ export class FactionBase {
           `You used function ${name}, but it is not unlocked!`
         );
     }
-    //That can be placed right here
   }
 }
 
