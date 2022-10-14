@@ -145,10 +145,12 @@ export class FactionBase {
   }
   
   //Equation Parsing / Scanning
-  static isPureMathEquation(msg) {
-    
-  }
-  
+  static parseOperator(msg, faction) {
+    for (const functionCheck of Object.values((Operators))){
+      
+    }
+  } // okay this is where the order of operations comes into play, right? We'll worry about OOP after we give this functionality
+  // 
   static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
     for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
@@ -161,8 +163,11 @@ export class FactionBase {
       //Unlock / Syntax Check
       if (functionCheck.isUnlocked) {
         const indexOfEnd = functionCheck.syntax.indexOf(")");
-        const start = msg.indexOf(functionCheck.syntax[0]) - 1;
+        const start = msg.indexOf(functionCheck.syntax[0]) - 1; //hmm... So
         const end = start + name.length + 2;
+        // A(A(1,1),1)
+        // A(x,y)
+        // not same length, but stlil valid
         const args = msg.substring(end, indexOfEnd).split(",");
         const correctArgs = functionCheck.syntax
           .substring(name + 1, indexOfEnd)
@@ -175,10 +180,8 @@ export class FactionBase {
           );
         for (const [i, arg] of args.entries()) {
           if (isNaN(Number(arg))) {
-            args[i] = this.parseFunction(arg);
-            for (const functionCheck of Object.values((Operators))){
-              
-            }
+            arg = this.parseFunction(arg, faction);
+            arg = this.parseOperator(arg, faction);
           }
           msg = msg.replace(
             msg.substring(
