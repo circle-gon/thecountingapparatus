@@ -3,11 +3,14 @@ import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import { Functions, Operators } from "../functions/functionClass.js";
 
-
 //Factions Objects
 export const factions = {};
 
 //Faction superclass
+
+// base class to differernate standard js errors vs compilation errors
+class ParserError extends Error {}
+
 export class FactionBase {
   constructor(name, msReq) {
     //Constant data
@@ -143,58 +146,58 @@ export class FactionBase {
     }
     return average / counter;
   }
-  
+
   //Equation Parsing / Scanning
   static parseOperator(msg, faction) {
-    for (const opCheck of Object.values((Operators))){ // 3+3+3 
-      let op = msg.indexOf(opCheck.syntax)
-      
-    } 
-  } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
-  static testParseFunction(msg) {
-    const parens = []
-    for (let loc=0;loc<msg.length;loc++) {
-      const char = msg[loc]
-      if (char === "(") parens.push(loc)
+    for (const opCheck of Object.values(Operators)) {
+      // 3+3+3
+      let op = msg.indexOf(opCheck.syntax);
     }
-  }
+  } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
   static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
-    for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
-      
+    for (const functionCheck of Object.values(Functions).filter(
+      (i) => !(i instanceof Operators)
+    )) {
       //synCheck
       const name = functionCheck.syntax.substring(
         0,
         functionCheck.syntax.indexOf("(")
       );
-      while (!msg.includes(name)){
+      while (!msg.includes(name)) {
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
           const parenCheck = msg.substring(start);
-          let indexOfEnd = start+parenCheck.indexOf("(");
+          let indexOfEnd = start + parenCheck.indexOf("(");
           let parenDepth = 0;
-          let args = [];
+          const args = [];
           let i = 0;
-          do{
-            if(indexOfEnd == "(") parenDepth++;
-            if(indexOfEnd == ")") parenDepth--;
-            if(indexOfEnd == "," && parenDepth == 1) i++;
-            args[i] = args[i].concat(msg[indexOfEnd++]);
-          }while(parenDepth !== 0);
-          const end = --indexOfEnd;
+          let argsText = ""
+          // can anyone explain what i is for?
+          // also pushing every single time....
+          // also I can't access discord so type it in here
+          do {
+            if (indexOfEnd === "(") parenDepth++;
+            if (indexOfEnd === ")") parenDepth--;
+            if (indexOfEnd === "," && parenDepth === 1) i++;
+            argsText += msg[indexOfEnd++]
+          } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
             .substring(name + 1, indexOfEnd)
             .split(",");
           if (args.length !== correctArgs.length)
-            throw new TypeError(
+            // do it here to prevent people killing the program by adding 10000000 arguments
+            throw new ParserError(
               `Invalid number of arguments passed to ${name}: ${args.length}` +
                 `arguments passed, but ${correctArgs.length} arguments required.` +
                 "Please check your syntax!"
             );
           for (const [i, arg] of args.entries()) {
             if (isNaN(Number(arg))) {
-              arg = this.parseFunction(arg, faction);
-              arg = this.parseOperator(arg, faction);
+              args[i] = this.parseOperator(
+                this.parseFunction(arg, faction),
+                faction
+              );
             }
             msg = msg.replace(
               msg.substring(
@@ -203,12 +206,12 @@ export class FactionBase {
               ),
               functionCheck.evaluate(...args)
             );
-          } 
-        }else{
-          throw new TypeError(
+          }
+        } else {
+          throw new ParserError(
             `You used function ${name}, but it is not unlocked!`
           );
-          break;
+          // throw automatically stops stuff
         }
       }
     }
