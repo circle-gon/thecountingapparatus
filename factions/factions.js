@@ -1,7 +1,7 @@
 //Imports
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import { Functions, Operators, Operator} from "../functions/functionClass.js";
+import { Functions, Operators, Operator } from "../functions/functionClass.js";
 
 //Factions Objects
 export const factions = {};
@@ -155,7 +155,7 @@ export class FactionBase {
     }
   } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
   static parseFunction(msg, faction) {
-    msg = msg.replaceAll(" ", "");//
+    msg = msg.replaceAll(" ", ""); //
     for (const functionCheck of Object.values(Functions).filter(
       (i) => !(i instanceof Operator)
     )) {
@@ -168,7 +168,7 @@ export class FactionBase {
         if (functionCheck.isUnlocked) {
           const start = msg.indexOf(functionCheck.syntax[0]);
           const parenCheck = msg.substring(start);
-          let indexOfEnd = parenCheck + name.length
+          let indexOfEnd = parenCheck + name.length;
           let parenDepth = 0;
           const args = [];
           let argsText = "";
@@ -176,17 +176,17 @@ export class FactionBase {
           // also I can't access discord so type it in here
           do {
             if (indexOfEnd > msg.length - 1)
-              throw new ParserError(`You are missing ${parenDepth} closing parentheses. Please check your syntax!`);
+              throw new ParserError(
+                `You are missing ${parenDepth} closing parentheses. Please check your syntax!`
+              );
             const text = msg[indexOfEnd];
             if (text === "(") parenDepth++;
             if (text === ")") parenDepth--;
-            if (parenDepth === 1) {
-              if (text === ",") {
-                args.push(argsText);
-                argsText = "";
-              } else {
-                argsText += text;
-              }
+            if (parenDepth === 1 && text === ",") {
+              args.push(argsText);
+              argsText = "";
+            } else {
+              argsText += text;
             }
             indexOfEnd++;
           } while (parenDepth > 0);
