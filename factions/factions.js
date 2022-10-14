@@ -181,7 +181,7 @@ export class FactionBase {
             if (text === "(") parenDepth++;
             if (text === ")") parenDepth--;
             if (parenDepth === 1) {
-              if (indexOfEnd === ",") {
+              if (text === ",") {
                 args.push(argsText);
                 argsText = "";
               } else {
