@@ -167,10 +167,10 @@ export class FactionBase {
       if (functionCheck.isUnlocked) {
         const indexOfEnd = functionCheck.syntax.indexOf(")");
         const start = msg.indexOf(functionCheck.syntax[0]) - 1; //hmm... So
-        const end = start + name.length + 2;
         // A(A(1,1),1)
         // A(x,y)
         // not same length, but stlil valid
+        const end = start + name.length + 2;
         const args = msg.substring(end, indexOfEnd).split(",");
         const correctArgs = functionCheck.syntax
           .substring(name + 1, indexOfEnd)
