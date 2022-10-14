@@ -154,6 +154,12 @@ export class FactionBase {
     // I think we should seperate unary and binary operators...
     //...fuck did we do that in parseFunction?...
   } // uh oh :trol:
+  static testParseFunction(msg) {
+    const parens = []
+    for (const char of msg) {
+      
+    }
+  }
   static parseFunction(msg, faction) {
     msg = msg.replaceAll(" ", "");
     for (const functionCheck of Object.values(Functions).filter(i=>!(Operators))) {
