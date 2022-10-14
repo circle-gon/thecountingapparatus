@@ -172,10 +172,15 @@ export class FactionBase {
           const start = msg.indexOf(functionCheck.syntax[0]);
           let indexOfEnd = start;
           let parenDepth = 0;
-          let subMsg = "";
+          const
+          let subMsg = [];
+          let i = 0;
           do{
             if(indexOfEnd == start) parenDepth++;
-            subMsg = subMsg.concat(msg[start++]);
+            if(indexOfEnd == "(") parenDepth++;
+            if(indexOfEnd == ")") parenDepth--;
+            if(indexOfEnd == "," && parenDepth == 1) i++;
+            subMsg[i] = subMsg[i].concat(msg[indexOfEnd++]);
           }while(parenDepth !== 0);
           const end = start + name.length + 2;
           const args = msg.substring(end, indexOfEnd).split(",");
