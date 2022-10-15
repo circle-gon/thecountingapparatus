@@ -1,5 +1,5 @@
 //Imports
-import { ce, TextChannel } from "../text/channel.js";
+import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import {
   Functions,
