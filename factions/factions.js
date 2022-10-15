@@ -229,7 +229,7 @@ export class FactionBase {
             msg = msg.replace(
               msg.substring(
                 start,
-                msg.lastIndexOf(")") + 1
+                msg.indexOf(")", indexOfEnd)
               ),
               functionCheck.evaluate(...args)
             );
