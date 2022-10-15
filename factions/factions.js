@@ -1,7 +1,10 @@
 //Imports
 import { ce, TextChannel } from "../utils/text.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import { Functions, Operators/*, Operator*/ } from "../functions/functionClass.js";
+import {
+  Functions,
+  Operators /*, Operator*/,
+} from "../functions/functionClass.js";
 // import { Operator } from "../functions/functionList.js";
 
 //Factions Objects
@@ -153,6 +156,7 @@ export class FactionBase {
     for (const opCheck of Object.values(Operators)) {
       // 3+3+3
       let op = msg.indexOf(opCheck.syntax);
+      
     }
   } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
   static parseFunction(msg, faction) {
@@ -161,13 +165,10 @@ export class FactionBase {
       (i) => !(i instanceof Operator)
     )) {
       //synCheck
-      const startOfArgs = functionCheck.syntax.indexOf("(")
+      const startOfArgs = functionCheck.syntax.indexOf("(");
       // first point where the ( is seen
-      // abc(x,y,z) yields 3 
-      const name = functionCheck.syntax.substring(
-        0,
-        startOfArgs
-      ); // name of function
+      // abc(x,y,z) yields 3
+      const name = functionCheck.syntax.substring(0, startOfArgs); // name of function
       // yields abc
       while (msg.includes(name)) {
         if (functionCheck.isUnlocked) {
@@ -176,7 +177,7 @@ export class FactionBase {
           let indexOfEnd = start + name.length;
           // end of name
           // abc(1,2,3) yields 3
-          let parenDepth = 0; 
+          let parenDepth = 0;
           // how far we are in a function
           const args = [];
           // arguments to the function
@@ -209,8 +210,11 @@ export class FactionBase {
             indexOfEnd++;
           } while (parenDepth > 0);
           const correctArgs = functionCheck.syntax
-            .substring(functionCheck.syntax.indexOf("(") + 1, functionCheck.syntax.indexOf(")"))
-            // this splits from the start of the inside of the function to 
+            .substring(
+              functionCheck.syntax.indexOf("(") + 1,
+              functionCheck.syntax.indexOf(")")
+            )
+            // this splits from the start of the inside of the function to
             .split(",");
           if (args.length !== correctArgs.length)
             // do it here to prevent people killing the program by adding 10000000 arguments
@@ -226,14 +230,11 @@ export class FactionBase {
                 faction
               );
             }
-            msg = msg.replace(
-              msg.substring(
-                start,
-                msg.indexOf(")", indexOfEnd)
-              ),
-              functionCheck.evaluate(...args)
-            );
           }
+          msg = msg.replace(
+            msg.substring(start, msg.indexOf(")", indexOfEnd)),
+            functionCheck.evaluate(...args)
+          );
         } else {
           throw new ParserError(
             `You used function ${name}, but it is not unlocked!`
@@ -262,7 +263,8 @@ class FactionDisplay extends HTMLElement {
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, this.c.width, this.c.height);
       // ctx.fillStyle = randomColor(); //create randomColor function
-      for (let x = 0; x < factions.Tree.count; x++) { // random colour per cell
+      for (let x = 0; x < factions.Tree.count; x++) {
+        // random colour per cell
         ctx.fillStyle = randomColor();
         ctx.fillRect(
           (x % treeGridSize) * 10,
