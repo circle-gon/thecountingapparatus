@@ -134,15 +134,13 @@ class TextChannelDisp extends HTMLElement {
   get tooBig() {
     return this.input.value.length > this.textInstance.length;
   }
+
   
-  disconnectedCallback() {
-    this.stop.forEach(i=>i())
-  }
-  
-  attributeChangedCallback() {
+  /*attributeChangedCallback() {
+    if (!this.isConnected) return
     this.stop.forEach(i=>i())
     this.initData()
-  }
+  }*/
   
   static get observedAttributes() {
     return ["name"]
@@ -151,16 +149,24 @@ class TextChannelDisp extends HTMLElement {
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
+    this.textInstance = channels[this.getAttribute("name")]
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 
     const wrapper = ce("div");
     this.title = ce("div");
+    // a string?????????????????
+    console.log(typeof this.title, ce("div"))
     this.texts = ce("div");
     this.input = ce("input");
     const btn = ce("button");
     const txtLength = ce("div");
     
-    this.initData()
+    //this.initData()
+    this.stop = [this.textInstance.on((d) => {
+      this.title.innerHTML = d;
+    }, "channelName")]
+    this.input.type = this.textInstance.inputType;
+    this.textInstance.updateData = () => this.updateText()
 
     this.title.textAlign = "center";
     this.input.onkeydown = (e) => {
@@ -168,7 +174,7 @@ class TextChannelDisp extends HTMLElement {
     };
     this.input.style.width = "calc(100% -  85px)";
 
-    btn.onclick = () => this.sendText();
+    btn.onclick = () => {this.sendText(); this.input.focus();};
     btn.innerHTML = "Submit";
     btn.style.width = "75px";
 
@@ -193,6 +199,7 @@ class TextChannelDisp extends HTMLElement {
 
   disconnectedCallback() {
     clearInterval(this.int);
+    this.stop.forEach(i=>i())
   }
 }
 
