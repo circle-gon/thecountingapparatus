@@ -1,4 +1,4 @@
-import {EMOJI} from './constants.js'
+import {EMOJI} from '../utils/constants.js'
  
 const channels = {};
 
@@ -89,6 +89,7 @@ export function ce(n) {
   return document.createElement(n);
 }
 
+// WARNING the string needs to be sanatized
 export function addEmoji(safeString) {
   for (const emoji of EMOJI) {
     const regex = new RegExp(`:${emoji.name}:`, "g")
