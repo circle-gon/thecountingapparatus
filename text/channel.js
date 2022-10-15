@@ -18,7 +18,7 @@ export class TextChannel {
     this.messages = []; //array,string
     this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
-    this.handlers = [];
+    this.handlers = new Set()
     this.isFrozen = false; //bool
     // force update
     this.updateText = () => {}; //function
@@ -42,18 +42,19 @@ export class TextChannel {
     this.messages.splice(ind, 1);
   }
   on(func, type) {
-    this.handlers.push({
+    const data = {
       type,
-      func,
-    });
+      func
+    }
+    this.handlers.add(data);
+    return () => this.handlers.delete(data)
   }
   isSupportedHandler(type, item) {
     return type === "*" || item.type === type;
   }
   invokeHandlers(type, data) {
-    for (const handler of this.handlers.filter((i) =>
-      this.isSupportedHandler(type, i)
-    )) {
+    for (const handler of this.handlers) {
+      if (!this.isSupportedHandler(type, handler.type)) continue
       handler.func(data);
     }
   }
@@ -120,37 +121,52 @@ class TextChannelDisp extends HTMLElement {
     this.textInstance.sendMessage(this.input.value, false);
     this.input.value = "";
   }
+  
+  initData() {
+    this.textInstance = channels[this.getAttribute("name")]
+    this.stop = [this.textInstance.on((d) => {
+      this.title.innerHTML = d;
+    }, "channelName")]
+    this.input.type = this.textInstance.inputType;
+    this.textInstance.updateData = () => this.updateText()
+  }
 
   get tooBig() {
     return this.input.value.length > this.textInstance.length;
+  }
+  
+  disconnectedCallback() {
+    this.stop.forEach(i=>i())
+  }
+  
+  attributeChangedCallback() {
+    this.stop.forEach(i=>i())
+    this.initData()
+  }
+  
+  static get observedAttributes() {
+    return ["name"]
   }
 
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
-    this.textInstance = channels[this.getAttribute("name")];
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 
     const wrapper = ce("div");
-    const title = ce("div");
+    this.title = ce("div");
     this.texts = ce("div");
     this.input = ce("input");
     const btn = ce("button");
     const txtLength = ce("div");
+    
+    this.initData()
 
-    title.textAlign = "center";
-    title.innerHTML = this.textInstance.realName;
-
-    this.input.type = this.textInstance.inputType;
+    this.title.textAlign = "center";
     this.input.onkeydown = (e) => {
       if (e.key === "Enter") this.sendText();
     };
     this.input.style.width = "calc(100% -  85px)";
-
-    this.textInstance.updateText = () => this.updateText();
-    this.textInstance.on((d) => {
-      title.innerHTML = d;
-    }, "channelName");
 
     btn.onclick = () => this.sendText();
     btn.innerHTML = "Submit";
@@ -163,7 +179,7 @@ class TextChannelDisp extends HTMLElement {
     txtLength.style.textAlign = "right";
 
     //wrapper.style.textAlign = "right"
-    wrapper.append(title, this.texts, this.input, btn, txtLength);
+    wrapper.append(this.title, this.texts, this.input, btn, txtLength);
     this.shadowRoot.append(wrapper);
     this.int = setInterval(() => {
       this.input.disabled = this.textInstance.isFrozen;
