@@ -20,6 +20,7 @@ class XxFaction extends FactionBase {
   //Counting & Milestones
 
   doCount(count) {
+    count = this.parseFunction
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
       this.updateMilestones();

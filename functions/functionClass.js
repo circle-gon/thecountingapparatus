@@ -21,7 +21,7 @@ export class FunctionBase {
       factorial: 0,
     };
     this.isBanned = false;
-    this.isUnlocked = false;
+    this.isUnlocked = true;
     /*this.isStunned = false;*/
   }
 }
