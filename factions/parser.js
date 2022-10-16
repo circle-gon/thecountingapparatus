@@ -10,11 +10,11 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
   let chunk = ""
   let chunks = []
   let args = []
-  let currentFunc = ""
+  let currentFunc = ["func",""]
   for(let i in str.split("")) {
     if(str[i] == "(") {
         if(names.includes(chunk) && parenDepth == 0) {
-          currentFunc = chunk
+          currentFunc[1] = chunk
           parenDepth++
           chunk = ""
           continue
@@ -27,7 +27,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
     if(str[i] == ")") {
         parenDepth--; 
         if(parenDepth == 0) {
-          if(currentFunc.length > 0) {
+          if(currentFunc[1].length > 0 && currentFunc[0] == "func") {
             args.push(stringToChunked(chunk))
             chunk = ""
             chunks.push(["function",currentFunc,args])
@@ -40,16 +40,17 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
           continue
         }
       }
-      if(str[i] == "," && currentFunc.length >= 1 && parenDepth == 1) {
+      if(str[i] == "," && currentFunc[1].length >= 1 && parenDepth == 1 && currentFunc[0] == "func") {
         args.push(stringToChunked(chunk))
         console.log(chunk)
         chunk = ""
         continue
       }
     chunk += str[i]
+    if(parenDepth > 0) continue
     for(let j in doubleSidedOps) {
       if(chunk.endsWith(doubleSidedOps.split("a")[0])) {
-        
+        chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[0].length)))
         chunk = ""
       }  
     } // ok time to see if this piece of shit works for functions

@@ -1,10 +1,7 @@
 //Imports
 import { ce, TextChannel } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import {
-  Functions,
-  Operators /*, Operator*/,
-} from "../functions/functionClass.js";
+import { Functions, Operators, Left, Right, Wrap, Bin } from "../functions/functionClass.js";
 
 //Factions Objects
 export const factions = {};
@@ -184,7 +181,14 @@ export class FactionBase {
         for (const opCheck of Object.values(Operators)) {
           while (subMsg.includes(opCheck.symbol)){
             let op = subMsg.indexOf(opCheck.syntax);
-            switch (opCheck)
+            let args = [];
+            switch (Object.getPrototypeOf(opCheck).constructor.name){
+              case Left.name:
+                let findArg = op;
+                do{
+                  args[0] = args[0].concat(++findArg)
+                }while(isNaN(Number(subMsg[findArg])))
+            }
           }
         }
         if(parenCheck !== 0) this.parseOperator(msg, faction);

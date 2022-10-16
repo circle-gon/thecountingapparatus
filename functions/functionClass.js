@@ -1,6 +1,10 @@
 //Function Objects
 export const Functions = {};
 export const Operators = {};
+export const Left = {};
+export const Right = {};
+export const Wrap = {};
+export const Bin = {};
 
 export class FunctionBase {
   constructor(name, unlock, syntax, evaluate) {
