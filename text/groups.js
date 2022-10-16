@@ -23,16 +23,84 @@ class TextGroupDisplay extends HTMLElement {
     this.textGroup = textGroups[name]
     const wrapper = ce("div")
     const style = ce("style")
+    // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `
-      <input type="checkbox" class="control" style="display: inline" />
-      <div class="title" style="display: inline-block">${this.textGroup.name}</div>
-      <ul class="content">
-        ${this.textGroup.channels.map(i=>`<li>${i}</li>`).join("")}
-      </ul>
+      <div class="container">
+  <div class="accordion_container">
+    <input type="checkbox"
+           id="accordion-1" 
+           class="accordion-control">
+    <label for="accordion-1"
+           class="accordion-label" 
+           data-label-closed="show" 
+           data-label-open="hide">Click to</label>
+    <div class="accordion-content">
+      This is collapsible content
+    </div>
+  </div>
+</div>
     `
-    /*style.innerHTML = `
-    
-    `*/
+    style.innerHTML = `
+    .accordion_container {
+  background: #861c7e;
+  padding: 20px;
+  border-bottom: 1px solid #fff;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.accordion_container:first-of-type {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.accordion_container:last-of-type {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom: none;
+}
+    .accordion-label {
+  cursor: pointer;
+  display: block;
+    user-select: none;
+    color: #fff;
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s;
+  background-size: 260px;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #fff;
+}
+.accordion-control {
+  display: none;
+}
+.accordion-control + label:before {
+  position: relative;
+  left: -19px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent #fff;
+  transition: all 0.2s ease-in;
+}
+.accordion-control:checked + label:after {
+  content: attr(data-label-open);
+}
+.accordion-control + label:after {
+  content: attr(data-label-closed);
+  padding-left: 4px;
+}
+.accordion-control:checked + label:before {
+  transform: rotate(90deg);
+}
+.accordion-control:checked + label + .accordion-content {
+  max-height: 350px;
+}
+
+    `
     this.shadowRoot.append(wrapper, style)
   }
 }
