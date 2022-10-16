@@ -21,10 +21,12 @@ class TextGroupDisplay extends HTMLElement {
     if (!this.isConnected) return
     this.attachShadow({mode: "open"})
     const name = this.getAttribute("name")
+    const type = this.getAttribute("type") ?? "faction"
     this.textGroup = textGroups[name]
     const wrapper = ce("div")
     const style = ce("link")
     const selection = ce("div")
+    const channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
@@ -43,8 +45,12 @@ class TextGroupDisplay extends HTMLElement {
         </div>
       </div>
     `
+    channelDisp.setAttribute("name", "Classic")
     style.rel = "stylesheet"
     style.href = "group-style.css"
+    wrapper.style.display = "grid"
+    wrapper.style.gridTemplateColumns = "20% 80%";
+    wrapper.append(selection, channelDisp)
     this.shadowRoot.append(wrapper, style)
   }
 }

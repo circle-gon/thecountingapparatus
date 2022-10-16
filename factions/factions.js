@@ -166,27 +166,40 @@ export class FactionBase {
     // look for literals (the base case)
     let literals = [];
     let literalsIndexes = [];
+    console.log(splitStr);
+    console.log(splitStr[0]);
+    console.log(splitStr[1]);
+    console.log(/[^0123456789]/.test(splitStr[0]));
+    
+    console.log(/[^0123456789]/.test(splitStr[0]));
     for (let i = 0; i < splitStr.length; i++) {
       // check if literal and add to list - maybe have it add index as well?
       if (/[^0123456789]/.test(splitStr[i])) {
         literals.push(splitStr[i]);
         literalsIndexes.push(i);
+        console.log(i);
       }
+      console.log('here');
+      console.log(i);
     }
     while (splitStr.length > 1) {
       for (let i = 0; i < literals.length; i++) {
-        let value = literals[i][0];
-        let index = literals[i][1];
+        let value = literals[i];
+        let index = literalsIndexes[i];
         let leftFunc = splitStr[index - 1];
         // rightFunc should be either nonexistant or a comma
         //let rightFunc = splitStr[index + 1]; // stop this checking oob
-        if (leftFunc == ',') {
+        if (leftFunc === ',') {
           // ignore it
           continue;
         }
-        let leftFuncUpper = leftFunc;
-        leftFuncUpper.toUpperCase();
-        let actualFunc = Functions[leftFuncUpper];//Object.values(Functions).find(i=>i.name === leftFunc);
+        // this _returns_ a new string
+        // so you're doing Functions[undefined]
+        console.log(index);
+        console.log(splitStr);
+        console.log(splitStr[index-1]);
+        console.log(leftFunc);
+        let actualFunc = Functions[leftFunc.toUpperCase()];//Object.values(Functions).find(i=>i.name === leftFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc == null || !actualFunc.unlocked) {
           // tell them they're a fool

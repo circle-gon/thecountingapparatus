@@ -135,7 +135,9 @@ class TextChannelDisp extends HTMLElement {
     this.input.type = this.textInstance.inputType;
     this.cancel = [this.textInstance.on((d) => {
       this.titleEle.innerHTML = d;
-    }, "channelName")]
+    }, "channelName"), this.textInstance.on((f) => {
+      this.wrapper.style.display = f ? "block" : "none"
+    }, "show")]
   }
   attributeChangedCallback() {
     if (!this.isConnected) return;
@@ -153,7 +155,7 @@ class TextChannelDisp extends HTMLElement {
     this.attachShadow({ mode: "open" });
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 
-    const wrapper = ce("div");
+    this.wrapper = ce("div");
     this.titleEle = ce("div");
     this.texts = ce("div");
     this.input = ce("input");
@@ -182,8 +184,8 @@ class TextChannelDisp extends HTMLElement {
     txtLength.style.textAlign = "right";
 
     //wrapper.style.textAlign = "right"
-    wrapper.append(this.titleEle, this.texts, this.input, btn, txtLength);
-    this.shadowRoot.append(wrapper);
+    this.wrapper.append(this.titleEle, this.texts, this.input, btn, txtLength);
+    this.shadowRoot.append(this.wrapper);
     this.int = setInterval(() => {
       this.input.disabled = this.textInstance.isFrozen;
       btn.disabled = this.tooBig || this.textInstance.isFrozen;
