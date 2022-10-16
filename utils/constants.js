@@ -70,7 +70,9 @@ const RULES_ABRIDGED = {
   ],
   
   X_X: [
-    
+    "Solving for counts with X amount of a number X",
+    "Benefits: Increases Classic Counting speed",
+    "Chal"
   ],
   
   Ones: [

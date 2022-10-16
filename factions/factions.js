@@ -25,7 +25,7 @@ export class FactionBase {
       name,
       name,
       100,
-      1000,
+      1,
       (msg) => {
         return {
           isCorrect: this.isCorrectCount(msg),
