@@ -11,9 +11,8 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
   let args = []
   let currentFunc = ""
   for(let i in str.split("")) {
-    for(let j in binOps) {
-      if(str[i] == "(") {
-        if(names.includes(chunk)) {
+    if(str[i] == "(") {
+        if(names.includes(chunk) && parenDepth == 0) {
           currentFunc = chunk
           parenDepth++
           chunk = ""
@@ -22,6 +21,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         if(parenDepth == 0) {
           parenDepth++;chunks.push(["literal",chunk]);chunk="";continue
         }
+        parenDepth++
       }
       if(str[i] == ")") {
         parenDepth--; 
@@ -33,19 +33,25 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
             args = []
             currentFunc = ""
           } else {
-            chunks.push([stringToChunked(chunk)])
+            chunks.push(["parens",stringToChunked(chunk)])
+            chunk = ""
           }
+          continue
         }
+      }
+      if(str[i] == "," && currentFunc.length >= 1 && parenDepth == 1) {
+        args.push(stringToChunked(chunk))
+        console.log(chunk)
+        chunk = ""
         continue
       }
-      if(str[i] == "," && parenDepth == 1) {
-        
-      }
-      if(str.substr(i).startsWith(binOps[j])) {
-        
-      }
-    }
+    chunk += str[i]
+    for(let j in binOps) {
+      
+      
+    } // ok time to see if this piece of shit works for functions
   } // hey wait
+  return chunks
 }
 function chunkToAst(chunk) {
 let parenDepth = 0

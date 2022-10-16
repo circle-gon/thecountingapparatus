@@ -155,6 +155,7 @@ export class FactionBase {
     
     //Checking highest parenDepth
     let parenDepthMax = 0;
+    let indexOfMaxDepthStart = 0;
       if(msg.includes("(")){
         let parenCheck = msg.indexOf("(");
         do {
@@ -166,11 +167,22 @@ export class FactionBase {
             );
           if (msg[parenCheck] === "(") parenDepth++; // increase parenDepth because we see a (
           if (msg[parenCheck] === ")") parenDepth--; // decrease parenDepth because we see a (
-          parenDepthMax = Math.max(parenDepth,parenDepthMax);
+          
+          //Checking for index of maximum depth
+          if (parenDepthMax < parenDepth){
+            parenDepthMax = Math.max(parenDepth,parenDepthMax);
+            indexOfMaxDepthStart = parenCheck;
+          }
           parenCheck++;
         } while (msg[parenCheck] > 0);
+        
+        //Creating the deepest parenDepth
+        let subMsg = msg.substring(indexOfMaxDepthStart);
+        subMsg = subMsg.substring(0,subMsg.indexOf(")"));
+        
+        //Operate on the deepest parenDepth
         for (const opCheck of Object.values(Operators)) {
-          while (msg.includes(opCheck.symbol)){
+          while (subMsg.includes(opCheck.symbol)){
             let op = msg.indexOf(opCheck.syntax);
 
           }
