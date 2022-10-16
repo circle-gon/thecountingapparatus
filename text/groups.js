@@ -64,5 +64,5 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup testing testing", "Classic", "Factorial", "Tree")
+new TextGroup("faction", "Factions", "Classic", "Factorial", "Letter", "Ones", "Tree", "X X")
 customElements.define("text-group", TextGroupDisplay)

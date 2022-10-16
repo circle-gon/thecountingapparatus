@@ -121,6 +121,9 @@ class TextChannelDisp extends HTMLElement {
   get tooBig() {
     return this.input.value.length > this.textInstance.length;
   }
+  disconnectedCallback() {
+    this.stop.forEach((i) => i());
+  }
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
@@ -144,12 +147,14 @@ class TextChannelDisp extends HTMLElement {
     this.input.style.width = "calc(100% -  85px)";
     this.input.type = this.textInstance.inputType;
 
-    this.textInstance.on((d) => {
-      this.titleEle.innerHTML = d;
-    }, "channelName");
-    this.textInstance.on((f) => {
-      this.wrapper.style.display = f ? "block" : "none";
-    }, "show");
+    this.stop = [
+      this.textInstance.on((d) => {
+        this.titleEle.innerHTML = d;
+      }, "channelName"),
+      this.textInstance.on((f) => {
+        this.wrapper.style.display = f ? "block" : "none";
+      }, "show"),
+    ];
 
     this.textInstance.updateText = () => this.updateText();
 
@@ -174,7 +179,7 @@ class TextChannelDisp extends HTMLElement {
       } chars left`;
       txtLength.style.color = this.tooBig ? "red" : "green";
     }, 10);
-    this.updateText()
+    this.updateText();
   }
 
   disconnectedCallback() {

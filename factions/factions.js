@@ -274,6 +274,9 @@ class FactionDisplay extends HTMLElement {
       //ctx.fillRect(0,20,30,20)
     }
   }
+  disconnectedCallback() {
+    this.stop.forEach((i) => i());
+  }
   connectedCallback() {
     if (!this.isConnected) return;
 
@@ -291,7 +294,7 @@ class FactionDisplay extends HTMLElement {
     chatInstance.setAttribute("name", this.getAttribute("name"));
 
     // RE: why do we need setAttribute?
-    this.faction.textBox.on(() => this.updateHTML(), "message")
+    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")];
     root.append(chatInstance, this.info);
     //root.style.position = "relative"
     if (name === "Tree") {
