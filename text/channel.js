@@ -1,7 +1,7 @@
 import { EMOJI } from "../utils/constants.js";
 import { EventListener } from "../utils/utils.js";
 
-const channels = {};
+export const channels = {};
 
 export class TextChannel {
   constructor(

@@ -1,4 +1,4 @@
-import {ce} from './channel.js'
+import {ce, TextChannel, channels} from './channel.js'
 import {randomInt} from '../utils/utils.js'
 import {switchTab} from './main.js'
 
@@ -8,10 +8,11 @@ class TextGroup {
   // channels is a array of arguments which either is:
   // string: pointing to a TextChannel instance
   // TextChannel: a TextChannel instance
-  constructor(name, displayName, ...channels) {
+  constructor(name, displayName, type, ...channels) {
     this.isVisible = true
     this.name = displayName
     this._name = name
+    this.type = type
     this.channels = channels
     textGroups[name] = this
     
@@ -39,12 +40,12 @@ class TextGroupDisplay extends HTMLElement {
     `
     wrapper.classList.add("container")
     names.classList.add("content")
-    this.textGroup.channels.forEach(i => {
+    this.textGroup.channels.forEach((i) => {
       const ele = ce("div")
       ele.classList.add("channel")
-      ele.innerHTML = i
+      ele.innerHTML = channels[i].realName
       ele.onclick = () => {
-        switchTab(i)
+        switchTab(i, this.textGroup.type)
       }
       names.append(ele)
     })
@@ -55,6 +56,11 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-new TextGroup("faction", "Factions", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
-new TextGroup("chat", "Chat", "Chat")
+new TextGroup("faction", "Factions", "faction", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
+
+// internalName, realName, maxMessages, maxLimit
+new TextChannel("chat", "Chat", 100, 100)
+
+// internalName, displayName, type, channel internal names
+new TextGroup("chat", "Chat", "text", "chat")
 customElements.define("text-group", TextGroupDisplay)

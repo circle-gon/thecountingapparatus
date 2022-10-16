@@ -1,10 +1,12 @@
 import {ce} from './channel.js'
 
 let currTab
+let type
 
-export function switchTab(tab) {
+export function switchTab(tab, newType) {
   console.log("switch!")
   currTab = tab
+  type = newType
 }
 
 class TabsMain extends HTMLElement {
@@ -26,7 +28,8 @@ class TabsMain extends HTMLElement {
     setInterval(() => {
       if (currTab !== lastTab) {
         main.remove()
-        main = ce("faction-disp")
+        console.log(currTab, lastTab)
+        main = ce(type === "faction" ? "faction-disp" : "text-box")
         main.setAttribute("name", currTab)
         wrapper.append(main)
       }
