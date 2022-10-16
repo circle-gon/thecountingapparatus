@@ -176,7 +176,7 @@ export class FactionBase {
         //Creating the deepest parenDepth
         let subMsg = msg.substring(indexOfMaxDepthStart);
         subMsg = subMsg.substring(0,subMsg.indexOf(")"));
-        let msgParam = ;
+        let msgParam = indexOfMaxDepthStart+(subMsg.length-1);
         
         //Operate on the deepest parenDepth
         for (const opCheck of Object.values(Operators)) {
@@ -185,15 +185,23 @@ export class FactionBase {
             let args = [];
             switch (Object.getPrototypeOf(opCheck).constructor.name){
               case Left.name:
-                let findArg = op;
+                let findArgLeft = op;
                 do{
-                  args[0] = args[0].concat(subMsg(++findArg));
-                }while(isNaN(Number(subMsg[findArg])));
-                subMsg = subMsg.replace(subMsg.substring(op,findArg));
+                  args[0] = args[0].concat(subMsg(++findArgLeft));
+                }while(isNaN(Number(subMsg[findArgLeft])));
+                subMsg = subMsg.replace(subMsg.substring(op,findArgLeft));
+                break;
+              case Wrap.name:
+                let findArgWrap = op;
+                do{
+                  args[0] = args[0].concat(subMsg(++findArgWrap));
+                }while(subMsg[op] == subMsg[findArgWrap]);
+                subMsg = subMsg.replace(subMsg.substring(op,findArgWrap));
                 break;
             }
           }
         }
+        msg = msg.replace(msg.substring(indexOfMaxDepthStart,msgParam),subMsg);
         if(parenCheck !== 0) this.parseOperator(msg, faction);
       }
   }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
