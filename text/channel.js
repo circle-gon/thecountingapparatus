@@ -131,6 +131,7 @@ class TextChannelDisp extends HTMLElement {
   
   initStuff() {
     this.textInstance = channels[this.getAttribute("name")]
+    console.log("text init")
     this.titleEle.innerHTML = this.textInstance.realName
     this.input.type = this.textInstance.inputType;
     this.cancel = [this.textInstance.on((d) => {
@@ -140,7 +141,6 @@ class TextChannelDisp extends HTMLElement {
     }, "show")]
   }
   attributeChangedCallback() {
-    console.log("change^2")
     if (!this.isConnected) return;
     this.cancel.forEach(i=>i())
     this.initStuff()

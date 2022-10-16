@@ -9,7 +9,7 @@ import {
   Wrap,
   Bin,
 } from "../functions/functionClass.js";
-// import { FUNCTIONS } from "../functions/functionList.js";
+import { FUNCTIONS } from "../functions/functionList.js";
 
 //Factions Objects
 export const factions = {};
@@ -237,6 +237,10 @@ export class FactionBase {
   
 
 class FactionDisplay extends HTMLElement {
+  constructor() {
+    super()
+    this.stop = []
+  }
   updateHTML() {
     const c = (co) => this.faction.countToDisplay(co);
     this.info.innerHTML = `Count: ${c(this.faction.count)}<br>
@@ -278,6 +282,20 @@ class FactionDisplay extends HTMLElement {
       //ctx.fillRect(0,20,30,20)
     }
   }
+  attributeChangedCallback() {
+    if (!this.isConnected) return
+    this.initStuff()
+  }
+  initStuff() {
+    this.stop.forEach(i=>i())
+    this.faction = factions[this.getAttribute("name")]
+    console.log("faction init")
+    this.chatInstance.setAttribute("name", name);
+    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")]
+  }
+  static get observedAttributes() {
+    return ["name"]
+  }
   connectedCallback() {
     if (!this.isConnected) return;
 
@@ -288,14 +306,14 @@ class FactionDisplay extends HTMLElement {
     this.info.style.position = "absolute"
     this.info.style.top = "0"
     this.info.style.right = "0"
-    this.faction = factions[name];
 
     const root = ce("div");
-    const chatInstance = ce("text-box");
+    this.chatInstance = ce("text-box");
+    this.initStuff()
 
     // RE: why do we need setAttribute?
-    chatInstance.setAttribute("name", name);
-    root.append(chatInstance, this.info);
+    console.log("append")
+    root.append(this.chatInstance, this.info);
     //root.style.position = "relative"
     if (name === "Tree") {
       this.c = ce("canvas");
@@ -304,7 +322,6 @@ class FactionDisplay extends HTMLElement {
     }
     root.append(ce("br"));
     this.shadowRoot.append(root);
-    this.faction.textBox.on(() => this.updateHTML(), "message");
     this.updateHTML();
   }
 }

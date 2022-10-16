@@ -1,5 +1,5 @@
 import { FunctionBase } from "./functionClass.js";
-import { gamma } from "../factions/factorial.js";
+import { gamma } from "../utils/utils.js";
 
 //Subclasses
 class NChooseR extends FunctionBase {

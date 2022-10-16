@@ -45,7 +45,7 @@ class TextGroupDisplay extends HTMLElement {
       ele.innerHTML = i
       ele.onclick = () => {
         console.log("change!")
-        channelDisp.setAttribute("name", i);
+        //channelDisp.setAttribute("name", i);
       }
       console.log(selection.childNodes);
       names.append(ele)
