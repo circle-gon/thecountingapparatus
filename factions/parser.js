@@ -47,24 +47,29 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         continue
       }
     chunk += str[i]
-    if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "") {
-      
+    if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "wrap") {
+      currentFunc[1]
     }
     for(let j in doubleSidedOps) {
       if(chunk.endsWith(doubleSidedOps[j].split("a")[1])) {
-        chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[1].length)))
+        if(parenDepth > 0) {
+          chunks.push(chunk.substr(0,doubleSidedOps.split("a")[1].length))
+        } else chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[1].length)))
         chunk = ""
       }
-      if(parenDepth > 0) continue
       if(chunk.endsWith(doubleSidedOps[j].split("a")[0])) {
+        if(parenDepth > 0 && currentFunc[1] != doubleSidedOps[j]) continue
         chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[0].length)))
         chunk = chunk.substr(-1*doubleSidedOps.split("a")[0].length)
-        
       }
       if(doubleSidedOps[j].split("a")[0] == chunk.substr(0,chunk.length-1) && (binOps.map(n => n[0]).includes(chunk[chunk.length-1]) || /[0123456789]/.test(chunk[chunk.length-1]))) {
+        parenDepth++
+        if(parenDepth > 0) {
+          chunk = chunks.pop() + chunk
+          continue
+        }
         currentFunc[0] = "wrap"
         currentFunc[1] = doubleSidedOps[j]
-        parenDepth++
         chunk = chunk[chunk.length-1]
       }
     } // ok time to see if this piece of shit works for functions

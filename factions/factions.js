@@ -187,17 +187,33 @@ export class FactionBase {
               case Left.name:
                 let findArgLeft = op;
                 do{
-                  args[0] = args[0].concat(subMsg(++findArgLeft));
-                }while(isNaN(Number(subMsg[findArgLeft])));
-                subMsg = subMsg.replace(subMsg.substring(op,findArgLeft));
+                  args[0] = args[0].concat(subMsg[++findArgLeft]);
+                }while(!isNaN(Number(subMsg[findArgLeft])));
+                subMsg = subMsg.replace(subMsg.substring(op,findArgLeft),opCheck.evaluate(args[0]));
                 break;
               case Wrap.name:
                 let findArgWrap = op;
                 do{
-                  args[0] = args[0].concat(subMsg(++findArgWrap));
-                }while(subMsg[op] == subMsg[findArgWrap]);
-                subMsg = subMsg.replace(subMsg.substring(op,findArgWrap));
+                  args[0] = args[0].concat(subMsg[++findArgWrap]);
+                }while(subMsg[op] != subMsg[findArgWrap]);
+                subMsg = subMsg.replace(subMsg.substring(op,findArgWrap),opCheck.evaluate(args[0]));
                 break;
+              case Right.name:
+                let findArgRight = op;
+                do{
+                  args[0] = subMsg[--findArgRight].concat(args[0]);
+                }while(!isNaN(Number(subMsg[findArgRight])));
+                subMsg = subMsg.replace(subMsg.substring(op,findArgRight),opCheck.evaluate(args[0]));
+                break;
+              case Bin.name:
+                let findArgZero = op;
+                let findArgOne = op;
+                do{
+                  args[0] = subMsg[--findArgZero].concat(args[0]);
+                }while(!isNaN(Number(subMsg[findArgZero])));
+                do{
+                  args[1] = args[1].concat(subMsg[++findArgOne]);
+                }while(!isNaN(Number(subMsg[findArgOne])));
             }
           }
         }
