@@ -179,7 +179,7 @@ export class FactionBase {
         }
         // this _returns_ a new string
         // so you're doing Functions[undefined]
-        const FUNCTIONS = import("../functions/functionList.js"); // maybe temp
+        //const FUNCTIONS = import("../functions/functionList.js"); // maybe temp
         let actualFunc = Object.values(FUNCTIONS).find(
           (i) => i.name === leftFunc.toUpperCase()
         );
