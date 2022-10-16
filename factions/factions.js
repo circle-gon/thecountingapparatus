@@ -152,11 +152,9 @@ export class FactionBase {
     }
     return average / counter;
   }
-
+}
   //Equation Parsing / Scanning
   
-
-}
 
 class FactionDisplay extends HTMLElement {
   updateHTML() {
