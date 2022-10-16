@@ -2,13 +2,8 @@
   padding-left: 10px;
 }
 
-ul {
-  /* TODO: get an image for this */
-  list-style-type: disc;
-}
-
-li {
-  line-height: 20px;
+.channel {
+  width: 150px;
 }
 
 .label {
@@ -16,6 +11,8 @@ li {
   display: block;
   user-select: none;
   text-transform: uppercase;
+  width: 200px;
+  overflow: auto;
 }
 
 .content {
@@ -24,7 +21,7 @@ li {
   messing up the timing. For widely variable height content, best not to animate. Switch display attribute instead */
   height: 0;
   overflow: hidden;
-  margin-left: -10px;
+  margin-left: 5px;
 }
 
 .control {
