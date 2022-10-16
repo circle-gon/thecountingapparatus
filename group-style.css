@@ -1,7 +1,5 @@
 .container {
-  padding: 20px;
-  width: fit-content;
-  border-radius: 20px;
+  padding: 10px;
 }
 
 .label {
@@ -17,6 +15,7 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s;
+  margin-left: 5px;
 }
 
 .control {
@@ -24,20 +23,19 @@
 }
 .control + .label {
   position: relative;
-  height: 40px;
-  margin-left: 20px;
+  height: 20px;
   padding-left: 5px;
   display: block;
 }
 .control + .label:before {
   content: "";
   position: absolute;
-  left: -19px;
+  left: -11px;
   top: 3px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 10px 0 10px 16px;
+  border-width: 6px 0 6px 12px;
   border-color: transparent transparent transparent grey;
   transition: all 0.2s ease-in;
 }
@@ -45,5 +43,5 @@
   transform: rotate(90deg);
 }
 .control:checked + .label + .content {
-  max-height: 350px;
+  max-height: 20px;
 }

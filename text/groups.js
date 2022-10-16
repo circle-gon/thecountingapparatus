@@ -29,12 +29,12 @@ class TextGroupDisplay extends HTMLElement {
         <input type="checkbox"
            id="check" 
            class="control">
-    <label for="check"
+        <label for="check"
            class="label">Click to</label>
-    <div class="content">
-      This is collapsible content
-    </div>
-</div>
+        <div class="content">
+          This is collapsible content
+        </div>
+      </div>
     `
     style.rel = "stylesheet"
     style.href = "group-style.css"
