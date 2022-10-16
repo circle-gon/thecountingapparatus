@@ -25,17 +25,17 @@ class TextGroupDisplay extends HTMLElement {
     const wrapper = ce("div")
     const style = ce("link")
     const int = randomInt()
+    const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `
       <div class="container">
         <input type="checkbox"
            id="check${int}" 
            class="control">
-        <label for="check${int}" class="label">${this.textGroup.name}</label>
+        <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
         <div class="content">
           ${this.textGroup.channels.map(i=>`
-            <div onmouseover="this.style.backgroundColor='grey'" onmouseout="this.style.backgroundColor='inherit'"
-                class="channel">
+            <div class="channel">
               ${i}
             </div>
           `).join("")}
@@ -48,5 +48,5 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup", 1, 2, 3)
+const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup testing testing", 1, 2, 3)
 customElements.define("text-group", TextGroupDisplay)

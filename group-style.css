@@ -3,7 +3,14 @@
 }
 
 .channel {
-  width: 150px;
+  width: 250px;
+  line-height: 20px;
+  height: 22px;
+  font-size: 20px;
+}
+.channel:hover {
+  background-color: grey;
+  border-radius: 2px;
 }
 
 .label {
@@ -11,8 +18,7 @@
   display: block;
   user-select: none;
   text-transform: uppercase;
-  width: 200px;
-  overflow: auto;
+  width: 250px;
 }
 
 .content {
@@ -22,6 +28,7 @@
   height: 0;
   overflow: hidden;
   margin-left: 5px;
+  width: 250px;
 }
 
 .control {
