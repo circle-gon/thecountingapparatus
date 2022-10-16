@@ -1,4 +1,5 @@
 function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard-code style... Although this does look concise so far
+  if(!(/[^123456789]/.test(str))) return ["literal", Number(str)]
   let parenDepth = 0
   let funcs = ["abu+(a,b)","AT(a,b,c)"]
   let names = funcs.map(n => n.split("(")[0])
@@ -23,7 +24,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         }
         parenDepth++
       }
-      if(str[i] == ")") {
+    if(str[i] == ")") {
         parenDepth--; 
         if(parenDepth == 0) {
           if(currentFunc.length > 0) {
@@ -46,9 +47,11 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         continue
       }
     chunk += str[i]
-    for(let j in binOps) {
-      
-      
+    for(let j in doubleSidedOps) {
+      if(chunk.endsWith(doubleSidedOps.split("a")[0])) {
+        
+        chunk = ""
+      }  
     } // ok time to see if this piece of shit works for functions
   } // hey wait
   return chunks

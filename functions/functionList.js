@@ -31,6 +31,30 @@ class Operator extends FunctionBase{
   }
 }
 
+class Left extends Operator{
+  constructor (name, unlock, symbol, evaluate){
+    super(name, unlock, symbol, evaluate);
+  }
+}
+
+class Right extends Operator{
+  constructor (name, unlock, symbol, evaluate){
+    super(name, unlock, symbol, evaluate);
+  }
+}
+
+class Wrap extends Operator{
+  constructor (name, unlock, symbol, evaluate){
+    super(name, unlock, symbol, evaluate);
+  }
+}
+
+class Bin extends Operator{
+  constructor (name, unlock, symbol, evaluate){
+    super(name, unlock, symbol, evaluate);
+  }
+}
+
 class QIntegral extends FunctionBase {
   constructor(name, unlock, syntax, integrand) {
     super(name, unlock, syntax, function (a, b) {
@@ -203,22 +227,22 @@ const FUNCTIONS = {
   
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
   
-  ADDITION: new Operator("Addition", "ADD", "+", (x,y) => x+y),
+  ADDITION: new Bin("Addition", "ADD", "+", (x,y) => x+y),
   
-  SUBTRACTION: new Operator("Subtraction", "SUB", "-", (x,y) => x-y),
+  SUBTRACTION: new Bin("Subtraction", "SUB", "-", (x,y) => x-y),
 
-  MULTIPLICATION: new Operator("Multiply", "MLT", "*", (x,y) => x*y),
+  MULTIPLICATION: new Bin("Multiply", "MLT", "*", (x,y) => x*y),
   
-  DIVISION: new Operator("Addition", "DIV", "/", (x,y) => x/y),
+  DIVISION: new Bin("Addition", "DIV", "/", (x,y) => x/y),
   
-  EXPONENTIATION: new Operator("Power", "POW", "+", (x,y) => x**y),
+  EXPONENTIATION: new Bin("Power", "POW", "+", (x,y) => x**y),
   
-  FACTORIAL: new Operator("Factorial", "PI", "!", (x) => gamma(x+1)),
+  FACTORIAL: new Right("Factorial", "PI", "!", (x) => gamma(x+1)),
   
-  MODULO: new Operator("Modulo", "MOD", "%", (x,y) => x%y),
+  MODULO: new Bin("Modulo", "MOD", "%", (x,y) => x%y),
   
-  PREDECESSOR: new Operator("Predecessor", "PRE", "--", (x,y) => --x),
+  PREDECESSOR: new Right("Predecessor", "PRE", "--", (x,y) => --x),
   
-  SUCCESSOR: new Operator("Successor", "ADD", "++", (x,y) => ++x),
+  SUCCESSOR: new Right("Successor", "ADD", "++", (x,y) => ++x),
 };
 // trole !

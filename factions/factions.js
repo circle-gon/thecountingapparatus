@@ -183,10 +183,11 @@ export class FactionBase {
         //Operate on the deepest parenDepth
         for (const opCheck of Object.values(Operators)) {
           while (subMsg.includes(opCheck.symbol)){
-            let op = msg.indexOf(opCheck.syntax);
-
+            let op = subMsg.indexOf(opCheck.syntax);
+            switch (opCheck)
           }
         }
+        if(parenCheck !== 0) this.parseOperator(msg, faction);
       }
   }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
 
