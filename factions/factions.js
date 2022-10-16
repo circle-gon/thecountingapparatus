@@ -290,6 +290,7 @@ class FactionDisplay extends HTMLElement {
     this.info.style.position = "absolute";
     this.info.style.top = "0";
     this.info.style.right = "0";
+    this.info.style.margin = "5px"
 
     const root = ce("div");
     const chatInstance = ce("text-box");
