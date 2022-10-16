@@ -25,6 +25,7 @@ class CountFaction extends FactionBase {
   }
 
   parseCount(count) {
+    this.parseFunction(count);
     return Number(count);
   }
   

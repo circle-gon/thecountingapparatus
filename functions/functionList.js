@@ -93,7 +93,7 @@ class QIntegral extends FunctionBase {
   }
 }
 //Functions (organize by Unlock)
-const FUNCTIONS = {
+export const FUNCTIONS = {
   A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (a, b) {
     switch (a) {
       case 0:

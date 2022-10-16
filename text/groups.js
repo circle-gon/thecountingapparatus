@@ -26,6 +26,7 @@ class TextGroupDisplay extends HTMLElement {
     const wrapper = ce("div")
     const style = ce("link")
     const selection = ce("div")
+    const content = ce("div")
     const channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
@@ -36,15 +37,16 @@ class TextGroupDisplay extends HTMLElement {
            id="check${int}" 
            class="control">
         <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
-        <div class="content">
+      </div>
+    `
+    content.innerHTML = `
+    <div class="content">
           ${this.textGroup.channels.map(i=>`
             <div class="channel">
               ${i}
             </div>
           `).join("")}
-        </div>
-      </div>
-    `
+    </div>`
     channelDisp.setAttribute("name", "Classic")
     style.rel = "stylesheet"
     style.href = "group-style.css"

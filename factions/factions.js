@@ -9,6 +9,7 @@ import {
   Wrap,
   Bin,
 } from "../functions/functionClass.js";
+// import { FUNCTIONS } from "../functions/functionList.js";
 
 //Factions Objects
 export const factions = {};
@@ -171,10 +172,7 @@ export class FactionBase {
       if (/\d/.test(splitStr[i])) {
         literals.push(splitStr[i]);
         literalsIndexes.push(i);
-        console.log(i);
       }
-      console.log('here');
-      console.log(i);
     }
     while (splitStr.length > 1) {
       for (let i = 0; i < literals.length; i++) {
@@ -189,14 +187,12 @@ export class FactionBase {
         }
         // this _returns_ a new string
         // so you're doing Functions[undefined]
-        console.log(index);
-        console.log(splitStr);
-        console.log(splitStr[index-1]);
-        console.log(leftFunc);
-        let actualFunc = Functions[leftFunc.toUpperCase()];//Object.values(Functions).find(i=>i.name === leftFunc);
+        let actualFunc = Object.values(FUNCTIONS).find(i=>i.name === leftFunc.toUpperCase());
+        console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc == null || !actualFunc.unlocked) {
           // tell them they're a fool
+          console.log("no function found");
         }
         if (actualFunc.isBanned || actualFunc.isStunned) {
           // special stuff
@@ -298,9 +294,6 @@ class FactionDisplay extends HTMLElement {
 
     // RE: why do we need setAttribute?
     chatInstance.setAttribute("name", name);
-    chatInstance.style.position = "absolute"
-    chatInstance.style.bottom = "0"
-    chatInstance.style.right = "0"
     root.append(chatInstance, this.info);
     //root.style.position = "relative"
     if (name === "Tree") {
