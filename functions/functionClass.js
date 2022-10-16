@@ -26,7 +26,7 @@ export class FunctionBase {
     };
     this.isBanned = false;
     this.isUnlocked = true;
-    /*this.isStunned = false;*/
+    this.isStunned = false;
   }
 }
 

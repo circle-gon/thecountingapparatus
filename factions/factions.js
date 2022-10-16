@@ -166,15 +166,9 @@ export class FactionBase {
     // look for literals (the base case)
     let literals = [];
     let literalsIndexes = [];
-    console.log(splitStr);
-    console.log(splitStr[0]);
-    console.log(splitStr[1]);
-    console.log(/[^0123456789]/.test(splitStr[0]));
-    
-    console.log(/[^0123456789]/.test(splitStr[0]));
     for (let i = 0; i < splitStr.length; i++) {
       // check if literal and add to list - maybe have it add index as well?
-      if (/[^0123456789]/.test(splitStr[i])) {
+      if (/\d/.test(splitStr[i])) {
         literals.push(splitStr[i]);
         literalsIndexes.push(i);
         console.log(i);
@@ -294,6 +288,9 @@ class FactionDisplay extends HTMLElement {
     const name = this.getAttribute("name");
 
     this.info = ce("div");
+    this.info.style.position = "absolute"
+    this.info.style.top = "0"
+    this.info.style.right = "0"
     this.faction = factions[name];
 
     const root = ce("div");
@@ -301,7 +298,11 @@ class FactionDisplay extends HTMLElement {
 
     // RE: why do we need setAttribute?
     chatInstance.setAttribute("name", name);
+    chatInstance.style.position = "absolute"
+    chatInstance.style.bottom = "0"
+    chatInstance.style.right = "0"
     root.append(chatInstance, this.info);
+    //root.style.position = "relative"
     if (name === "Tree") {
       this.c = ce("canvas");
       this.c.style.border = "solid";

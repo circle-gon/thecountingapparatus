@@ -179,7 +179,7 @@ class TextChannelDisp extends HTMLElement {
 
     this.texts.style.overflow = "auto";
     this.texts.style.overflowWrap = "break-word";
-    this.texts.style.height = "100px";
+    this.texts.style.height = "500px";
 
     txtLength.style.textAlign = "right";
 

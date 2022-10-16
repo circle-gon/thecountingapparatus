@@ -7,7 +7,8 @@ import "./factions/factorial.js";
 import "./text/groups.js";
 
 const factions = ["Classic", "Tree", "Letter", "X X", "Ones", "Factorial"];
-document.getElementById("content").innerHTML +=
+/*document.getElementById("content").innerHTML +=
   "<div>" +
   factions.map((i) => `<faction-disp name="${i}"></faction-disp>`).join("") +
   "</div>";
+*/
