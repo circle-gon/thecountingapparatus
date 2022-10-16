@@ -1,5 +1,6 @@
 import {ce} from './channel.js'
 import {randomInt} from '../utils/utils.js'
+import {switchTab} from './main.js'
 
 const textGroups = {}
 
@@ -21,48 +22,39 @@ class TextGroupDisplay extends HTMLElement {
     if (!this.isConnected) return
     this.attachShadow({mode: "open"})
     const name = this.getAttribute("name")
-    const type = this.getAttribute("type") ?? "faction"
     this.textGroup = textGroups[name]
     const wrapper = ce("div")
     const style = ce("link")
-    const selection = ce("div")
     const names = ce("div")
-    let channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
+    // fix assumption later
+    let channelDisp = ce("faction-disp")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
-    selection.innerHTML = `
+    wrapper.innerHTML = `
     <input type="checkbox"
       id="check${int}" 
       class="control">
     <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
     `
-    selection.classList.add("container")
+    wrapper.classList.add("container")
     names.classList.add("content")
     this.textGroup.channels.forEach(i => {
       const ele = ce("div")
       ele.classList.add("channel")
       ele.innerHTML = i
       ele.onclick = () => {
-        channelDisp.remove()
-        channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
-        channelDisp.setAttribute("name", i)
-        wrapper.append(channelDisp)
+        switchTab(i)
       }
-      console.log(selection.childNodes);
       names.append(ele)
     })
-    channelDisp.setAttribute("name", "Classic")
     style.rel = "stylesheet"
     style.href = "group-style.css"
-    wrapper.style.display = "grid"
-    wrapper.style.gridTemplateColumns = "20% 80%";
-    
-    selection.append(names)
-    wrapper.append(selection, channelDisp)
+    wrapper.append(names)
     this.shadowRoot.append(wrapper, style)
   }
 }
 
 new TextGroup("faction", "Factions", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
+new TextGroup("chat", "Chat", "Chat")
 customElements.define("text-group", TextGroupDisplay)
