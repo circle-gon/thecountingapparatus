@@ -1,0 +1,49 @@
+.container {
+  padding: 20px;
+  width: fit-content;
+  border-radius: 20px;
+}
+
+.label {
+  cursor: pointer;
+  display: block;
+  user-select: none;
+}
+
+.content {
+  /* Height animation:
+  only really works well if the height is close to content - too high and the animation still goes to the max-height number, 
+  messing up the timing. For widely variable height content, best not to animate. Switch display attribute instead */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s;
+}
+
+.control {
+  display: none;
+}
+.control + .label {
+  position: relative;
+  height: 40px;
+  margin-left: 20px;
+  padding-left: 5px;
+  display: block;
+}
+.control + .label:before {
+  content: "";
+  position: absolute;
+  left: -19px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent grey;
+  transition: all 0.2s ease-in;
+}
+.control:checked + .label:before {
+  transform: rotate(90deg);
+}
+.control:checked + .label + .content {
+  max-height: 350px;
+}
