@@ -25,14 +25,12 @@ class TextGroupDisplay extends HTMLElement {
     const style = ce("style")
     // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `
-  <div class="accordion_container">
+  <div class="container">
     <input type="checkbox"
            id="accordion-1" 
            class="accordion-control">
     <label for="accordion-1"
-           class="accordion-label" 
-           data-label-closed="show" 
-           data-label-open="hide">Click to</label>
+           class="accordion-label">Click to</label>
     <div class="accordion-content">
       This is collapsible content
     </div>
@@ -46,14 +44,11 @@ class TextGroupDisplay extends HTMLElement {
   color: #fff;
 }
 
-.accordion_container {
+.container {
   background: #861c7e;
   padding: 20px;
   width: fit-content;
-}
-.accordion_container:first-of-type {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-radius: 20px;
 }
 
 .accordion-content {
@@ -97,18 +92,8 @@ class TextGroupDisplay extends HTMLElement {
   border-color: transparent transparent transparent #fff;
   transition: all 0.2s ease-in;
 }
-.accordion-control + label:after {
-  content: attr(data-label-closed);
-  padding-left: 4px;
-}
-.accordion-control:checked + label {
-  cursor: pointer;
-}
 .accordion-control:checked + label:before {
   transform: rotate(90deg);
-}
-.accordion-control:checked + label:after {
-  content: attr(data-label-open);
 }
 .accordion-control:checked + label + .accordion-content {
   max-height: 350px;
