@@ -187,6 +187,7 @@ export class FactionBase {
         }
         // this _returns_ a new string
         // so you're doing Functions[undefined]
+        const FUNCTIONS = import('../functions/functionList.js'); // maybe temp
         let actualFunc = Object.values(FUNCTIONS).find(i=>i.name === leftFunc.toUpperCase());
         console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)

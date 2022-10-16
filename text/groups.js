@@ -26,32 +26,37 @@ class TextGroupDisplay extends HTMLElement {
     const wrapper = ce("div")
     const style = ce("link")
     const selection = ce("div")
-    const content = ce("div")
+    const names = ce("div")
     const channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
     selection.innerHTML = `
-      <div class="container">
-        <input type="checkbox"
-           id="check${int}" 
-           class="control">
-        <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
-      </div>
+    <input type="checkbox"
+      id="check${int}" 
+      class="control">
+    <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
     `
-    content.innerHTML = `
-    <div class="content">
-          ${this.textGroup.channels.map(i=>`
-            <div class="channel">
-              ${i}
-            </div>
-          `).join("")}
-    </div>`
+    selection.classList.add("container")
+    names.classList.add("content")
+    this.textGroup.channels.forEach(i => {
+      const ele = ce("div")
+      ele.classList.add("channel")
+      ele.innerHTML = i
+      ele.onclick = () => {
+        console.log("change!")
+        channelDisp.setAttribute("name", i);
+      }
+      console.log(selection.childNodes);
+      names.append(ele)
+    })
     channelDisp.setAttribute("name", "Classic")
     style.rel = "stylesheet"
     style.href = "group-style.css"
     wrapper.style.display = "grid"
     wrapper.style.gridTemplateColumns = "20% 80%";
+    
+    selection.append(names)
     wrapper.append(selection, channelDisp)
     this.shadowRoot.append(wrapper, style)
   }

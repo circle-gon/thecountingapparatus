@@ -140,6 +140,7 @@ class TextChannelDisp extends HTMLElement {
     }, "show")]
   }
   attributeChangedCallback() {
+    console.log("change^2")
     if (!this.isConnected) return;
     this.cancel.forEach(i=>i())
     this.initStuff()
