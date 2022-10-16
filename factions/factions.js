@@ -1,14 +1,6 @@
 //Imports
 import { ce, TextChannel } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import {
-  Functions,
-  Operators,
-  Left,
-  Right,
-  Wrap,
-  Bin,
-} from "../functions/functionClass.js";
 import { FUNCTIONS } from "../functions/functionList.js";
 
 //Factions Objects
@@ -153,7 +145,7 @@ export class FactionBase {
     }
     return average / counter;
   }
-  
+
   parseFunction(str) {
     // ASSUMES FULL BRACKETING
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
@@ -163,7 +155,7 @@ export class FactionBase {
 
     // split into a full arrawy of just functions and their arguments
     let splitStr = str.split(/[(|(,)|)]/); // how does make work
-    splitStr = splitStr.filter(x => x != '');
+    splitStr = splitStr.filter((x) => x != "");
     // look for literals (the base case)
     let literals = [];
     let literalsIndexes = [];
@@ -181,14 +173,16 @@ export class FactionBase {
         let leftFunc = splitStr[index - 1];
         // rightFunc should be either nonexistant or a comma
         //let rightFunc = splitStr[index + 1]; // stop this checking oob
-        if (leftFunc === ',') {
+        if (leftFunc === ",") {
           // ignore it
           continue;
         }
         // this _returns_ a new string
         // so you're doing Functions[undefined]
-        const FUNCTIONS = import('../functions/functionList.js'); // maybe temp
-        let actualFunc = Object.values(FUNCTIONS).find(i=>i.name === leftFunc.toUpperCase());
+        const FUNCTIONS = import("../functions/functionList.js"); // maybe temp
+        let actualFunc = Object.values(FUNCTIONS).find(
+          (i) => i.name === leftFunc.toUpperCase()
+        );
         console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc == null || !actualFunc.unlocked) {
@@ -203,7 +197,10 @@ export class FactionBase {
         let argsIndexes = [];
         for (let j = 0; j < expectedArgs.length; j++) {
           // has arg been calculated to literal already
-          if (splitStr[index + 1] == ',' && literalsIndexes.includes(index + 2)) {
+          if (
+            splitStr[index + 1] == "," &&
+            literalsIndexes.includes(index + 2)
+          ) {
             args.push(literals[index + 2]);
             argsIndexes.push(literalsIndexes.indexOf(index + 2));
           }
@@ -212,16 +209,16 @@ export class FactionBase {
           let result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
-            literals[argsIndexes[k]] = 'test'; // to avoid resizing while deleting
-            literalsIndexes[argsIndexes[k]] = 'test';
+            literals[argsIndexes[k]] = "test"; // to avoid resizing while deleting
+            literalsIndexes[argsIndexes[k]] = "test";
           }
-          literals.removeAll('test');
-          literalsIndexes.removeAll('test');
+          literals.removeAll("test");
+          literalsIndexes.removeAll("test");
           literals.push(result);
           literalsIndexes.push(index - 1);
           // update splitStr
-          splitStr[index - 1] = result
-            // remove calculated stuff
+          splitStr[index - 1] = result;
+          // remove calculated stuff
           for (let j = 0; j < expectedArgs.length * 2 - 1; j++) {
             splitStr.removeAt(index);
           }
@@ -233,13 +230,12 @@ export class FactionBase {
     return splitStr[0]; // gwa
   }
 }
-  //Equation Parsing / Scanning
-  
+//Equation Parsing / Scanning
 
 class FactionDisplay extends HTMLElement {
   constructor() {
-    super()
-    this.stop = []
+    super();
+    this.stop = [];
   }
   updateHTML() {
     const c = (co) => this.faction.countToDisplay(co);
@@ -282,19 +278,20 @@ class FactionDisplay extends HTMLElement {
       //ctx.fillRect(0,20,30,20)
     }
   }
-  attributeChangedCallback() {
-    if (!this.isConnected) return
-    this.initStuff()
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (!this.isConnected) return;
+    console.log("attribute changed: ", name, "new value", newVal, oldVal)
+    this.initStuff();
   }
   initStuff() {
-    this.stop.forEach(i=>i())
-    this.faction = factions[this.getAttribute("name")]
-    console.log("faction init")
-    this.chatInstance.setAttribute("name", name);
-    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")]
+    this.stop.forEach((i) => i());
+    this.faction = factions[this.getAttribute("name")];
+    console.log("faction init");
+    this.chatInstance.setAttribute("name", this.getAttribute("name"));
+    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")];
   }
   static get observedAttributes() {
-    return ["name"]
+    return ["name"];
   }
   connectedCallback() {
     if (!this.isConnected) return;
@@ -303,16 +300,15 @@ class FactionDisplay extends HTMLElement {
     const name = this.getAttribute("name");
 
     this.info = ce("div");
-    this.info.style.position = "absolute"
-    this.info.style.top = "0"
-    this.info.style.right = "0"
+    this.info.style.position = "absolute";
+    this.info.style.top = "0";
+    this.info.style.right = "0";
 
     const root = ce("div");
     this.chatInstance = ce("text-box");
-    this.initStuff()
+    this.initStuff();
 
     // RE: why do we need setAttribute?
-    console.log("append")
     root.append(this.chatInstance, this.info);
     //root.style.position = "relative"
     if (name === "Tree") {

@@ -131,7 +131,6 @@ class TextChannelDisp extends HTMLElement {
   
   initStuff() {
     this.textInstance = channels[this.getAttribute("name")]
-    console.log("text init")
     this.titleEle.innerHTML = this.textInstance.realName
     this.input.type = this.textInstance.inputType;
     this.cancel = [this.textInstance.on((d) => {
@@ -169,7 +168,7 @@ class TextChannelDisp extends HTMLElement {
       if (e.key === "Enter") this.sendText();
     };
     this.input.style.width = "calc(100% -  85px)";
-    
+    console.log(this.getAttribute("name"))
     this.initStuff()
     
     this.textInstance.updateText = () => this.updateText();

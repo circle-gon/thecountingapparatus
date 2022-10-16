@@ -27,7 +27,7 @@ class TextGroupDisplay extends HTMLElement {
     const style = ce("link")
     const selection = ce("div")
     const names = ce("div")
-    const channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
+    let channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
@@ -44,8 +44,10 @@ class TextGroupDisplay extends HTMLElement {
       ele.classList.add("channel")
       ele.innerHTML = i
       ele.onclick = () => {
-        console.log("change!")
-        //channelDisp.setAttribute("name", i);
+        channelDisp.remove()
+        channelDisp = ce(type === "faction" ? "faction-disp" : "text-box")
+        channelDisp.setAttribute("name", i)
+        wrapper.append(channelDisp)
       }
       console.log(selection.childNodes);
       names.append(ele)
@@ -62,5 +64,5 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup testing testing", 1, 2, 3)
+const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup testing testing", "Classic", "Factorial")
 customElements.define("text-group", TextGroupDisplay)
