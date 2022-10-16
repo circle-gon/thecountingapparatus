@@ -1,7 +1,14 @@
 //Imports
 import { ce, TextChannel } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
-import { Functions, Operators, Left, Right, Wrap, Bin } from "../functions/functionClass.js";
+import {
+  Functions,
+  Operators,
+  Left,
+  Right,
+  Wrap,
+  Bin,
+} from "../functions/functionClass.js";
 
 //Factions Objects
 export const factions = {};
@@ -148,88 +155,97 @@ export class FactionBase {
 
   //Equation Parsing / Scanning
   parseOperator(msg, faction) {
-    
     //Checking highest parenDepth
     let parenDepthMax = 0;
     let indexOfMaxDepthStart = 0;
-      if(msg.includes("(")){
-        let parenCheck = msg.indexOf("(");
-        do {
-          let parenDepth = 0;
-          if (parenCheck > msg.length - 1)
-            // we're past the end, the user inputted an invalid string
-            throw new ParserError(
-              `You are missing ${parenDepth} closing parentheses. Please check your syntax!`
-            );
-          if (msg[parenCheck] === "(") parenDepth++; // increase parenDepth because we see a (
-          if (msg[parenCheck] === ")") parenDepth--; // decrease parenDepth because we see a (
-          
-          //Checking for index of maximum depth
-          if (parenDepthMax < parenDepth){
-            parenDepthMax = Math.max(parenDepth,parenDepthMax);
-            indexOfMaxDepthStart = parenCheck;
-          }
-          parenCheck++;
-        } while (msg[parenCheck] > 0);
-        
-        //Creating the deepest parenDepth
-        let subMsg = msg.substring(indexOfMaxDepthStart);
-        subMsg = subMsg.substring(0,subMsg.indexOf(")"));
-        let msgParam = indexOfMaxDepthStart+(subMsg.length-1);
-        
-        //Operate on the deepest parenDepth
-        for (const opCheck of Object.values(Operators)) {
-          while (subMsg.includes(opCheck.symbol)){
-            let op = subMsg.indexOf(opCheck.syntax);
-            let args = [];
-            switch (Object.getPrototypeOf(opCheck).constructor.name){
-              case Left.name:
-                let findArgLeft = op;
-                do{
-                  args[0] = args[0].concat(subMsg[++findArgLeft]);
-                }while(!isNaN(Number(subMsg[findArgLeft])));
-                subMsg = subMsg.replace(subMsg.substring(op,findArgLeft),opCheck.evaluate(args[0]));
-                break;
-              case Wrap.name:
-                let findArgWrap = op;
-                do{
-                  args[0] = args[0].concat(subMsg[++findArgWrap]);
-                }while(subMsg[op] != subMsg[findArgWrap]);
-                subMsg = subMsg.replace(subMsg.substring(op,findArgWrap),opCheck.evaluate(args[0]));
-                break;
-              case Right.name:
-                let findArgRight = op;
-                do{
-                  args[0] = subMsg[--findArgRight].concat(args[0]);
-                }while(!isNaN(Number(subMsg[findArgRight])));
-                subMsg = subMsg.replace(subMsg.substring(op,findArgRight),opCheck.evaluate(args[0]));
-                break;
-              case Bin.name:
-                let findArgZero = op;
-                let findArgOne = op;
-                do{
-                  args[0] = subMsg[--findArgZero].concat(args[0]);
-                }while(!isNaN(Number(subMsg[findArgZero])));
-                do{
-                  args[1] = args[1].concat(subMsg[++findArgOne]);
-                }while(!isNaN(Number(subMsg[findArgOne])));
-                subMsg = subMsg.replace(subMsg.substring(findArgZero,findArgOne),opCheck.evaluate(...args));
-                break;
-            }
+    if (msg.includes("(")) {
+      let parenCheck = msg.indexOf("(");
+      do {
+        let parenDepth = 0;
+        if (parenCheck > msg.length - 1)
+          // we're past the end, the user inputted an invalid string
+          throw new ParserError(
+            `You are missing ${parenDepth} closing parentheses. Please check your syntax!`
+          );
+        if (msg[parenCheck] === "(") parenDepth++; // increase parenDepth because we see a (
+        if (msg[parenCheck] === ")") parenDepth--; // decrease parenDepth because we see a (
+
+        //Checking for index of maximum depth
+        if (parenDepthMax < parenDepth) {
+          parenDepthMax = parenDepth
+          indexOfMaxDepthStart = parenCheck;
+        }
+        parenCheck++;
+      } while (msg[parenCheck] > 0);
+
+      //Creating the deepest parenDepth
+      let subMsg = msg.substring(indexOfMaxDepthStart);
+      subMsg = subMsg.substring(0, subMsg.indexOf(")"));
+      let msgParam = indexOfMaxDepthStart + (subMsg.length - 1);
+
+      //Operate on the deepest parenDepth
+      for (const opCheck of Object.values(Operators)) {
+        while (subMsg.includes(opCheck.symbol)) {
+          let op = subMsg.indexOf(opCheck.syntax);
+          let args = [];
+          switch (Object.getPrototypeOf(opCheck).constructor.name) {
+            case Left.name:
+              let findArgLeft = op;
+              do {
+                args[0] = args[0].concat(subMsg[++findArgLeft]);
+              } while (!isNaN(Number(subMsg[findArgLeft])));
+              subMsg = subMsg.replace(
+                subMsg.substring(op, findArgLeft),
+                opCheck.evaluate(args[0])
+              );
+              break;
+            case Wrap.name:
+              let findArgWrap = op;
+              do {
+                args[0] = args[0].concat(subMsg[++findArgWrap]);
+              } while (subMsg[op] != subMsg[findArgWrap]);
+              subMsg = subMsg.replace(
+                subMsg.substring(op, findArgWrap),
+                opCheck.evaluate(args[0])
+              );
+              break;
+            case Right.name:
+              let findArgRight = op;
+              do {
+                args[0] = subMsg[--findArgRight].concat(args[0]);
+              } while (!isNaN(Number(subMsg[findArgRight])));
+              subMsg = subMsg.replace(
+                subMsg.substring(op, findArgRight),
+                opCheck.evaluate(args[0])
+              );
+              break;
+            case Bin.name:
+              let findArgZero = op;
+              let findArgOne = op;
+              do {
+                args[0] = subMsg[--findArgZero].concat(args[0]);
+              } while (!isNaN(Number(subMsg[findArgZero])));
+              do {
+                args[1] = args[1].concat(subMsg[++findArgOne]);
+              } while (!isNaN(Number(subMsg[findArgOne])));
+              subMsg = subMsg.replace(
+                subMsg.substring(findArgZero, findArgOne),
+                opCheck.evaluate(...args)
+              );
+              break;
           }
         }
-        msg = msg.replace(msg.substring(indexOfMaxDepthStart,msgParam),subMsg);
-        if(parenCheck !== 0) this.parseOperator(msg, faction);
       }
-  }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
+      msg = msg.replace(msg.substring(indexOfMaxDepthStart, msgParam), subMsg);
+      if (parenCheck !== 0) this.parseOperator(msg, faction);
+    }
+  } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
 
   parseFunction(msg, faction) {
-
     msg = msg.replaceAll(" ", ""); //
     for (const functionCheck of Object.values(Functions).filter(
       (i) => !(i instanceof Operators)
     )) {
-
       //s
       const startOfArgs = functionCheck.syntax.indexOf("(");
       // first point where the ( is seen

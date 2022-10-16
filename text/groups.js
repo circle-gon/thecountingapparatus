@@ -25,7 +25,7 @@ class TextGroupDisplay extends HTMLElement {
     const style = ce("style")
     wrapper.innerHTML = `
       <input type="checkbox" class="control" style="display: inline" />
-      <div class="title" style="display: inline">${this.textGroup.name}</div>
+      <div class="title" style="display: inline-block">${this.textGroup.name}</div>
       <ul class="content">
         ${this.textGroup.channels.map(i=>`<li>${i}</li>`).join("")}
       </ul>
@@ -38,5 +38,4 @@ class TextGroupDisplay extends HTMLElement {
 }
 
 const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup", 1, 2, 3)
-console.log("testing")
 customElements.define("text-group", TextGroupDisplay)
