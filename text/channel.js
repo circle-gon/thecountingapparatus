@@ -105,6 +105,7 @@ class TextChannelDisp extends HTMLElement {
       if (!i.bot) ele.innerHTML += `<sub>#${i.num}</sub>`;
       this.texts.append(ele);
     });
+    if (this.texts.childNodes.length === 0) return
     [...this.texts.childNodes].at(-1).scrollIntoView({
       behavior: "smooth",
       block: "end",

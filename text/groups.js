@@ -2,7 +2,7 @@ import {ce} from './channel.js'
 import {randomInt} from '../utils/utils.js'
 import {switchTab} from './main.js'
 
-const textGroups = {}
+export const textGroups = {}
 
 class TextGroup {
   // channels is a array of arguments which either is:
@@ -11,6 +11,7 @@ class TextGroup {
   constructor(name, displayName, ...channels) {
     this.isVisible = true
     this.name = displayName
+    this._name = name
     this.channels = channels
     textGroups[name] = this
     
@@ -27,7 +28,6 @@ class TextGroupDisplay extends HTMLElement {
     const style = ce("link")
     const names = ce("div")
     // fix assumption later
-    let channelDisp = ce("faction-disp")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
