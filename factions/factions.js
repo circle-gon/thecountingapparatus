@@ -154,11 +154,10 @@ export class FactionBase {
     // ALSO GWA
 
     // split into a full arrawy of just functions and their arguments
-    let splitStr = str.split(/[(|(,)|)]/); // how does make work
-    splitStr = splitStr.filter((x) => x != "");
+    const splitStr = str.split(/[(|(,)|)]/).filter((x) => x !== "");
     // look for literals (the base case)
-    let literals = [];
-    let literalsIndexes = [];
+    const literals = [];
+    const literalsIndexes = [];
     for (let i = 0; i < splitStr.length; i++) {
       // check if literal and add to list - maybe have it add index as well?
       if (/\d/.test(splitStr[i])) {
@@ -168,9 +167,9 @@ export class FactionBase {
     }
     while (splitStr.length > 1) {
       for (let i = 0; i < literals.length; i++) {
-        let value = literals[i];
-        let index = literalsIndexes[i];
-        let leftFunc = splitStr[index - 1];
+        const value = literals[i];
+        const index = literalsIndexes[i];
+        const leftFunc = splitStr[index - 1];
         // rightFunc should be either nonexistant or a comma
         //let rightFunc = splitStr[index + 1]; // stop this checking oob
         if (leftFunc === ",") {
@@ -185,16 +184,19 @@ export class FactionBase {
         );
         console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
-        if (actualFunc == null || !actualFunc.unlocked) {
-          // tell them they're a fool
-          console.log("no function found");
+        if (actualFunc === undefined || !actualFunc.unlocked) {
+          throw new ParserError(
+            actualFunc === "undefined"
+              ? `Function ${leftFunc} does not exist.`
+              : `Function ${actualFunc} is not unlocked.`
+          );
         }
         if (actualFunc.isBanned || actualFunc.isStunned) {
           // special stuff
         }
-        let expectedArgs = actualFunc.expectedArgs;
-        let args = [];
-        let argsIndexes = [];
+        const expectedArgs = actualFunc.expectedArgs;
+        const args = [];
+        const argsIndexes = [];
         for (let j = 0; j < expectedArgs.length; j++) {
           // has arg been calculated to literal already
           if (

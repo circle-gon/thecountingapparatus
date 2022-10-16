@@ -64,5 +64,5 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-new TextGroup("faction", "Factions", "Classic", "Factorial", "Letter", "Ones", "Tree", "X X")
+new TextGroup("faction", "Factions", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
 customElements.define("text-group", TextGroupDisplay)
