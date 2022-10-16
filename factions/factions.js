@@ -233,10 +233,6 @@ export class FactionBase {
 //Equation Parsing / Scanning
 
 class FactionDisplay extends HTMLElement {
-  constructor() {
-    super();
-    this.stop = [];
-  }
   updateHTML() {
     const c = (co) => this.faction.countToDisplay(co);
     this.info.innerHTML = `Count: ${c(this.faction.count)}<br>
@@ -278,26 +274,12 @@ class FactionDisplay extends HTMLElement {
       //ctx.fillRect(0,20,30,20)
     }
   }
-  attributeChangedCallback(name, oldVal, newVal) {
-    if (!this.isConnected) return;
-    console.log("attribute changed: ", name, "new value", newVal, oldVal)
-    this.initStuff();
-  }
-  initStuff() {
-    this.stop.forEach((i) => i());
-    this.faction = factions[this.getAttribute("name")];
-    console.log("faction init");
-    this.chatInstance.setAttribute("name", this.getAttribute("name"));
-    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")];
-  }
-  static get observedAttributes() {
-    return ["name"];
-  }
   connectedCallback() {
     if (!this.isConnected) return;
 
     this.attachShadow({ mode: "open" });
     const name = this.getAttribute("name");
+    this.faction = factions[this.getAttribute("name")];
 
     this.info = ce("div");
     this.info.style.position = "absolute";
@@ -305,11 +287,12 @@ class FactionDisplay extends HTMLElement {
     this.info.style.right = "0";
 
     const root = ce("div");
-    this.chatInstance = ce("text-box");
-    this.initStuff();
+    const chatInstance = ce("text-box");
+    chatInstance.setAttribute("name", this.getAttribute("name"));
 
     // RE: why do we need setAttribute?
-    root.append(this.chatInstance, this.info);
+    this.faction.textBox.on(() => this.updateHTML(), "message")
+    root.append(chatInstance, this.info);
     //root.style.position = "relative"
     if (name === "Tree") {
       this.c = ce("canvas");

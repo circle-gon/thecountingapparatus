@@ -1,6 +1,6 @@
-import {EMOJI} from '../utils/constants.js'
-import {EventListener} from '../utils/utils.js'
- 
+import { EMOJI } from "../utils/constants.js";
+import { EventListener } from "../utils/utils.js";
+
 const channels = {};
 
 export class TextChannel {
@@ -19,7 +19,7 @@ export class TextChannel {
     this.messages = []; //array,string
     this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
-    this.eventListener = new EventListener()
+    this.eventListener = new EventListener();
     this.isFrozen = false; //bool
     this.isVisible = true;
     // force update
@@ -44,24 +44,21 @@ export class TextChannel {
     this.messages.splice(ind, 1);
   }
   on(func, type) {
-    return this.eventListener.on(
-      func,
-      type
-    );
+    return this.eventListener.on(func, type);
   }
   unListen() {
     this.handlers = [];
   }
   show() {
-    this.isVisible = true
-    this.eventListener.emit("show", true)
+    this.isVisible = true;
+    this.eventListener.emit("show", true);
   }
   hide() {
-    this.isVisible = false
-    this.eventListener.emit("show", false)
+    this.isVisible = false;
+    this.eventListener.emit("show", false);
   }
   freeze() {
-    this.eventListner.emit("freeze", true)
+    this.eventListner.emit("freeze", true);
     this.isFrozen = true;
   }
   unFreeze() {
@@ -92,16 +89,12 @@ export function ce(n) {
 // WARNING the string needs to be sanatized
 export function addEmoji(safeString) {
   for (const emoji of EMOJI) {
-    const regex = new RegExp(`:${emoji.name}:`, "g")
-    safeString = safeString.replace(regex, emoji.src)
+    const regex = new RegExp(`:${emoji.name}:`, "g");
+    safeString = safeString.replace(regex, emoji.src);
   }
-  return safeString
+  return safeString;
 }
 class TextChannelDisp extends HTMLElement {
-  constructor() {
-    super()
-    this.cancel = []
-  }
   updateText() {
     // oh shoot js injection
     this.texts.innerHTML = "";
@@ -128,32 +121,12 @@ class TextChannelDisp extends HTMLElement {
   get tooBig() {
     return this.input.value.length > this.textInstance.length;
   }
-  
-  initStuff() {
-    this.textInstance = channels[this.getAttribute("name")]
-    this.titleEle.innerHTML = this.textInstance.realName
-    this.input.type = this.textInstance.inputType;
-    this.cancel = [this.textInstance.on((d) => {
-      this.titleEle.innerHTML = d;
-    }, "channelName"), this.textInstance.on((f) => {
-      this.wrapper.style.display = f ? "block" : "none"
-    }, "show")]
-  }
-  attributeChangedCallback() {
-    if (!this.isConnected) return;
-    this.cancel.forEach(i=>i())
-    this.initStuff()
-  }
-  disconnectedCallback() {
-    this.cancel.forEach(i=>i())
-  }
-  static get observedAttributes() {
-    return ["name"]
-  }
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
+
+    this.textInstance = channels[this.getAttribute("name")];
 
     this.wrapper = ce("div");
     this.titleEle = ce("div");
@@ -163,14 +136,21 @@ class TextChannelDisp extends HTMLElement {
     const txtLength = ce("div");
 
     this.titleEle.textAlign = "center";
-    
+    this.titleEle.innerHTML = this.textInstance.realName;
+
     this.input.onkeydown = (e) => {
       if (e.key === "Enter") this.sendText();
     };
     this.input.style.width = "calc(100% -  85px)";
-    console.log(this.getAttribute("name"))
-    this.initStuff()
-    
+    this.input.type = this.textInstance.inputType;
+
+    this.textInstance.on((d) => {
+      this.titleEle.innerHTML = d;
+    }, "channelName");
+    this.textInstance.on((f) => {
+      this.wrapper.style.display = f ? "block" : "none";
+    }, "show");
+
     this.textInstance.updateText = () => this.updateText();
 
     btn.onclick = () => this.sendText();
@@ -194,6 +174,7 @@ class TextChannelDisp extends HTMLElement {
       } chars left`;
       txtLength.style.color = this.tooBig ? "red" : "green";
     }, 10);
+    this.updateText()
   }
 
   disconnectedCallback() {
