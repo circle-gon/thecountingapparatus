@@ -1,4 +1,5 @@
 import {EMOJI} from '../utils/constants.js'
+import {EventListener} from '../utils/utils.js'
  
 const channels = {};
 
@@ -18,7 +19,7 @@ export class TextChannel {
     this.messages = []; //array,string
     this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
-    this.handlers = [];
+    this.eventListener = new EventListener()
     this.isFrozen = false; //bool
     // force update
     this.updateText = () => {}; //function
@@ -35,37 +36,27 @@ export class TextChannel {
     channels[name] = this;
   }
   changeChannelName(name) {
-    this.invokeHandlers("channelName", name);
+    this.eventListener.emit("channelName", name);
     this.realName = name;
   }
   deleteMessage(ind) {
     this.messages.splice(ind, 1);
   }
   on(func, type) {
-    this.handlers.push({
-      type,
+    return this.eventListener.on(
       func,
-    });
-  }
-  isSupportedHandler(type, item) {
-    return type === "*" || item.type === type;
-  }
-  invokeHandlers(type, data) {
-    for (const handler of this.handlers.filter((i) =>
-      this.isSupportedHandler(type, i)
-    )) {
-      handler.func(data);
-    }
+      type
+    );
   }
   unListen() {
     this.handlers = [];
   }
   freeze() {
-    this.invokeHandlers("freeze", true);
+    this.eventListner.emit("freeze", true)
     this.isFrozen = true;
   }
   unFreeze() {
-    this.invokeHandlers("freeze", false);
+    this.eventListener.emit("freeze", false);
     this.isFrozen = false;
   }
   sendMessage(msg, bot = true) {
@@ -77,7 +68,7 @@ export class TextChannel {
       bot,
       ...this.extraData(msg),
     });
-    this.invokeHandlers("message", msg);
+    this.eventListener.emit("message", msg);
     if (this.messages.length > this.max) {
       this.messages.shift();
     }
@@ -124,7 +115,16 @@ class TextChannelDisp extends HTMLElement {
   get tooBig() {
     return this.input.value.length > this.textInstance.length;
   }
+  /*attributeChangedCallback() {
+    if (!this.isConnected) return;
+    this.textInstance = channels[this.getAttribute("name")]
+    title.innerHTML = this.textInstance.realName;
 
+    this.input.type = this.textInstance.inputType;
+  }*/
+  static get observedAttributes() {
+    return ["name"]
+  }
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
@@ -132,13 +132,13 @@ class TextChannelDisp extends HTMLElement {
     // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 
     const wrapper = ce("div");
-    const title = ce("div");
+    this.title = ce("div");
     this.texts = ce("div");
     this.input = ce("input");
     const btn = ce("button");
     const txtLength = ce("div");
 
-    title.textAlign = "center";
+    this.title.textAlign = "center";
     title.innerHTML = this.textInstance.realName;
 
     this.input.type = this.textInstance.inputType;

@@ -160,7 +160,8 @@ export class FactionBase {
     // ALSO GWA
 
     // split into a full arrawy of just functions and their arguments
-    const splitStr = str.split(/[(|(,)|)]/); // how does make work
+    let splitStr = str.split(/[(|(,)|)]/); // how does make work
+    splitStr = splitStr.filter(x => x != '');
     // look for literals (the base case)
     let literals = [];
     let literalsIndexes = [];
