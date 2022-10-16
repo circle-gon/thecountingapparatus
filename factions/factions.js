@@ -152,13 +152,30 @@ export class FactionBase {
   //Equation Parsing / Scanning
   static parseOperator(msg, faction) {
     throw new ParserError("Unimplemented...")
-    let parenDepthMax = 0
-    for (const opCheck of Object.values(Operators)) {
-      while (msg.includes(opCheck.symbol)){
-        let op = msg.indexOf(opCheck.syntax);
-        
+    
+    //Checking highest parenDepth
+    let parenDepthMax = 0;
+      if(msg.includes("(")){
+        let parenCheck = msg.indexOf("(");
+        do {
+          let parenDepth = 0;
+          if (parenCheck > msg.length - 1)
+            // we're past the end, the user inputted an invalid string
+            throw new ParserError(
+              `You are missing ${parenDepth} closing parentheses. Please check your syntax!`
+            );
+          if (msg[parenCheck] === "(") parenDepth++; // increase parenDepth because we see a (
+          if (msg[parenCheck] === ")") parenDepth--; // decrease parenDepth because we see a (
+          parenDepthMax = Math.max(parenDepth,parenDepthMax);
+          parenCheck++;
+        } while (msg[parenCheck] > 0);
+        for (const opCheck of Object.values(Operators)) {
+          while (msg.includes(opCheck.symbol)){
+            let op = msg.indexOf(opCheck.syntax);
+
+          }
+        }
       }
-    }
   }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
 
   static parseFunction(msg, faction) {
