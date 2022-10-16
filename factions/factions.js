@@ -176,6 +176,7 @@ export class FactionBase {
         //Creating the deepest parenDepth
         let subMsg = msg.substring(indexOfMaxDepthStart);
         subMsg = subMsg.substring(0,subMsg.indexOf(")"));
+        let msgParam = ;
         
         //Operate on the deepest parenDepth
         for (const opCheck of Object.values(Operators)) {
@@ -186,8 +187,10 @@ export class FactionBase {
               case Left.name:
                 let findArg = op;
                 do{
-                  args[0] = args[0].concat(++findArg)
-                }while(isNaN(Number(subMsg[findArg])))
+                  args[0] = args[0].concat(subMsg(++findArg));
+                }while(isNaN(Number(subMsg[findArg])));
+                subMsg = subMsg.replace(subMsg.substring(op,findArg));
+                break;
             }
           }
         }
