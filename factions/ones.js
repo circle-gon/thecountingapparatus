@@ -17,8 +17,15 @@ class OnesFaction extends FactionBase {
     );
   }
   
+  isCorrectCount(count) {
+    return (
+      this.nextCount === this.parseCount(count)
+    );
+  }
+  
   parseCount(count) {
-    return Number(this.parseFunction(count));
+    count = this.parseFunction(count,this);
+    return Number(count);
   }
 }
 

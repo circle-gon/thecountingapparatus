@@ -7,7 +7,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
   let binOps = ["+","-","*","/"]
   let leftUnOps = ["#"]
   let rightUnOps = ["!", "!!"]
-  let doubleSidedOps = ["|a|","[[a]]","||a||"]
+  let doubleSidedOps = ["##a##","[[a]]","||a||"]
   let chunk = ""
   let chunks = []
   let args = []
@@ -31,7 +31,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
           if(currentFunc[1].length > 0 && currentFunc[0] == "func") {
             args.push(stringToChunked(chunk))
             chunk = ""
-            chunks.push(["function",currentFunc,args])
+            chunks.push(["function",currentFunc[1],args])
             args = []
             currentFunc = ""
           } else {
@@ -48,20 +48,19 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         continue
       }
     chunk += str[i]
-    if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "wrap") {
+    if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "wrap" && parenDepth == 1) {
       chunks.push(["wrap",currentFunc[1],stringToChunked(chunk.substr(0,chunk.length-currentFunc[1].split("a")[1].length))])
       chunk = ""
       currentFunc[1] = ""
       currentFunc[0] = "func"
+      parenDepth = 0
+    }
+    if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "wrap" && parenDepth > 1) {
+        parenDepth--
     }
     for(let j in doubleSidedOps) {
       if(currentFunc[1].length>=1 && currentFunc[0] == "func") continue
-      if(chunk.endsWith(doubleSidedOps[j].split("a")[1])) {
-        if(parenDepth > 0) {
-          chunks.push(chunk.substr(0,doubleSidedOps[j].split("a")[1].length))
-        } else chunks.push(stringToChunked(chunk.substr(0,chunk.length-doubleSidedOps[j].split("a")[1].length)))
-        chunk = ""
-      }
+      
       if(chunk.endsWith(doubleSidedOps[j].split("a")[0])) {
         if(parenDepth > 0 && currentFunc[1] != doubleSidedOps[j]) continue
         chunks.push(stringToChunked(chunk.substr(0,chunk.length-doubleSidedOps[j].split("a")[0].length)))

@@ -19,6 +19,12 @@ class XxFaction extends FactionBase {
 
   //Counting & Milestones
 
+  isCorrectCount(count) {
+    return (
+      this.nextCount === this.parseCount(count)
+    );
+  }
+  
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
@@ -32,7 +38,8 @@ class XxFaction extends FactionBase {
   }
   
   parseCount(count) {
-    return Number(this.parseFunction(count));
+    count = this.parseFunction(count,this);
+    return Number(count);
   }
   
   updateMilestones() {
