@@ -10,7 +10,7 @@ class TextGroup {
     this.isVisible = true
     this.name = displayName
     this.channels = channels
-    this.textGroups[name] = this
+    textGroups[name] = this
     
   }
 }
@@ -24,10 +24,20 @@ class TextGroupDisplay extends HTMLElement {
     const wrapper = ce("div")
     const title = ce("div")
     const channels = ce("ul")
+    const style = ce("style")
     title.innerHTML = this.textGroup.name
-    
-    this.shadowRoot.append(wrapper)
+    channels.innerHTML = this.textGroup.channels.map(i=>`<li>${i}</li>`).join("")
+    style.innerHTML = `
+    ul {
+      /* don't ask why */
+      list-style-type: disc;
+    }
+    `
+    wrapper.append(title, channels)
+    this.shadowRoot.append(wrapper, style)
   }
 }
 
+const TEST_TEST_GROUP = new TextGroup("example", "Example TextGroup", 1, 2, 3)
+console.log("testing")
 customElements.define("text-group", TextGroupDisplay)

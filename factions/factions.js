@@ -152,10 +152,12 @@ export class FactionBase {
   //Equation Parsing / Scanning
   static parseOperator(msg, faction) {
     throw new ParserError("Unimplemented...")
+    let parenDepthMax = 0
     for (const opCheck of Object.values(Operators)) {
-      // 3+3+3
-      let op = msg.indexOf(opCheck.syntax);
-      
+      while (msg.includes(opCheck.symbol)){
+        let op = msg.indexOf(opCheck.syntax);
+        
+      }
     }
   }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
 
