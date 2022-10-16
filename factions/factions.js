@@ -32,7 +32,7 @@ export class FactionBase {
       name,
       name,
       100,
-      1,
+      1000,
       (msg) => {
         return {
           isCorrect: this.isCorrectCount(msg),
@@ -157,6 +157,7 @@ export class FactionBase {
     // ASSUMES FULL BRACKETING
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
     // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
+    // CURRENTLY RUNS ON NAMES OF FUNCTIONS
     // ALSO GWA
 
     // split into a full arrawy of just functions and their arguments
@@ -183,14 +184,17 @@ export class FactionBase {
           // ignore it
           continue;
         }
+        let leftFuncUpper = leftFunc;
+        leftFuncUpper.toUpperCase();
+        let actualFunc = Functions[leftFuncUpper];//Object.values(Functions).find(i=>i.name === leftFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
-        if (!(leftFunc in Functions) || !Functions[leftFunc].unlocked) {
+        if (actualFunc == null || !actualFunc.unlocked) {
           // tell them they're a fool
         }
-        if (Functions[leftFunc].isBanned || Functions[leftFunc].isStunned) {
+        if (actualFunc.isBanned || actualFunc.isStunned) {
           // special stuff
         }
-        let expectedArgs = Functions[leftFunc].expectedArgs;
+        let expectedArgs = actualFunc.expectedArgs;
         let args = [];
         let argsIndexes = [];
         for (let j = 0; j < expectedArgs.length; j++) {
@@ -201,7 +205,7 @@ export class FactionBase {
           }
         }
         if (args.length == expectedArgs.length) {
-          let result = Functions[leftFunc].evaluate(args);
+          let result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
             literals[argsIndexes[k]] = 'test'; // to avoid resizing while deleting

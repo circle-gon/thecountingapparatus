@@ -24,10 +24,11 @@ class TextGroupDisplay extends HTMLElement {
     this.textGroup = textGroups[name]
     const wrapper = ce("div")
     const style = ce("link")
+    const selection = ce("div")
     const int = randomInt()
     const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
     // THIS IS TESTING NOT THE FINAL PRODUCT
-    wrapper.innerHTML = `
+    selection.innerHTML = `
       <div class="container">
         <input type="checkbox"
            id="check${int}" 
