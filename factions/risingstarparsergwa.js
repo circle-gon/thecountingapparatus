@@ -1,15 +1,12 @@
 import {
-  Functions,
-  // Operators,
-  // Left,
-  // Right,
-  // Wrap,
-  // Bin,
+  Functions
 } from "../functions/functionClass.js";
 
 function parse(str) {
   // ASSUMES FULL BRACKETING
   // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
+  // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
+  // ALSO GWA
   
   // split into a full arrawy of just functions and their arguments
   const splitStr = str.split('/[()]+/');
@@ -35,7 +32,13 @@ function parse(str) {
         continue;
       }
       // find number of arguments (work out arbitrary args later, may need to keep brackets in split)
-      let expectedArgs = Functions[leftFunc].expectedArgs; // check function exists?
+      if (!(leftFunc in Functions) || !Functions[leftFunc].unlocked) {
+        // tell them they're a fool
+      }
+      if (Functions[leftFunc].isBanned || Functions[leftFunc].isStunned) {
+        // special stuff
+      }
+      let expectedArgs = Functions[leftFunc].expectedArgs;
       let args = [];
       let argsIndexes = [];
       for (let j = 0; j < expectedArgs.length(); j++) {
@@ -45,10 +48,10 @@ function parse(str) {
           argsIndexes.push(literalsIndexes.indexOf(index + 2));
         }
       }
-      if (args.length == expectedArgs) {
+      if (args.length == expectedArgs.length()) {
         let result = Functions[leftFunc].evaluate(args);
         // update literals lists
-        for (let k = 0; k < expectedArgs; k++) {
+        for (let k = 0; k < expectedArgs.length(); k++) {
           literals[argsIndexes[k]] = 'test'; // to avoid resizing while deleting
           literalsIndexes[argsIndexes[k]] = 'test';
         }
@@ -57,10 +60,15 @@ function parse(str) {
         literals.push(result);
         literalsIndexes.push(index - 1);
         // update splitStr
-        
+        splitStr[index - 1] = result
+          // remove calculated stuff
+        for (let j = 0; j < expectedArgs.length() * 2 - 1; j++) {
+          splitStr.removeAt(index);
+        }
         // reset the literals search
         break;
       }
     }
   }
+  return splitStr[0]; // gwa
 }

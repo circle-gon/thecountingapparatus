@@ -17,7 +17,10 @@ export function randomColor() {
   }
   return colorStr
 }
-
+let int = 0
+export function randomInt() {
+  return int++
+}
 export class EventListener {
   constructor() {
     this.handlers = new Set()

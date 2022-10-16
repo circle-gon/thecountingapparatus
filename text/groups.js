@@ -1,4 +1,5 @@
 import {ce} from './channel.js'
+import {randomInt} from '../utils/utils.js'
 
 const textGroups = {}
 
@@ -23,17 +24,17 @@ class TextGroupDisplay extends HTMLElement {
     this.textGroup = textGroups[name]
     const wrapper = ce("div")
     const style = ce("link")
+    const int = randomInt()
     // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `
       <div class="container">
         <input type="checkbox"
-           id="check" 
+           id="check${int}" 
            class="control">
-        <label for="check"
-           class="label">Click to</label>
-        <div class="content">
-          This is collapsible content
-        </div>
+        <label for="check${int}" class="label">${this.textGroup.name}</label>
+        <ul class="content">
+          ${this.textGroup.channels.map(i=>`<li>${i}</li>`).join("")}
+        </ul>
       </div>
     `
     style.rel = "stylesheet"
