@@ -1,4 +1,5 @@
 function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard-code style... Although this does look concise so far
+  if(str==="") return ["valCheck"]
   if(!(/[^123456789]/.test(str))) return ["literal", Number(str)]
   let parenDepth = 0
   let funcs = ["abu+(a,b)","AT(a,b,c)"]
@@ -6,7 +7,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
   let binOps = ["+","-","*","/"]
   let leftUnOps = ["#"]
   let rightUnOps = ["!", "!!"]
-  let doubleSidedOps = ["[[a]]","||a||"]
+  let doubleSidedOps = ["|a|","[[a]]","||a||"]
   let chunk = ""
   let chunks = []
   let args = []
@@ -58,17 +59,17 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
       if(chunk.endsWith(doubleSidedOps[j].split("a")[1])) {
         if(parenDepth > 0) {
           chunks.push(chunk.substr(0,doubleSidedOps[j].split("a")[1].length))
-        } else chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps[j].split("a")[1].length)))
+        } else chunks.push(stringToChunked(chunk.substr(0,chunk.length-doubleSidedOps[j].split("a")[1].length)))
         chunk = ""
       }
       if(chunk.endsWith(doubleSidedOps[j].split("a")[0])) {
         if(parenDepth > 0 && currentFunc[1] != doubleSidedOps[j]) continue
-        chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps[j].split("a")[0].length)))
+        chunks.push(stringToChunked(chunk.substr(0,chunk.length-doubleSidedOps[j].split("a")[0].length)))
         chunk = chunk.substr(-1*doubleSidedOps[j].split("a")[0].length)
       }
-      if(doubleSidedOps[j].split("a")[0] == chunk.substr(0,chunk.length-1) && (binOps.map(n => n[0]).includes(chunk[chunk.length-1]) || /[0123456789]/.test(chunk[chunk.length-1]))) {
+      if(doubleSidedOps[j].split("a")[0] == chunk.substr(0,chunk.length-1) && (doubleSidedOps.map(n => n[0]).filter(n => n!=chunk[0]).includes(chunk[chunk.length-1]) || /[0123456789]/.test(chunk[chunk.length-1]))) {
         parenDepth++
-        if(parenDepth > 0) {
+        if(parenDepth > 1) {
           chunk = chunks.pop() + chunk
           continue
         }

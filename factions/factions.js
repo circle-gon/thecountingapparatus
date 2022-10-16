@@ -147,8 +147,7 @@ export class FactionBase {
   }
 
   //Equation Parsing / Scanning
-  static parseOperator(msg, faction) {
-    throw new ParserError("Unimplemented...")
+  parseOperator(msg, faction) {
     
     //Checking highest parenDepth
     let parenDepthMax = 0;
@@ -224,8 +223,8 @@ export class FactionBase {
       }
   }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
 
-  static parseFunction(msg, faction) {
-    throw new ParserError("Unimplemented...")
+  parseFunction(msg, faction) {
+
     msg = msg.replaceAll(" ", ""); //
     for (const functionCheck of Object.values(Functions).filter(
       (i) => !(i instanceof Operators)
