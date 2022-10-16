@@ -33,7 +33,11 @@ class TextGroupDisplay extends HTMLElement {
            class="control">
         <label for="check${int}" class="label">${this.textGroup.name}</label>
         <ul class="content">
-          ${this.textGroup.channels.map(i=>`<li>${i}</li>`).join("")}
+          ${this.textGroup.channels.map(i=>`
+            <li onmouseover="this.style.backgroundColor='grey'" onmouseout="this.style.backgroundColor='inherit'">
+              ${i}
+            </li>
+          `).join("")}
         </ul>
       </div>
     `

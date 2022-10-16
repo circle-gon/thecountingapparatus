@@ -26,7 +26,7 @@ function parse(str) {
       let index = literals[i][1];
       let leftFunc = splitStr[index - 1];
       // rightFunc should be either nonexistant or a comma
-      let rightFunc = splitStr[index + 1]; // stop this checking oob
+      //let rightFunc = splitStr[index + 1]; // stop this checking oob
       if (leftFunc == ',') {
         // ignore it
         continue;

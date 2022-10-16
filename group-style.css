@@ -8,8 +8,7 @@ ul {
 }
 
 li {
-  display: inline-block;
-  height: 20px;
+  line-height: 20px;
 }
 
 .label {
@@ -25,7 +24,6 @@ li {
   messing up the timing. For widely variable height content, best not to animate. Switch display attribute instead */
   height: 0;
   overflow: hidden;
-  transition: height 0.2s;
   margin-left: -10px;
 }
 
@@ -54,5 +52,5 @@ li {
   transform: rotate(90deg);
 }
 .control:checked + .label + .content {
-  height: 70px;
+  height: fit-content;
 }
