@@ -12,7 +12,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
   let args = []
   let currentFunc = ["func",""]
   for(let i in str.split("")) {
-    if(str[i] == "(") {
+    if(str[i] == "(" && currentFunc[0] == "func") {
         if(names.includes(chunk) && parenDepth == 0) {
           currentFunc[1] = chunk
           parenDepth++
@@ -24,7 +24,7 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
         }
         parenDepth++
       }
-    if(str[i] == ")") {
+    if(str[i] == ")" && currentFunc[0] == "func") {
         parenDepth--; 
         if(parenDepth == 0) {
           if(currentFunc[1].length > 0 && currentFunc[0] == "func") {
@@ -48,19 +48,23 @@ function stringToChunked(str) { //HOPEFULLY this isn't going to be designed hard
       }
     chunk += str[i]
     if(chunk.endsWith(currentFunc[1].split("a")[1]) && currentFunc[0] == "wrap") {
-      currentFunc[1]
+      chunks.push(["wrap",currentFunc[1],stringToChunked(chunk.substr(0,chunk.length-currentFunc[1].split("a")[1].length))])
+      chunk = ""
+      currentFunc[1] = ""
+      currentFunc[0] = "func"
     }
     for(let j in doubleSidedOps) {
+      if(currentFunc[1].length>=1 && currentFunc[0] == "func") continue
       if(chunk.endsWith(doubleSidedOps[j].split("a")[1])) {
         if(parenDepth > 0) {
-          chunks.push(chunk.substr(0,doubleSidedOps.split("a")[1].length))
-        } else chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[1].length)))
+          chunks.push(chunk.substr(0,doubleSidedOps[j].split("a")[1].length))
+        } else chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps[j].split("a")[1].length)))
         chunk = ""
       }
       if(chunk.endsWith(doubleSidedOps[j].split("a")[0])) {
         if(parenDepth > 0 && currentFunc[1] != doubleSidedOps[j]) continue
-        chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps.split("a")[0].length)))
-        chunk = chunk.substr(-1*doubleSidedOps.split("a")[0].length)
+        chunks.push(stringToChunked(chunk.substr(0,doubleSidedOps[j].split("a")[0].length)))
+        chunk = chunk.substr(-1*doubleSidedOps[j].split("a")[0].length)
       }
       if(doubleSidedOps[j].split("a")[0] == chunk.substr(0,chunk.length-1) && (binOps.map(n => n[0]).includes(chunk[chunk.length-1]) || /[0123456789]/.test(chunk[chunk.length-1]))) {
         parenDepth++

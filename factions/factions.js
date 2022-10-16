@@ -214,6 +214,8 @@ export class FactionBase {
                 do{
                   args[1] = args[1].concat(subMsg[++findArgOne]);
                 }while(!isNaN(Number(subMsg[findArgOne])));
+                subMsg = subMsg.replace(subMsg.substring(findArgZero,findArgOne),opCheck.evaluate(...args));
+                break;
             }
           }
         }
