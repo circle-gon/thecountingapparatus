@@ -17,3 +17,26 @@ export function randomColor() {
   }
   return colorStr
 }
+
+export class EventListener {
+  constructor() {
+    this.handlers = new Set()
+  }
+  
+  on(handler, type) {
+    const data = {
+      handler, 
+      type
+    }
+    this.handlers.add(data)
+    return () => this.handlers.delete(data)
+  }
+  
+  emit(type, data) {
+    this.handlers.forEach(i => {
+      if (i.type === type) {
+        i.handler(data)
+      }
+    })
+  }
+}
