@@ -1,21 +1,18 @@
-/*z*///Imports
-// z??????????
+//Imports
 import { ce, TextChannel } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import {
   Functions,
   Operators /*, Operator*/,
 } from "../functions/functionClass.js";
-// import { Operator } from "../functions/functionList.js";
 
 //Factions Objects
 export const factions = {};
 
-//Faction superclass
-
 // base class to differernate standard js errors vs compilation errors
 class ParserError extends Error {}
 
+//Faction superclass
 export class FactionBase {
   constructor(name, msReq) {
     //Constant data
@@ -160,14 +157,16 @@ export class FactionBase {
       let op = msg.indexOf(opCheck.syntax);
       
     }
-  } //[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
+  }//[["literal",3],["operator","+"],["literal",3],["operator","+"],["literal",3]]
+
   static parseFunction(msg, faction) {
     throw new ParserError("Unimplemented...")
     msg = msg.replaceAll(" ", ""); //
     for (const functionCheck of Object.values(Functions).filter(
-      (i) => !(i instanceof Operator)
+      (i) => !(i instanceof Operators)
     )) {
-      //synCheck
+
+      //s
       const startOfArgs = functionCheck.syntax.indexOf("(");
       // first point where the ( is seen
       // abc(x,y,z) yields 3
