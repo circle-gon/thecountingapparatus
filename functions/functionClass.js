@@ -56,13 +56,13 @@ export function integral(integrand, a, b) {
   let conversion = (f,x,b,a) => (f((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
   if (a === -Infinity) {
     if (b === Infinity) {
-      outf = x => conversion(x => (integrand(1/x - 1) + integrand(-1/x - 1)) / (x**2), x, 0, 1);
+      outf = x => conversion(x => (integrand(1/x) + integrand(-1/x)) / (x**2), x, 0, 1);
     } else {
-      outf = x => conversion(x => integrand(-1/x - 1) / (x**2), x, 0, 1);
+      outf = x => conversion(x => integrand(-1/x) / (x**2), x, 0, 1);
     }
   } else {
     if (b === Infinity) {
-      outf = x => conversion(x => integrand(1/x - 1) / (x**2), x, 0, 1);
+      outf = x => conversion(x => integrand(1/x) / (x**2), x, 0, 1);
     } else {
       outf = x => conversion(integrand,x,a,b);
     }
@@ -75,4 +75,5 @@ export function integral(integrand, a, b) {
   return output;
   
   //20 point gaussian quadrature
+  //DO NOT USE
 }
