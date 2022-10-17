@@ -164,8 +164,8 @@ export class FactionBase {
     //   }
     // }
     // look for literals (the base case)
-    const literals = [];
-    const literalsIndexes = [];
+    let literals = [];
+    let literalsIndexes = [];
     for (let i = 0; i < splitStr.length; i++) {
       // check if literal and add to list - maybe have it add index as well?
       if (/\d/.test(splitStr[i])) {
@@ -175,6 +175,8 @@ export class FactionBase {
     }
     while (splitStr.length > 1) {
       console.log(splitStr);
+      console.log(literals);
+      console.log(literalsIndexes);
       for (let i = 0; i < literals.length; i++) {
         const value = literals[i];
         const index = literalsIndexes[i];
@@ -222,14 +224,15 @@ export class FactionBase {
         }
         if (args.length == expectedArgs.length) {
           console.log(args);
+          console.log(argsIndexes);
           let result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
-            literals[argsIndexes[k]] = "test"; // to avoid resizing while deleting
-            literalsIndexes[argsIndexes[k]] = "test";
+            literals[literalsIndexes.indexOf(argsIndexes[k])] = "test"; // to avoid resizing while deleting
+            literalsIndexes[literalsIndexes.indexOf(argsIndexes[k])] = "test";
           }
-          literals.filter(x => x !== "test");
-          literalsIndexes.filter(x => x !== "test");
+          literals = literals.filter(x => x != "test");
+          literalsIndexes = literalsIndexes.filter(x => x != "test");
           literals.push(result);
           literalsIndexes.push(index - 1);
           // update splitStr
