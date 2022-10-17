@@ -25,7 +25,7 @@ export class FactionBase {
       name,
       name,
       100,
-      1,
+      1000,
       (msg) => {
         return {
           isCorrect: this.isCorrectCount(msg),
@@ -197,6 +197,7 @@ export class FactionBase {
         const expectedArgs = actualFunc.syntax.split(',');//actualFunc.expectedArgs; // expected args will cover if they're matrices, real, etc
         const args = [];
         const argsIndexes = [];
+        console.log(expectedArgs);
         for (let j = 0; j < expectedArgs.length; j++) {
           // has arg been calculated to literal already
           if (
