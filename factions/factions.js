@@ -194,7 +194,7 @@ export class FactionBase {
         if (actualFunc.isBanned || actualFunc.isStunned) {
           // special stuff
         }
-        const expectedArgs = actualFunc.syntax.split(',').length;//actualFunc.expectedArgs;
+        const expectedArgs = actualFunc.syntax.split(',');//actualFunc.expectedArgs; // expected args will cover if they're matrices, real, etc
         const args = [];
         const argsIndexes = [];
         for (let j = 0; j < expectedArgs.length; j++) {
