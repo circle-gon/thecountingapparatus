@@ -154,8 +154,8 @@ export class FactionBase {
     // ALSO GWA
 
     // split into a full arrawy of just functions and their arguments
-    const splitStr = str.split(/[(A)]/).filter((x) => x !== "");
-    console.log()
+    const splitStr = str.split(/([,])|[()]/).filter((x) => x !== "" && x !== undefined);
+    // console.log(splitStr);
     // let splitStr = [];
     // for (const s of splitStrt) {
     //   let split = s.split(/[(,)]/).filter((x) => x !== "");
@@ -220,6 +220,7 @@ export class FactionBase {
           }
         }
         if (args.length == expectedArgs.length) {
+          console.log(args);
           let result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {

@@ -40,6 +40,7 @@ class XxFaction extends FactionBase {
   
   parseCount(count) {
     count = this.parseFunction(count,this);
+    console.log(count);
     return Number(count);
   }
   

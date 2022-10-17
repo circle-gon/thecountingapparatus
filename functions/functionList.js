@@ -62,18 +62,18 @@ class Integral extends FunctionBase {
 }
 //Functions (organize by Unlock)
 export const FUNCTIONS = {
-  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (a, b) {
-    switch (a) {
-      case 0: return b + 1;
-      case 1: return b + 2;
-      case 2: return 2 * b + 3;
-      case 3: return 2 ** (b + 3) - 3;
+  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (args) {
+    switch (args[0]) {
+      case 0: return args[1] + 1;
+      case 1: return args[1] + 2;
+      case 2: return 2 * args[1] + 3;
+      case 3: return 2 ** (args[1] + 3) - 3;
       case 4:
-        if (b === 0) {return 13;}
-        else if (b === 1) {return 65533;}
+        if (args[1] === 0) {return 13;}
+        else if (args[1] === 1) {return 65533;}
         else {return Infinity;}
       case 5:
-        if (b === 0) {return 65533;}
+        if (args[1] === 0) {return 65533;}
         else {return Infinity;}
       default:
         return Infinity;
