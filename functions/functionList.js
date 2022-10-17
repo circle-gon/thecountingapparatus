@@ -69,18 +69,12 @@ export const FUNCTIONS = {
       case 2: return 2 * args[1] + 3;
       case 3: return 2 ** (args[1] + 3) - 3;
       case 4:
-        if (args[1] === 0) {return 13;
-        } else if (args[1] === 1) {
-          return 65533;
-        } else {
-          return Infinity;
-        }
+        if (args[1] === 0) return 13;
+        else if (args[1] === 1) return 65533;
+        else return Infinity;
       case 5:
-        if (args[1] === 0) {
-          return 65533;
-        } else {
-          return Infinity;
-        }
+        if (args[1] === 0) return 65533;
+        else return Infinity;
       default:
         return Infinity;
     }
