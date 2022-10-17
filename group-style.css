@@ -10,15 +10,15 @@
 }
 
 .channel {
-  width: calc(100% + 5px);
+  width: 100%;
   height: 22px;
   font-size: 20px;
-  margin-top: 2px;
+  margin-bottom: 2px;
   padding-left: 8px;
 }
 .channel:hover {
   /* example */
-  background-color: #9f9faf;
+  background-color: #a7a7bf;
   border-radius: 2px;
 }
 

@@ -70,7 +70,7 @@ export function integral(integrand, a, b) {
 [0.0176140071391521,	-0.9931285991850949],
 [0.0176140071391521,	0.9931285991850949]]
   let outf;
-  const conversion = (f,x,b,a) => (f((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
+  const conversion = (f,x,a,b) => (f((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
   if (a === -Infinity && b === Infinity) {
     outf = x => (conversion(x => (integrand(1/x - 1) + integrand(-1/x - 1)) / (x**2), x, 0, 1));
   } else if (a === -Infinity) {
