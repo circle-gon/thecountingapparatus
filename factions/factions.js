@@ -333,7 +333,6 @@ class FactionDisplay extends HTMLElement {
       this.c.style.border = "solid";
       root.append(this.c);
     }
-    root.append(ce("br"));
     this.shadowRoot.append(root);
     this.updateHTML();
   }
