@@ -223,7 +223,7 @@ export class FactionBase {
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc === undefined || !actualFunc.isUnlocked) {
           throw new ParserError(
-            actualFunc === "undefined"
+            actualFunc === undefined
               ? `Function ${leftFunc} does not exist.`
               : `Function ${actualFunc} is not unlocked.`
           );

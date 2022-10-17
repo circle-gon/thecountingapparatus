@@ -101,7 +101,9 @@ export const FUNCTIONS = {
     }
     return output;
   }),
-
+  
+  J: ,
+  
   L: new FunctionBase(
     "Lucas Numbers",
     "L",
