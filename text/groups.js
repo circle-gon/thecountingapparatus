@@ -30,6 +30,7 @@ class TextGroupDisplay extends HTMLElement {
     const names = ce("div")
     // fix assumption later
     const int = randomInt()
+    console.log("tester")
     // TODO: better method than this
     // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `

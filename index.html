@@ -5,10 +5,17 @@
     <title>The Counting Apparatus Web Game</title>
     <script>
       window.onerror = (event, source, lineno, colno, error) => {
-        alert(error.stack)
-      }
+        alert(error.stack);
+      };
     </script>
-    <script src="main.js" type="module"></script>
+    <script>
+      const script = document.createElement("script");
+      script.src = "main.js";
+      script.type = "module";
+      setTimeout(() => {
+        document.head.append(script);
+      }, 5000);
+    </script>
   </head>
   <body>
     <tabs-main tabs="faction"></tabs-main>
