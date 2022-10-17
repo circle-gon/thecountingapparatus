@@ -1,5 +1,5 @@
 //Imports
-import { ce, TextChannel } from "../text/channel.js";
+import { ce, TextChannel, addEmoji } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import { FUNCTIONS } from "../functions/functionList.js";
 
@@ -34,10 +34,7 @@ export class FactionBase {
       (i) => {
         const ele = ce("div");
         const txt = ce("span");
-        txt.innerHTML = escapeHtml(i.msg).replaceAll(
-          /gwa|:gwa:/g,
-          `<img src="https://cdn.glitch.global/c4b4c3c5-22da-4237-8d6f-f6335452d8b5/gwa.png?v=1665428837632" />`
-        );
+        txt.innerHTML = addEmoji(escapeHtml(i.msg))
 
         ele.append(txt);
         ele.style.color = i.isCorrect ? "green" : "red";
@@ -157,7 +154,6 @@ export class FactionBase {
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
     // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
     // CURRENTLY RUNS ON NAMES OF FUNCTIONS
-    // ALSO GWA
 
     // split into a full array of just functions and their arguments
     const splitStr = str
@@ -210,16 +206,15 @@ export class FactionBase {
         }
         // this _returns_ a new string
         // so you're doing Functions[undefined]
-        //const FUNCTIONS = import("../functions/functionList.js"); // maybe temp
-        // const onesF = Object.values(FUNCTIONS).find((i) => i.name == "All Ones Sequence");
-        // console.log(leftFunc);
+        console.log(leftFunc);
+        console.log(splitStr);
         // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")));
         // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")) === leftFunc);
         
         const actualFunc = Object.values(FUNCTIONS).find(
           (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === leftFunc
         );
-        // console.log(actualFunc);
+        console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc === undefined || !actualFunc.isUnlocked) {
           throw new ParserError(

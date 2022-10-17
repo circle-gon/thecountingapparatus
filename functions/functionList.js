@@ -103,18 +103,24 @@ export const FUNCTIONS = {
   }),
   
   J: new Integral(
-    "Bessel Function",
+    "Bessel Function of the First Kind",
     "J",
     "J[n]x",
-    (args) => integral(t => Math.cos(args[0]*t - args[1]*Math.sin(t))/Math.PI, 0, Math.PI)),
-  
-  
+    (args) => integral(t => Math.cos(args[0]*t - args[1]*Math.sin(t))/Math.PI, 0, Math.PI)
+  ),
   
   L: new FunctionBase(
     "Lucas Numbers",
     "L",
     "L(x)",
     (args) => ((1 + Math.sqrt(5)) / 2) ** args[0] + ((1 - Math.sqrt(5)) / 2) ** args[0]
+  ),
+  
+  Y: new Integral(
+    "Bessel Function of the Second Kind",
+    "Y",
+    "Y[n]x",
+    (args) => integral(t => Math.sin(args[1]*Math.sin(t) - args[0]*t)/Math.PI, 0, Math.PI)
   ),
 
   AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function (args) {
@@ -144,6 +150,12 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+  
+  CI: new Integral(
+    "Cosine Integral",
+    "CI",
+    "Ci(x)",
+    (args) => integral(Math.cos, )),
 
   DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
     var output = 1;

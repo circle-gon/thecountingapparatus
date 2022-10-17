@@ -1,5 +1,5 @@
 import { EMOJI } from "../utils/constants.js";
-import { EventListener } from "../utils/utils.js";
+import { EventListener, escapeHtml } from "../utils/utils.js";
 
 export const channels = {};
 
@@ -30,7 +30,7 @@ export class TextChannel {
       ((i) => {
         const ele = ce("div");
         const txt = ce("span");
-        txt.innerText = i.msg;
+        txt.innerHTML = addEmoji(escapeHtml(i.msg));
         ele.append(txt);
         return ele;
       });
@@ -90,7 +90,7 @@ export function ce(n) {
 export function addEmoji(safeString) {
   for (const emoji of EMOJI) {
     const regex = new RegExp(`:${emoji.name}:`, "g");
-    safeString = safeString.replace(regex, emoji.src);
+    safeString = safeString.replace(regex, `<img src="${emoji.src}" />`);
   }
   return safeString;
 }
