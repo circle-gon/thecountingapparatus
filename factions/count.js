@@ -23,13 +23,6 @@ class CountFaction extends FactionBase {
   get nextCount() {
     return this.count + Math.max(xxCount.effectiveX, 1);
   }
-  doCount(count) {
-    if (this.isCorrectCount(count)) {
-      this.count = this.nextCount;
-      this.updateMilestones();
-      this.updateGoals();
-    }
-  }
 
   get milestoneRewards() {
     return {
@@ -40,6 +33,9 @@ class CountFaction extends FactionBase {
     };
   }
 
+  isCorrectCount(count) {
+    return count === this.nextCount.toString()
+  }
   useRewardOne() {
     if (this.rewardOneUsed < this.milestoneRewards.one) {
       this.rewardUsed++;

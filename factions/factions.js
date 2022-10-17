@@ -49,11 +49,8 @@ export class FactionBase {
   }
 
   // abstracts
-  isValidCount(count) {} //XX, Ones, Factorial
 
   parseCount(count) {} //XX, Ones, Factorial
-
-  doCount(count) {}
 
   spireBoost() {} //All Factions
 
@@ -75,6 +72,15 @@ export class FactionBase {
 
   get nextCount() {
     return this.count + 1;
+  }
+
+  doCount(count) {
+    console.log(this.isCorrectCount(count))
+    if (this.isCorrectCount(count)) {
+      this.count = this.nextCount;
+      this.updateMilestones();
+      this.updateGoals();
+    }
   }
 
   updateMilestones() {
@@ -237,13 +243,13 @@ export class FactionBase {
             argsIndexes.push(index + 2 + 2 * j);
           }
         }
-        if (args.length == expectedArgs.length) {
+        if (args.length === expectedArgs.length) {
           // console.log(args);
           // console.log(argsIndexes);
           const result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
-            const index = literalsIndexes.indexOf(argsIndexes[k])
+            const index = literalsIndexes.indexOf(argsIndexes[k]);
             literals[index] = "test"; // to avoid resizing while deleting
             literalsIndexes[index] = "test";
           }
@@ -267,7 +273,9 @@ export class FactionBase {
           // reset the literals search
           break;
         } else {
-          throw new ParserError("Invalid number of arguments for " + actualFunc.name);
+          throw new ParserError(
+            "Invalid number of arguments for " + actualFunc.name
+          );
         }
       }
     }

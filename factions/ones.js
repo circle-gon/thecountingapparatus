@@ -16,7 +16,6 @@ class OnesFaction extends FactionBase {
       )
     );
   }
-}
   
   parseCount(count) {
     return FactionBase.parseFunction(count,this);
