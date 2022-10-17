@@ -174,9 +174,9 @@ export class FactionBase {
       }
     }
     while (splitStr.length > 1) {
-      console.log(splitStr);
-      console.log(literals);
-      console.log(literalsIndexes);
+      // console.log(splitStr);
+      // console.log(literals);
+      // console.log(literalsIndexes);
       for (let i = 0; i < literals.length; i++) {
         const value = literals[i];
         const index = literalsIndexes[i];
@@ -223,8 +223,8 @@ export class FactionBase {
           }
         }
         if (args.length == expectedArgs.length) {
-          console.log(args);
-          console.log(argsIndexes);
+          // console.log(args);
+          // console.log(argsIndexes);
           let result = actualFunc.evaluate(args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
