@@ -197,8 +197,9 @@ export class FactionBase {
         const expectedArgs = actualFunc.syntax.split(',');//actualFunc.expectedArgs; // expected args will cover if they're matrices, real, etc
         const args = [];
         const argsIndexes = [];
-        console.log(expectedArgs);
-        for (let j = 0; j < expectedArgs.length; j++) {
+        args.push(literals[index]);
+        argsIndexes.push(index);
+        for (let j = 0; j < expectedArgs.length-1; j++) {
           // has arg been calculated to literal already
           if (
             splitStr[index + 1] == "," &&
@@ -215,18 +216,21 @@ export class FactionBase {
             literals[argsIndexes[k]] = "test"; // to avoid resizing while deleting
             literalsIndexes[argsIndexes[k]] = "test";
           }
-          literals.removeAll("test");
-          literalsIndexes.removeAll("test");
+          literals.filter(x => x !== "test");
+          literalsIndexes.filter(x => x !== "test");
           literals.push(result);
           literalsIndexes.push(index - 1);
           // update splitStr
           splitStr[index - 1] = result;
           // remove calculated stuff
           for (let j = 0; j < expectedArgs.length * 2 - 1; j++) {
-            splitStr.removeAt(index);
+            splitStr.splice(index, 1);
           }
           // reset the literals search
           break;
+        }
+        else {
+          throw new ParserError("Invalid number of arguments for " + actualFunc.name);
         }
       }
     }
