@@ -35,7 +35,7 @@ class TabsMain extends HTMLElement {
     }, 50)
     
     selection.style.border = "1px solid grey"
-    selection.style.height = "100vh"
+    selection.style.height = "100%"
     wrapper.append(selection, main)
     wrapper.style.display = "grid"
     wrapper.style.gridTemplateColumns = "20% 80%"
