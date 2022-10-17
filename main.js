@@ -4,4 +4,5 @@ import "./factions/letter.js";
 import "./factions/xx.js";
 import "./factions/ones.js";
 import "./factions/factorial.js";
+import './text/groups.js'
 import './text/main.js'

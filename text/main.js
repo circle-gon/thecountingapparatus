@@ -1,4 +1,5 @@
 import {ce} from './channel.js'
+import {textGroups} from './groups.js'
 
 let currTab
 let type

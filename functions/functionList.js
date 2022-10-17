@@ -80,7 +80,7 @@ export const FUNCTIONS = {
     }
   }),
 
-  B: new FunctionBase(
+  B: new Operator(
     "Beta Function",
     "B",
     "B(x,y)",
@@ -88,14 +88,14 @@ export const FUNCTIONS = {
       (gamma(args[0] + 1) * gamma(args[1] + 1)) / gamma(args[0] + args[1] + 1)
   ),
 
-  C: new FunctionBase(
+  C: new Operator(
     "Catalan Numbers",
     "C",
     "C(x)",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 2) / gamma(args[0] + 1)
   ),
 
-  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function (args) {
+  H: new Operator("Harmonic Numbers", "H", "H(a,b)", function (args) {
     let output = 0;
     for (let i = 1; i <= args[0]; i++) {
       output += 1 / i ** args[1];

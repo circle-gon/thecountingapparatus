@@ -8,16 +8,9 @@
         alert(error.stack);
       };
     </script>
-    <script>
-      const script = document.createElement("script");
-      script.src = "main.js";
-      script.type = "module";
-      setTimeout(() => {
-        document.head.append(script);
-      }, 5000);
-    </script>
+    <script src="main.js" type="module"></script>
   </head>
   <body>
-    <tabs-main tabs="faction"></tabs-main>
+    <tabs-main tabs="faction,chat"></tabs-main>
   </body>
 </html>
