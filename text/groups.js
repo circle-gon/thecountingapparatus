@@ -35,7 +35,8 @@ class TextGroupDisplay extends HTMLElement {
     wrapper.innerHTML = `
     <input type="checkbox"
       id="check${int}" 
-      class="control">
+      class="control"
+      checked>
     <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
     `
     wrapper.classList.add("container")

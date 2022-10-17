@@ -168,7 +168,7 @@ export const FUNCTIONS = {
   }),
 
   CI: new Integral("Cosine Integral", "CI", "Ci(x)", (args) =>
-    integral(Math.cos)
+    integral(t => -Math.cos(t)/t, args[0], Infinity)
   ),
 
   DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
