@@ -3,10 +3,11 @@
 }
 
 .channel {
-  width: 250px;
-  line-height: 22px;
+  width: 100%;
   height: 22px;
   font-size: 20px;
+  border: 1px solid;
+  margin: 10px, 0;
 }
 .channel:hover {
   background-color: grey;
@@ -14,11 +15,14 @@
 }
 
 .label {
+  /* nah it's fine we all make mistakes  */
+  margin: 0, 4px;
   cursor: pointer;
   display: block;
   user-select: none;
   text-transform: uppercase;
-  width: 250px;
+  width: calc(100% - 6px);
+  border: 1px solid;
 }
 
 .content {
