@@ -54,19 +54,16 @@ const points = [[0.1527533871307258,	-0.0765265211334973],
 export function integral(integrand, a, b) {
   let outf;
   let conversion = (f,x,b,a) => (f((x * (b - a)) / 2 + (a + b) / 2) * (b - a)) / 2;
-  if (a === -Infinity) {
-    if (b === Infinity) {
-      outf = x => conversion(x => (integrand(1/x - 1) + integrand(-1/x - 1)) / (x**2), x, 0, 1);
-    } else {
-      outf = x => conversion(x => integrand(-1/x - 1) / (x**2), x, 0, 1) + conversion(integrand, x, 0, b);
-    }
+  if (a === -Infinity && b === Infinity) {
+    outf = x => (conversion(x => (integrand(1/x - 1) + integrand(-1/x - 1)) / (x**2), x, 0, 1));
+  } else if (a === -Infinity) {
+      outf = x => (conversion(x => integrand(-1/x - 1) / (x**2), x, 0, 1) + conversion(integrand, x, 0, b));
+  } else if (b === Infinity){
+      outf = x => (conversion(x => integrand(1/x - 1) / (x**2), x, 0, 1) + conversion(integrand, x, a, 0));
   } else {
-    if (b === Infinity) {
-      outf = x => conversion(x => integrand(1/x - 1) / (x**2), x, 0, 1) + conversion(integrand, x, a, 0);
-    } else {
       outf = x => conversion(integrand,x,a,b);
-    }
   }
+  // linear for clarity
   
   let output = 0;
   for (let i = 0; i < points.length; i++) {
@@ -75,4 +72,5 @@ export function integral(integrand, a, b) {
   return output;
   
   //20 point gaussian quadrature
+  //Doesnt work with improper integrals for some reason
 }
