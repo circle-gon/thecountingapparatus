@@ -71,6 +71,6 @@ export function integral(integrand, a, b) {
   }
   return output;
   
-  //20 point gaussian quadrature
-  //Doesnt work with improper integrals for some reason
+  // 20 point gaussian quadrature
+  // Doesnt work with improper integrals yet for some reason
 }
