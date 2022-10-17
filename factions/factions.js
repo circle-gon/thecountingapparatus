@@ -214,7 +214,7 @@ export class FactionBase {
         const actualFunc = Object.values(FUNCTIONS).find(
           (i) => i.syntax.substring(0, i.syntax.indexOf("("))[0] === leftFunc
         );
-        //console.log(actualFunc);
+        // console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
         if (actualFunc === undefined || !actualFunc.isUnlocked) {
           throw new ParserError(

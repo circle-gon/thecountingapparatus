@@ -137,8 +137,9 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (x) {
+  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
     var output = 1;
+    const x = args[0];
     for (const i of x.toString()) {
       output *= i.parseInt();
     }
@@ -149,7 +150,7 @@ export const FUNCTIONS = {
     "Falling Factorial",
     "FF",
     "x_n",
-    (x, n) => gamma(x + 1) / gamma(x - n + 1)
+    (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
