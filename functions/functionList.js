@@ -56,8 +56,8 @@ class Bin extends Operator{
 }
 
 class Integral extends FunctionBase {
-  constructor(name, unlock, syntax, integrand, a, b) {
-    super(name, unlock, syntax, integral(integrand,a,b));
+  constructor(name, unlock, syntax, evaluate) {
+    super(name, unlock, syntax, evaluate);
   }
 }
 //Functions (organize by Unlock)
@@ -102,7 +102,13 @@ export const FUNCTIONS = {
     return output;
   }),
   
-  J: ,
+  J: new Integral(
+    "Bessel Function",
+    "J",
+    "J[n]x",
+    (args) => integral(t => Math.cos(args[0]*t - args[1]*Math.sin(t))/Math.PI, 0, Math.PI)),
+  
+  
   
   L: new FunctionBase(
     "Lucas Numbers",

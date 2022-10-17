@@ -159,7 +159,7 @@ export class FactionBase {
     // CURRENTLY RUNS ON NAMES OF FUNCTIONS
     // ALSO GWA
 
-    // split into a full arrawy of just functions and their arguments
+    // split into a full array of just functions and their arguments
     const splitStr = str
       .split(/([,])|[()]/)
       .filter((x) => x !== "" && x !== undefined);
@@ -180,7 +180,7 @@ export class FactionBase {
         literals.push(Number(splitStr[i]));
         literalsIndexes.push(i);
       }
-    } // what. gwa
+    }
     // so how is this expected to work with operators :trol:
     // so you're basically just gonna turn expressions into function expressions?
     // that is what the all caps at the top says yes
@@ -238,16 +238,28 @@ export class FactionBase {
         argsIndexes.push(index);
         // console.log(literals);
         // console.log(literalsIndexes);
-        for (let j = 0; j < expectedArgs.length - 1; j++) {
-          // has arg been calculated to literal already
+        // find all parameters of the function, even if it shouldn't have that many (due to user error)
+        let lastLiteralIndex = index;
+        while (lastLiteralIndex + 2 < splitStr.length) {
           if (
-            splitStr[index + 1 + 2 * j] === "," &&
-            literalsIndexes.includes(index + 2 + 2 * j)
+            splitStr[lastLiteralIndex + 1] === "," &&
+            literalsIndexes.includes(lastLiteralIndex + 2)
           ) {
-            args.push(literals[literalsIndexes.indexOf(index + 2 + 2 * j)]);
-            argsIndexes.push(index + 2 + 2 * j);
-          }
+            lastLiteralIndex += 2;
+            args.push(literals[literalsIndexes.indexOf(lastLiteralIndex)]);
+            argsIndexes.push(lastLiteralIndex);
+          } else { break; }
         }
+        // for (let j = 0; j < expectedArgs.length - 1; j++) {
+        //   // has arg been calculated to literal already
+        //   if (
+        //     splitStr[index + 1 + 2 * j] === "," &&
+        //     literalsIndexes.includes(index + 2 + 2 * j)
+        //   ) {
+        //     args.push(literals[literalsIndexes.indexOf(index + 2 + 2 * j)]);
+        //     argsIndexes.push(index + 2 + 2 * j);
+        //   }
+        // }
         if (args.length === expectedArgs.length) {
           // console.log(args);
           // console.log(argsIndexes);
