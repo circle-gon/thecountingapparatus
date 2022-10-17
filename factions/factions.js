@@ -172,8 +172,19 @@ export class FactionBase {
         literals.push(Number(splitStr[i]));
         literalsIndexes.push(i);
       }
-    }
-    while (splitStr.length > 1) {
+    } // what. gwa
+    // so how is this expected to work with operators :trol:
+    // so you're basically just gonna turn expressions into function expressions?
+    // that is what the all caps at the top says yes
+    // add(1,3) as the syntax
+    const originalLength = splitStr.length;
+    for (let w = 0; w < originalLength + 2; w++) {
+      if (splitStr.length == 1) {
+        break;
+      }
+      else if (w == originalLength + 1) { // + 1 just cuz I cba to do the math
+        throw new ParserError("operation length longer than expected, aborting");
+      }
       // console.log(splitStr);
       // console.log(literals);
       // console.log(literalsIndexes);
