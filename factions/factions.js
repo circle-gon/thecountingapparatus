@@ -199,14 +199,16 @@ export class FactionBase {
         const argsIndexes = [];
         args.push(literals[index]);
         argsIndexes.push(index);
+        console.log(literals);
+        console.log(literalsIndexes);
         for (let j = 0; j < expectedArgs.length-1; j++) {
           // has arg been calculated to literal already
           if (
-            splitStr[index + 1] == "," &&
-            literalsIndexes.includes(index + 2)
+            splitStr[index + 1 + 2*j] === "," &&
+            literalsIndexes.includes(index + 2 + 2*j)
           ) {
-            args.push(literals[index + 2]);
-            argsIndexes.push(literalsIndexes.indexOf(index + 2));
+            args.push(literals[index + 2 + 2*j]);
+            argsIndexes.push(literalsIndexes.indexOf(index + 2 +));
           }
         }
         if (args.length == expectedArgs.length) {
@@ -230,7 +232,8 @@ export class FactionBase {
           break;
         }
         else {
-          throw new ParserError("Invalid number of arguments for " + actualFunc.name);
+          console.log("bad argument count for " + actualFunc.name + "?");
+          //throw new ParserError("Invalid number of arguments for " + actualFunc.name);
         }
       }
     }

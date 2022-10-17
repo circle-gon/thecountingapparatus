@@ -21,7 +21,8 @@ class XxFaction extends FactionBase {
 
   isCorrectCount(count) {
     return (
-      this.nextCount === this.parseCount(count)
+      // this.nextCount === this.parseCount(count)
+      Math.abs(this.nextCount - this.parseCount(count)) < 0.00000001
     );
   }
   
