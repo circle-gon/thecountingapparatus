@@ -211,12 +211,13 @@ export class FactionBase {
         // this _returns_ a new string
         // so you're doing Functions[undefined]
         //const FUNCTIONS = import("../functions/functionList.js"); // maybe temp
-        console.log(leftFunc);
-        console.log("one(x)".substring(0, "one(x)".indexOf("(")));
-        console.log("one(x)".substring(0, "one(x)".indexOf("(")) === leftFunc);
-        const onesF = Object.values(FUNCTIONS).find((i)
+        // const onesF = Object.values(FUNCTIONS).find((i) => i.name == "All Ones Sequence");
+        // console.log(leftFunc);
+        // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")));
+        // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")) === leftFunc);
+        
         const actualFunc = Object.values(FUNCTIONS).find(
-          (i) => i.syntax.substring(0, i.syntax.indexOf("("))[0] === leftFunc
+          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === leftFunc
         );
         // console.log(actualFunc);
         // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
