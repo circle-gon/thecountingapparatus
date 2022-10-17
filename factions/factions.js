@@ -219,7 +219,7 @@ export class FactionBase {
             literalsIndexes.includes(index + 2 + 2*j)
           ) {
             args.push(literals[literalsIndexes.indexOf(index + 2 + 2*j)]);
-            argsIndexes.push(literalsIndexes.indexOf(index + 2 + 2*j));
+            argsIndexes.push(index + 2 + 2*j);
           }
         }
         if (args.length == expectedArgs.length) {
@@ -233,14 +233,21 @@ export class FactionBase {
           }
           literals = literals.filter(x => x != "test");
           literalsIndexes = literalsIndexes.filter(x => x != "test");
+          for (let q = 0; q < literalsIndexes.length; q++) {
+            if (literalsIndexes[q] > index - 1) {
+              literalsIndexes[q] -= expectedArgs.length * 2 - 1;
+            }
+          }
           literals.push(result);
           literalsIndexes.push(index - 1);
+          
           // update splitStr
           splitStr[index - 1] = result;
           // remove calculated stuff
           for (let j = 0; j < expectedArgs.length * 2 - 1; j++) {
             splitStr.splice(index, 1);
           }
+          
           // reset the literals search
           break;
         }
