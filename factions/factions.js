@@ -192,7 +192,7 @@ export class FactionBase {
       } else if (w === originalLength + 1) {
         // + 1 just cuz I cba to do the math
         throw new ParserError(
-          "operation length longer than expected, aborting"
+          "Oops, we ran into an error. Check your syntax!"
         );
       }
       // console.log(splitStr);
@@ -246,7 +246,7 @@ export class FactionBase {
         if (args.length === expectedArgs.length) {
           // console.log(args);
           // console.log(argsIndexes);
-          const result = actualFunc.evaluate(args);
+          const result = actualFunc.evaluate(...args);
           // update literals lists
           for (let k = 0; k < expectedArgs.length; k++) {
             const index = literalsIndexes.indexOf(argsIndexes[k]);

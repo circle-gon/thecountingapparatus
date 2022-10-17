@@ -1,5 +1,5 @@
-import { FunctionBase, integral } from "./functionClass.js";
-import { gamma } from "../utils/utils.js";
+import { FunctionBase} from "./functionClass.js";
+import { gamma, integral } from "../utils/utils.js";
 
 //Subclasses
 class NChooseR extends FunctionBase {
@@ -84,20 +84,20 @@ export const FUNCTIONS = {
     "Beta Function",
     "B",
     "B(x,y)",
-    (x, y) => (gamma(x + 1) * gamma(y + 1)) / gamma(x + y + 1)
+    (args) => (gamma(args[0] + 1) * gamma(args[1] + 1)) / gamma(args[0] + args[1] + 1)
   ),
 
   C: new FunctionBase(
     "Catalan Numbers",
     "C",
     "C(x)",
-    (x) => gamma(2 * x + 1) / gamma(x + 2) / gamma(x + 1)
+    (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 2) / gamma(args[0] + 1)
   ),
 
-  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function (a, b) {
+  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function (args) {
     let output = 0;
-    for (let i = 1; i <= a; i++) {
-      output += 1 / i ** b;
+    for (let i = 1; i <= args[0]; i++) {
+      output += 1 / i ** args[1];
     }
     return output;
   }),
@@ -106,23 +106,29 @@ export const FUNCTIONS = {
     "Lucas Numbers",
     "L",
     "L(x)",
-    (x) => ((1 + Math.sqrt(5)) / 2) ** x + ((1 - Math.sqrt(5)) / 2) ** x
+    (args) => ((1 + Math.sqrt(5)) / 2) ** args[0] + ((1 - Math.sqrt(5)) / 2) ** args[0]
   ),
 
-  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function (x) {
+  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function (args) {
     let output = 0;
+    const x = args[0];
     for (let i = 1; i <= x; i++) {
       output += gamma(i + 1) * (-1) ** (x - i);
     }
     return output
   }),
 
-  AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", (a, b, c) =>
-    Math.sqrt((-a + b + c) * (a - b + c) * (a + b - c) * (a + b + c))
+  AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", function (args) {
+    const a = args[0];
+    const b = args[1];
+    const c = args[2];
+    return Math.sqrt((-a + b + c) * (a - b + c) * (a + b - c) * (a + b + c))
+  }
   ),
 
-  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function (x) {
+  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function (args) {
     let output = 0;
+    const x = args[0];
     for (let i = 1; i <= x - 2; i++) {
       for (let j = i + 1; j <= x - 1; j++) {
         output += i ** 2 * j ** 2;
