@@ -154,7 +154,15 @@ export class FactionBase {
     // ALSO GWA
 
     // split into a full arrawy of just functions and their arguments
-    const splitStr = str.split(/[(|(,)|)]/).filter((x) => x !== "");
+    const splitStr = str.split(/[(A)]/).filter((x) => x !== "");
+    console.log()
+    // let splitStr = [];
+    // for (const s of splitStrt) {
+    //   let split = s.split(/[(,)]/).filter((x) => x !== "");
+    //   for (const sp of split) {
+    //     splitStr.push(sp);
+    //   }
+    // }
     // look for literals (the base case)
     const literals = [];
     const literalsIndexes = [];
@@ -199,8 +207,8 @@ export class FactionBase {
         const argsIndexes = [];
         args.push(literals[index]);
         argsIndexes.push(index);
-        console.log(literals);
-        console.log(literalsIndexes);
+        // console.log(literals);
+        // console.log(literalsIndexes);
         for (let j = 0; j < expectedArgs.length-1; j++) {
           // has arg been calculated to literal already
           if (
@@ -208,7 +216,7 @@ export class FactionBase {
             literalsIndexes.includes(index + 2 + 2*j)
           ) {
             args.push(literals[index + 2 + 2*j]);
-            argsIndexes.push(literalsIndexes.indexOf(index + 2 +));
+            argsIndexes.push(literalsIndexes.indexOf(index + 2 + 2*j));
           }
         }
         if (args.length == expectedArgs.length) {
