@@ -6,8 +6,6 @@ class XxFaction extends FactionBase {
     super("X X", (x) => Math.pow(x+1, Math.pow(x+1, this.milestoneReduction)));
     this.challenges = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     this.hasChal = true;
-    this.rawX = 1;
-    this.effectiveX = 1;
     this.goals = [
       () => this.rawX >= 4,
       () => this.challenges[0] >= 100,
@@ -38,23 +36,15 @@ class XxFaction extends FactionBase {
     return 1;
   }
   
-  parseCount(count) {
-    count = this.parseFunction(count,this);
-    console.log(count);
-    return Number(count);
+  get rawX() {
+    return this.milestones + 1
+  }
+  get effectiveX() {
+    return this.milestones + 1
   }
   
-  updateMilestones() {
-    const oldMilestone = this.milestones;
-    while (this.count >= this.milestoneNextAt) {
-      this.milestones++;
-      
-    }
-    if (this.milestones > oldMilestone) {
-      this.onMilestone();
-    }
-    this.effectiveX = this.milestones+1;
-    this.rawX = this.milestones+1;
+  parseCount(count) {
+    return FactionBase.parseFunction(count,this)
   }
   
   get challengeReward() {

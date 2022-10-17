@@ -23,12 +23,6 @@ class CountFaction extends FactionBase {
   get nextCount() {
     return this.count + Math.max(xxCount.effectiveX, 1);
   }
-
-  parseCount(count) {
-    this.parseFunction(count);
-    return Number(count);
-  }
-  
   doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;

@@ -18,15 +18,8 @@ class FactorialFaction extends FactionBase {
     
   }
   
-  isCorrectCount(count) {
-    return (
-      this.nextCount === this.parseCount(count)
-    );
-  }
-  
   parseCount(count) {
-    count = this.parseFunction(count,this);
-    return Number(count);
+    return FactionBase.parseFunction(count,this);
   }
 }
 export const factorialCount = new FactorialFaction();
