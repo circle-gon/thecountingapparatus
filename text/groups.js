@@ -30,14 +30,14 @@ class TextGroupDisplay extends HTMLElement {
     const names = ce("div")
     // fix assumption later
     const int = randomInt()
-    const realText = this.textGroup.name.length > 24 ? this.textGroup.name.substring(0, 24) + "..." : this.textGroup.name
+    // TODO: better method than this
     // THIS IS TESTING NOT THE FINAL PRODUCT
     wrapper.innerHTML = `
     <input type="checkbox"
       id="check${int}" 
       class="control"
       checked>
-    <label for="check${int}" title="${this.textGroup.name}" class="label">${realText}</label>
+    <label for="check${int}" title="${this.textGroup.name}" class="label">${this.textGroup.name}</label>
     `
     wrapper.classList.add("container")
     names.classList.add("content")

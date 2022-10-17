@@ -1,16 +1,24 @@
+* {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   padding-left: 10px;
 }
 
 .channel {
-  width: 100%;
+  width: calc(100% + 5px);
   height: 22px;
   font-size: 20px;
-  border: 1px solid;
-  margin: 10px, 0;
+  margin-top: 2px;
+  padding-left: 8px;
 }
 .channel:hover {
-  background-color: grey;
+  /* example */
+  background-color: #9f9faf;
   border-radius: 2px;
 }
 
@@ -22,7 +30,6 @@
   user-select: none;
   text-transform: uppercase;
   width: calc(100% - 6px);
-  border: 1px solid;
 }
 
 .content {
@@ -32,7 +39,6 @@
   height: 0;
   overflow: hidden;
   margin-left: 5px;
-  width: 250px;
 }
 
 .control {
