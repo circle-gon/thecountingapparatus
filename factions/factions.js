@@ -169,11 +169,12 @@ export class FactionBase {
     for (let i = 0; i < splitStr.length; i++) {
       // check if literal and add to list - maybe have it add index as well?
       if (/\d/.test(splitStr[i])) {
-        literals.push(splitStr[i]);
+        literals.push(Number(splitStr[i]));
         literalsIndexes.push(i);
       }
     }
     while (splitStr.length > 1) {
+      console.log(splitStr);
       for (let i = 0; i < literals.length; i++) {
         const value = literals[i];
         const index = literalsIndexes[i];
@@ -205,7 +206,7 @@ export class FactionBase {
         const expectedArgs = actualFunc.syntax.split(',');//actualFunc.expectedArgs; // expected args will cover if they're matrices, real, etc
         const args = [];
         const argsIndexes = [];
-        args.push(literals[index]);
+        args.push(literals[literalsIndexes.indexOf(index)]);
         argsIndexes.push(index);
         // console.log(literals);
         // console.log(literalsIndexes);
@@ -215,7 +216,7 @@ export class FactionBase {
             splitStr[index + 1 + 2*j] === "," &&
             literalsIndexes.includes(index + 2 + 2*j)
           ) {
-            args.push(literals[index + 2 + 2*j]);
+            args.push(literals[literalsIndexes.indexOf(index + 2 + 2*j)]);
             argsIndexes.push(literalsIndexes.indexOf(index + 2 + 2*j));
           }
         }
