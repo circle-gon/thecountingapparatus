@@ -1,11 +1,3 @@
-import { basicCount } from "../factions/count.js"
-import { treeCount } from "../factions/tree.js"
-import { letterCount } from "../factions/letter.js"
-import { xxCount } from "../factions/xx.js"
-import { onesCount } from "../factions/ones.js"
-import { factorialCount } from "../factions/factorial.js"
-
-
 //RULESETS
 const RULES = {
   Classic: [
@@ -49,39 +41,36 @@ const RULES = {
 const RULES_ABRIDGED = {
   Classic: [
     "Standard counting",
-    "Benefits: Unbans functions, yields Letter stock",
-    () => "Current Count: "+basicCount.count,
-    () => "Current Milestones: "+basicCount.milestones,
+    "Benefits: Unbans functions, yields letter stock",
+    "Downsides: Increases effective milestones"
   ],
   
   Tree: [
     "Slowmode counting",
     "Benefits: Unbans functions, increases Character Limit of messages",
-    () => "Current Count: "+treeCount.count,
-    () => "Current Milestones: "+treeCount.milestones,
+    "Downsides: Increases effective milestones"
   ],
   
   Letter: [
     "Counting with Letters",
     "Benefits: Reduces effective milestones, Unlocks functions",
-    () => "Current Count: "+letterCount.count,
-    () => "Current Milestones: "+letterCount.milestones,
-    
+    "Downsides: "
   ],
   
   X_X: [
     "Solving for counts with X amount of a number X",
     "Benefits: Increases Classic Counting speed, Reduces milestone scalings",
-    () => "Current Count: "+xxCount.count,
-    () => "Current Milestones: "+xxCount.milestones,
+    "Downsides: Increases effective milestones, bans functions"
   ],
   
   Ones: [
-    
+    "Uniquely solving for counts using only the number 1",
+    "Benefits: Reduces Tree slowmode. Multiplies Tree effect on Character Limit. Allows for usage of banned functions",
   ],
   
   Factorial: [
-    
+  "solving for counts using factorials of numbers",
+  "Benefits: Reduces effective milestones, yields letter stock"
   ]
 }
 
