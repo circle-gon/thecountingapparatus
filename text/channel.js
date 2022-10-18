@@ -111,7 +111,6 @@ class TextChannelDisp extends HTMLElement {
   updateText() {
     // oh shoot js injection
     this.texts.innerHTML = "";
-    console.log(this.textInstance.messages);
     this.textInstance.currentMessages.forEach((i) => {
       const ele = this.textInstance.toHTML(i);
       ele.onmouseover = () => (ele.style.backgroundColor = "grey");

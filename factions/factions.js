@@ -22,7 +22,7 @@ export class FactionBase {
     this.goalsCompleted = [];
     this.challengeDetails = challenges;
     this.inChallenge = null;
-    this.challenges = [];
+    this.challenges = new Array(challenges.length).fill(0)
 
     //Text box logic
     this.textBox = new TextChannel(
@@ -91,7 +91,7 @@ export class FactionBase {
   }
 
   doCount(count) {
-    console.log(this.isCorrectCount(count));
+    console.trace()
     if (this.isCorrectCount(count)) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;

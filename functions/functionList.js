@@ -362,9 +362,9 @@ export const FUNCTIONS = {
         Math.floor(Math.log10(x) / 3)
       ];
       return (
-        suffix +
         eng([Math.floor(x / 10 ** (3 * Math.floor(Math.log10(x) / 3)))]) +
-        eng([x % 10 ** (3 * Math.floor(Math.log10(x) / 3))])
+        suffix +
+        (x % 10 ** (3 * Math.floor(Math.log10(x) / 3))?eng([x % 10 ** (3 * Math.floor(Math.log10(x) / 3))]):0)
       );
     }
   }),
