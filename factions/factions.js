@@ -20,6 +20,8 @@ export class FactionBase {
     this.count = 0;
     this.goals = [];
     this.goalsCompleted = [];
+    this.inChallenge = null;
+    this.challenges = [];
 
     //Text box logic
     this.textBox = new TextChannel(
@@ -63,6 +65,10 @@ export class FactionBase {
 
   get milestoneRewards() {
     return {};
+  }
+  
+  get challengeEffects() {
+    return this.challenges.map(i => i.effect())
   }
 
   countToDisplay(c) {
