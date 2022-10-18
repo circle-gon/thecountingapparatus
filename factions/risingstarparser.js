@@ -94,12 +94,19 @@ export function parse2(str) {
       for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
         // find if there's a function with fitting syntax
         // ignore brackets if no function has been found yet
-        let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i]);
+        let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
         if (foundFunction == null) {
           subString = subString.replace(/[()]/g, '');
         }
-        const actualFunc = Object.values(FUNCTIONS).find(
-          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === subString
+        const actualFunc = Object.values(FUNCTIONS).find( function (i) {
+          if (i instanceof Right) {
+            return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
+          }
+          else if (i instanceof Operator) {
+            return i.syntax.substring(i.syntax.indexOf("a") + 1) === subString;
+          }
+        }
+          (i) => i.syntax.substring(i.syntax.indexOf(")") + 1) === subString
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
         if (actualFunc.isUnlocked) {

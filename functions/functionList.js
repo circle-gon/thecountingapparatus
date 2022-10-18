@@ -239,16 +239,25 @@ export const FUNCTIONS = {
 
   TF: new FunctionBase("Triple Factorial", "TF", "x!!!", function (args) {
     let output = 1;
-    for (let i = args[0]; i > 0; i -= 3) 
-      output *= i;
+    for (let i = args[0]; i > 0; i -= 3) output *= i;
     return output;
   }),
 
-  UN: new FunctionBase("Unary Representation", "UN", "1️⃣(x)", (args) => Math.floor(10**args[0] / 9)),
-  
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
-  ADD: new Operator("Addition", "ADD", "a+b", (args) => args[0] + args[1]),
+  UN: new FunctionBase("Unary Representation", "UN", "1️⃣(x)", (args) =>
+    Math.floor(10 ** args[0] / 9)
+  ),
+  
+  ABS: new FunctionBase("Absolute Value", "ABS", "|x|", Math.abs),
+
+  ADD: new FunctionBase("Addition", "ADD", "a+b", (args) => args[0] + args[1]),
+  
+  ADI: new FunctionBase("Additive Inverse", "ADI", "-x", (args) => -args[0]),
+  
+  AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
+  
+  BIN: new Bin("Binary Representation", "BIN", "bin[n]x")
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
