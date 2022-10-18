@@ -119,17 +119,10 @@ export function parse2(str) {
         // look for other args
         const expectedArgs = foundFunction.syntax.split(",");
         let args = [literals[i]];
-        let checkingIndex = i;
-        while (checkingIndex < literals.length) {
-          if (adaptedStr[literalsIndexes[i] + literalsLengths[i]] != ',') {
-            break;
+        if (foundFunction instanceof Bin) {
+          if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
+            args.push(literals[i + 1]);
           }
-          //should be a literal on the other side
-          if (!literalsIndexes.contains(literalsIndexes[i] + literalsLengths[i])) {
-            break;
-          }
-          args.push(literals[i+1]); // literals is ordered and should be kept that way
-          checkingIndex++;
         }
         if (args.length == expectedArgs.length) {
           const result = foundFunction.evaluate(args);

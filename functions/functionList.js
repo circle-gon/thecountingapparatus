@@ -257,7 +257,7 @@ export const FUNCTIONS = {
 
   AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
 
-  BIN: new Bin("Binary Representation", "BIN", "bin[n](x)", (args) =>
+  BIN: new Bin("Binary Numbers", "BIN", "bin[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(2)
   ),
 
@@ -277,10 +277,48 @@ export const FUNCTIONS = {
     (args) => Math.sin(args[0]) ** args[1] + Math.cos(args[0])
   ),
 
-  CHN: new FunctionBase("Centered Hexagonal Numbers", "CHN", "hex(x)", (args) => 3*args[0]*(args[0] + 1) + 1),
+  CHN: new FunctionBase(
+    "Centered Hexagonal Numbers",
+    "CHN",
+    "hex(x)",
+    (args) => 3 * args[0] * (args[0] + 1) + 1
+  ),
+
+  COS: new FunctionBase("Cosine", "COS", "cos(x)", Math.cos),
+
+  COT: new FunctionBase(
+    "Cotangent",
+    "COT",
+    "cot(x)",
+    (args) => 1 / Math.tan(args[0])
+  ),
+
+  CSC: new FunctionBase(
+    "Cosecent",
+    "CSC",
+    "csc(x)",
+    (args) => 1 / Math.sin(args[0])
+  ),
+
+  DBL: new FunctionBase(
+    "Doublets",
+    "DBL",
+    "2️⃣(x)",
+    (args) => args[0] + 10 ** Math.floor(Math.log10(args[0]) + 1) * args[0]
+  ),
+
+  DEC: new Bin("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
+    parseInt((args[1] >>> 0).toString(), args[0]).toString(10)
+  ),
+
+  //DET: new FunctionBase("Determinant", "DET", "det(A)", )
+  
+  DIV: new FunctionBase("Division", "DIV", "x/y", (args) => args[0]/args[1]),
+  
+  
   
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
-  
+
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
