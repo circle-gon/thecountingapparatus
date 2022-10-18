@@ -176,7 +176,7 @@ export function parse2(str) {
         }
         const actualFunc = Object.values(FUNCTIONS).find( function (i) {
           // possibly split up operators to prioritize
-          const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1);
+          const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y") + 1);
           if (syntaxSub == '') {
             return false;
           }

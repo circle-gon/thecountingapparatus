@@ -45,7 +45,7 @@ class LetterFaction extends FactionBase {
     const difference = this.LetterToNumber(count) - this.extensionCount;
     if (difference === 0) return false;
     if (difference === 1) {
-      this.count = this.nextCount
+      this.count[0]++
       return true;
     }
     const oom = Math.log(Math.abs(difference)) / Math.log(26);
