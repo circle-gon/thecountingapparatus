@@ -48,6 +48,7 @@ class TextGroupDisplay extends HTMLElement {
       ele.onclick = () => {
         switchTab(i, this.textGroup.type);
       };
+      ele.title = channels[i].realName
       channels[i].on((i) => {
         ele.style.display = i ? "block" : "none"
       }, "show")

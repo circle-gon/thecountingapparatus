@@ -171,10 +171,10 @@ export const FUNCTIONS = {
   ),
 
   DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
-    var output = 1;
+    let output = 1;
     const x = args[0];
     for (const i of x.toString()) {
-      output *= i.parseInt();
+      output *= Number(i)
     }
     return output;
   }),
@@ -345,7 +345,7 @@ export const FUNCTIONS = {
 
   ENG: new FunctionBase("English", "ENG", "eng(n)", function eng(args) {
     let x = args[0];
-    if (x == 0) return 4;
+    if (x === 0) return 4;
     let val = 0;
     if (x < 1e3) {
       val += [0, 10, 10, 12, 11, 11, 10, 12, 12, 11][Math.floor(x / 100)]; //Hundreds
