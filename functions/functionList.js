@@ -202,12 +202,12 @@ export const FUNCTIONS = {
 
   OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
 
-  PF: new FunctionBase(
-    "Pairity Factorial",
-    "PF",
-    "x!!",
-    (args) => (2 ** args[0] * gamma(0.5 + args[0])) / Math.sqrt(Math.PI)
-  ),
+  PF: new FunctionBase("Pairity Factorial", "PF", "x!!", function (args) {
+    let output = 1;
+    for (let i = args[0]; i > 0; i -= 2) {
+      output *= i
+    }
+  }),
 
   PI: new FunctionBase("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
 
@@ -237,6 +237,13 @@ export const FUNCTIONS = {
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
 
+  TF: new FunctionBase(
+    "Triple Factorial",
+    "TF",
+    "x!!!",
+    (args) => (2 ** args[0] * gamma(0.5 + args[0])) / Math.sqrt(Math.PI)
+  ),
+  
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
   ADD: new Operator("Addition", "ADD", "a+b", (args) => args[0] + args[1]),
