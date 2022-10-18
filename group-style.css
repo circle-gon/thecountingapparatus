@@ -21,13 +21,25 @@
 
 .label {
   /* nah it's fine we all make mistakes  */
-  margin: 0, 4px;
   cursor: pointer;
-  display: block;
   user-select: none;
   text-transform: uppercase;
   width: calc(100% - 6px);
+  position: relative;
+  display: block;
 }
+/*.label:before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 12px;
+  border-color: transparent transparent transparent grey;
+  transition: all 0.2s ease-in;
+}*/
 
 .content {
   /* Height animation:
@@ -40,24 +52,6 @@
 
 .control {
   display: none;
-}
-.control + .label {
-  position: relative;
-  height: 20px;
-  padding-left: 5px;
-  display: block;
-}
-.control + .label:before {
-  content: "";
-  position: absolute;
-  left: -9px;
-  top: 3px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 6px 0 6px 12px;
-  border-color: transparent transparent transparent grey;
-  transition: all 0.2s ease-in;
 }
 .control:checked + .label:before {
   transform: rotate(90deg);

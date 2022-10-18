@@ -154,6 +154,7 @@ export class FactionBase {
   }
 
   static parseFunction(str) {
+    console.log("hi");
     return parse2(str);
     // ASSUMES FULL BRACKETING
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)

@@ -6,6 +6,8 @@ import {
   Left
 } from "../functions/functionList.js";
 
+class ParserError extends Error {}
+
 export function parse2(str) {
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
@@ -24,7 +26,7 @@ export function parse2(str) {
   }
   
   // going through the literals, look for the longest valid function
-  // start left, then right, then binary, then enclosing
+  // start left, then right/binary, then enclosing
   // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
   // if something's processed, collapse it and adjust literals/indexes
   // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
@@ -38,11 +40,17 @@ export function parse2(str) {
     console.log(literalsIndexes);
     console.log("literalsLengths:");
     console.log(literalsLengths);
-    if (adaptedStr.length === 1) {
+    if (adaptedStr.length === literalsLengths[0]) {
       break;
     }
     // check literals in order, if nothing happens, check next
-    for (let i = 0; i < literals.length; i++) {
+    for (let i = 0; i < literals.length + 1; i++) {
+      if (i == literals.length + 1) {
+        // nothing was found
+        if (adaptedStr.length != literalsLengths[0]) {
+          throw new ParserError("no operation found but not finished");
+        }
+      }
       // left existence
       let foundFunction = null;
       let foundLength = 0;
