@@ -7,6 +7,7 @@ import {
 } from "../functions/functionList.js";
 
 export function parse2(str) {
+  console.log("start parse of " + str);
   // find all the actual numbers and their indexes
   const literals = str.match(/\d+/g); // this doesn't get index gwa
   let literalsIndexes = [];
@@ -20,6 +21,12 @@ export function parse2(str) {
     // replace the index with a not number of same length
     replaceString = replaceString.replace(literals[i], new Array(literals[i].length + 1).join("a"));
   }
+  console.log("literals:");
+  console.log(literals);
+  console.log("literalsIndexes:");
+  console.log(literalsIndexes);
+  console.log("literalsLengths:");
+  console.log(literalsLengths);
   
   // going through the literals, look for the longest valid function
   // start left, then right, then binary, then enclosing
@@ -51,6 +58,7 @@ export function parse2(str) {
         }
       }
       if (foundFunction != null) {
+        console.log(foundFunction);
         // look for other args
         const expectedArgs = foundFunction.syntax.split(",");
         let args = [literals[i]];
@@ -89,9 +97,9 @@ export function parse2(str) {
             bracketsBeGone++;
           }
           // actually remove used literals
-          literals = literals = literals.filter((x) => x !== "remove");
-          literalsIndexes = literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
-          literalsLengths = literalsLengths = literalsLengths.filter((x) => x !== "remove");
+          literals = literals.filter((x) => x !== "remove");
+          literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
+          literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
@@ -111,7 +119,11 @@ export function parse2(str) {
         }
         const actualFunc = Object.values(FUNCTIONS).find( function (i) {
           // possibly split up operators to prioritize
-          return i.syntax === subString || i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
+          const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1);
+          if (syntaxSub == '') {
+            return false;
+          }
+          return i.syntax === subString || syntaxSub === subString;
         }
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
@@ -121,6 +133,7 @@ export function parse2(str) {
         }
       }
       if (foundFunction != null) {
+        console.log(foundFunction);
         // look for other args
         const expectedArgs = foundFunction.syntax.split(",");
         let args = [literals[i]];
@@ -152,8 +165,8 @@ export function parse2(str) {
           literalsIndexes[i] -= bracketsBeGone;
           // actually remove used literals
           literals = literals.filter((x) => x !== "remove");
-          literalsIndexes = literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
-          literalsLengths = literalsLengths = literalsLengths.filter((x) => x !== "remove");
+          literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
+          literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
@@ -162,6 +175,7 @@ export function parse2(str) {
       }
     }
   }
+  console.log(literals[0]);
   return literals[0];
 }
 

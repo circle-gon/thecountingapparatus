@@ -312,22 +312,30 @@ export const FUNCTIONS = {
   ),
 
   //DET: new FunctionBase("Determinant", "DET", "det(A)", )
-  
-  DIV: new FunctionBase("Division", "DIV", "x/y", (args) => args[0]/args[1]),
-  
+
+  DIV: new FunctionBase("Division", "DIV", "x/y", (args) => args[0] / args[1]),
+
   DRT: new FunctionBase("Digital Root", "DRT", "D√n)", function drt(args) {
     let input = args[0].toString();
-    if (input.length = 1)
-      return parseInt(input);
+    if (input.length === 1) return parseInt(input);
     else {
       let output = 0;
-      for(let i = 0; i < input.length; i++) {
+      for (let i = 0; i < input.length; i++) {
         output += parseInt(input.charAt(i));
       }
       return drt([output]);
     }
   }),
   
+  DSM: new FunctionBase("Digit Sum", "DSM", "D+n", function (args) {
+    args[0] = args[0].toString();
+    let output = 0;
+    for (let i = 0; i < args[0].length; i++) {
+      output += parseInt(args[0].charAt(i));
+    }
+    return output;
+  }),
+
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
