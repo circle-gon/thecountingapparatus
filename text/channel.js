@@ -1,7 +1,7 @@
 import { EMOJI } from "../utils/constants.js";
 import { EventListener, escapeHtml } from "../utils/utils.js";
 
-export const channels = {};
+export const channels = window.channels = {};
 
 export class TextChannel {
   constructor(
@@ -16,7 +16,9 @@ export class TextChannel {
     this.realName = realName;
     this.max = maxMessages; //int
     this.length = maxLength; //int
-    this.messages = []; //array,string
+    this.messages = {
+      default: []
+    }; //array,string
     this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
     this.eventListener = new EventListener();

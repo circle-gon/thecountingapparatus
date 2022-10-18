@@ -48,6 +48,9 @@ class TextGroupDisplay extends HTMLElement {
       ele.onclick = () => {
         switchTab(i, this.textGroup.type);
       };
+      channels[i].on((i) => {
+        ele.style.display = i ? "block" : "none"
+      }, "show")
       names.append(ele);
     });
     style.rel = "stylesheet";
