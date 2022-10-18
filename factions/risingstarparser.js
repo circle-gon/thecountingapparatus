@@ -102,16 +102,16 @@ export function parse2(str) {
           subString = subString.replace(/[()]/g, '');
         }
         const actualFunc = Object.values(FUNCTIONS).find( function (i) {
-          if (i instanceof Right) {
-            return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
-          }
-          else if (i instanceof Bin) {
-            return i.syntax === subString;
-          }
-          else if (i instanceof Operator) {
-            return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
-          }
-          return false;
+          // if (i instanceof Right) {
+          //   return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString || ;
+          // }
+          // else if (i instanceof Bin) {
+          //   return i.syntax === subString;
+          // }
+          // else if (i instanceof Operator) {
+          //   return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
+          // }
+          return i.syntax === subString || i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
         }
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked

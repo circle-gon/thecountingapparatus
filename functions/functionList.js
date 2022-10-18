@@ -248,22 +248,24 @@ export const FUNCTIONS = {
   UN: new FunctionBase("Unary Representation", "UN", "1️⃣(x)", (args) =>
     Math.floor(10 ** args[0] / 9)
   ),
-  
+
   ABS: new FunctionBase("Absolute Value", "ABS", "|x|", Math.abs),
 
   ADD: new FunctionBase("Addition", "ADD", "a+b", (args) => args[0] + args[1]),
-  
+
   ADI: new FunctionBase("Additive Inverse", "ADI", "-x", (args) => -args[0]),
-  
+
   AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
-  
-  BIN: new Bin("Binary Representation", "BIN", "bin(x)", (args) => (args[0] >>> 0).tostring(2)),
+
+  BIN: new Bin("Binary Representation", "BIN", "bin[n](x)", (args) =>
+    parseInt((args[1] >>> 0).toString(), args[0]).toString(2)
+  ),
+
+  BLG: new Logarithm("Binary Logarithm", "BLG", "log2(x)", 2),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
-  LOG10: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
-
-  LOG2: new Logarithm("Binary Logarithm", "BL", "log2(x)", 2),
+  LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
 
