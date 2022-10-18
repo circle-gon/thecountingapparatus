@@ -12,10 +12,23 @@ export function parse2(str) {
     let index = replaceString.indexOf(literals[i]);
     literalsIndexes.push(index);
     // replace the index with a not number of same length
-    replaceString.replace(literals[i], "syke");
+    replaceString = replaceString.replace(literals[i], new Array(literals[i].length + 1).join("a"));
   }
-  console.log(replaceString);
-  console.log(literalsIndexes);
+  
+  // going through the literals, look for the longest valid function
+  // start left, then right, then binary, then enclosing
+  // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
+  // if something's processed, collapse it and adjust literals/indexes
+  // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
+  for (let notUsed = 0; notUsed < str.length; notUsed++) {
+    // check literals in order, if nothing happens, check next
+    for (let i = 0; i < literals.length; i++) {
+      // left existence
+      for (let distanceLeft = 0; distanceLeft < literalsIndexes[i]; distanceLeft++) {
+        // find if there's a function with fitting syntax
+      }
+    }
+  }
 }
 
 function parse(str) {

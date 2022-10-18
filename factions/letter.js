@@ -46,15 +46,20 @@ class LetterFaction extends FactionBase {
   
   doCount(count) {
     if (this.isCorrectCount(count)) {
-      this.count[0] = this.nextCount;
+      this.count[1] = this.nextCount;
       console.log(this.count);
       this.unlockFunction();
       this.updateMilestones();
       this.updateGoals();
     }
   }
+  get digitLength(){
+    let count = Math.max(baseCount(), extensionCount())
+    return Math.floor(Math.logBase(25*count+1, 26)-1)
+  }
   
   get nextCount(){
+    for (let i=0;i<this.count.length)
     return this.count[0]+1;
   }
   
