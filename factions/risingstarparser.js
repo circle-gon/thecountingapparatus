@@ -2,12 +2,21 @@ import {
   Functions
 } from "../functions/functionClass.js";
 
-function parse2(str) {
+export function parse2(str) {
   // find all the actual numbers and their indexes
-  const literals = str.match(/\d/);
-  console.log(literals);
+  const literals = str.match(/\d+/g); // this doesn't get index gwa
+  let literalsIndexes = [];
+  let replaceString = str;
+  for (let i = 0; i < literals.length; i++) {
+    //get first index, literals is ordered
+    let index = replaceString.indexOf(literals[i]);
+    literalsIndexes.push(index);
+    // replace the index with a not number of same length
+    replaceString.replace(literals[i], "syke");
+  }
+  console.log(replaceString);
+  console.log(literalsIndexes);
 }
-parse2("a2nf453j");
 
 function parse(str) {
   // ASSUMES FULL BRACKETING

@@ -2,6 +2,7 @@
 import { ce, TextChannel, addEmoji } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import { FUNCTIONS } from "../functions/functionList.js";
+import { parse2 } from "./risingstarparser.js";
 
 //Factions Objects
 export const factions = {};
@@ -150,6 +151,7 @@ export class FactionBase {
   }
 
   static parseFunction(str) {
+    parse2(str);
     // ASSUMES FULL BRACKETING
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
     // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED

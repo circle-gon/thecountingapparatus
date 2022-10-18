@@ -31,11 +31,6 @@ class LetterFaction extends FactionBase {
     return a
   }
   
-  get nextCount() {
-    if(isNaN(Number(this.count[0])))
-    return this.count[0] + 1;
-  }
-  
   usedStock(){
     let a=0
     for(let i =0; i<this.count.length;i++){
@@ -43,18 +38,26 @@ class LetterFaction extends FactionBase {
     }
     return a
   }
+  
   //Counting Logic
   isCorrectCount(count) {
     return count === this.NumberToLetter(this.nextCount)
   }
+  
   doCount(count) {
     if (this.isCorrectCount(count)) {
-      this.count = this.nextCount;
+      this.count[0] = this.nextCount;
+      console.log(this.count);
       this.unlockFunction();
       this.updateMilestones();
       this.updateGoals();
     }
   }
+  
+  get nextCount(){
+    return this.count[0]+1;
+  }
+  
   countToDisplay(count) {
     return this.NumberToLetter(count)
   }
