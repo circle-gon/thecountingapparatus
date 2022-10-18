@@ -251,7 +251,7 @@ export const FUNCTIONS = {
 
   ABS: new FunctionBase("Absolute Value", "ABS", "|x|", Math.abs),
 
-  ADD: new FunctionBase("Addition", "ADD", "x+y", (args) => args[0] + args[1]),
+  ADD: new Bin("Addition", "ADD", "x+y", (args) => args[0] + args[1]),
 
   ADI: new FunctionBase("Additive Inverse", "ADI", "-x", (args) => -args[0]),
 

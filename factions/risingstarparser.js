@@ -161,6 +161,7 @@ export function parse2(str) {
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
           }
+          break; // reset loop and avoid getting kicked out for reaching the end
         }
       }
       
@@ -176,11 +177,15 @@ export function parse2(str) {
         }
         const actualFunc = Object.values(FUNCTIONS).find( function (i) {
           // possibly split up operators to prioritize
-          const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y") + 1);
-          if (syntaxSub == '') {
-            return false;
+          let syntaxSubx = i.syntax.substring(i.syntax.indexOf("x") + 1);
+          if (syntaxSubx == '') {
+            syntaxSubx = null;
           }
-          return i.syntax === subString || syntaxSub === subString;
+          let syntaxSubxy = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y"));
+          if (syntaxSubxy == '') {
+            syntaxSubxy = null;
+          }
+          return i.syntax === subString || syntaxSubx === subString || syntaxSubxy === subString;
         }
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
@@ -265,6 +270,7 @@ export function parse2(str) {
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone - 1;
           }
+          break; // reset loop and avoid getting kicked out for reaching the end
         }
       }
       // enclosing existance trol

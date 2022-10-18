@@ -68,10 +68,6 @@ export class FactionBase {
     return {};
   }
 
-  challengeEffect(i) {
-    return this.challengeDetails[i];
-  }
-
   countToDisplay(c) {
     return c;
   }
@@ -82,6 +78,12 @@ export class FactionBase {
   
   enterChallenge(i) {
     this.inChallenge = i
+    this.textBox.switchToChat(this.challengeDetails[i].name)  
+  }
+  
+  exitChallenge() {
+    this.inChallenge = null
+    this.textBox.switchToChat("default")
   }
 
   //Count & Milestones
@@ -174,148 +176,6 @@ export class FactionBase {
 
   static parseFunction(str) {
     return parse2(str);
-    // ASSUMES FULL BRACKETING
-    // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
-    // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
-    // CURRENTLY RUNS ON NAMES OF FUNCTIONS
-
-    // split into a full array of just functions and their arguments
-    const splitStr = str
-      .split(/([,])|[()]/)
-      .filter((x) => x !== "" && x !== undefined);
-    // console.log(splitStr);
-    // let splitStr = [];
-    // for (const s of splitStrt) {
-    //   let split = s.split(/[(,)]/).filter((x) => x !== "");
-    //   for (const sp of split) {
-    //     splitStr.push(sp);
-    //   }
-    // }
-    // look for literals (the base case)
-    let literals = [];
-    let literalsIndexes = [];
-    for (let i = 0; i < splitStr.length; i++) {
-      // check if literal and add to list - maybe have it add index as well?
-      if (/\d/.test(splitStr[i])) {
-        literals.push(Number(splitStr[i]));
-        literalsIndexes.push(i);
-      }
-    }
-    // so how is this expected to work with operators :trol:
-    // so you're basically just gonna turn expressions into function expressions?
-    // that is what the all caps at the top says yes
-    // add(1,3) as the syntax
-    const originalLength = splitStr.length;
-    for (let w = 0; w < originalLength + 2; w++) {
-      if (splitStr.length === 1) {
-        break;
-      } else if (w === originalLength + 1) {
-        // + 1 just cuz I cba to do the math
-        throw new ParserError("Oops, we ran into an error. Check your syntax!");
-      }
-      // console.log(splitStr);
-      // console.log(literals);
-      // console.log(literalsIndexes);
-      for (let i = 0; i < literals.length; i++) {
-        const value = literals[i];
-        const index = literalsIndexes[i];
-        const leftFunc = splitStr[index - 1];
-        // rightFunc should be either nonexistant or a comma
-        //let rightFunc = splitStr[index + 1]; // stop this checking oob
-        if (leftFunc === ",") {
-          // ignore it
-          continue;
-        }
-        // this _returns_ a new string
-        // so you're doing Functions[undefined]
-        console.log(leftFunc);
-        console.log(splitStr);
-        // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")));
-        // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")) === leftFunc);
-
-        const actualFunc = Object.values(FUNCTIONS).find(
-          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === leftFunc
-        );
-        console.log(actualFunc);
-        // find number of arguments (work out arbitrary args later, may need to ke(6)ep brackets in split)
-        if (actualFunc === undefined || !actualFunc.isUnlocked) {
-          throw new ParserError(
-            actualFunc === undefined
-              ? `Function ${leftFunc} does not exist.`
-              : `Function ${actualFunc} is not unlocked.`
-          );
-        }
-        if (actualFunc.isBanned || actualFunc.isStunned) {
-          // special stuff
-        }
-        const expectedArgs = actualFunc.syntax.split(","); //actualFunc.expectedArgs; // expected args will cover if they're matrices, real, etc
-        const args = [];
-        const argsIndexes = [];
-        args.push(literals[literalsIndexes.indexOf(index)]);
-        argsIndexes.push(index);
-        // console.log(literals);
-        // console.log(literalsIndexes);
-        // find all parameters of the function, even if it shouldn't have that many (due to user error)
-        let lastLiteralIndex = index;
-        while (lastLiteralIndex + 2 < splitStr.length) {
-          if (
-            splitStr[lastLiteralIndex + 1] === "," &&
-            literalsIndexes.includes(lastLiteralIndex + 2)
-          ) {
-            lastLiteralIndex += 2;
-            args.push(literals[literalsIndexes.indexOf(lastLiteralIndex)]);
-            argsIndexes.push(lastLiteralIndex);
-          } else {
-            break;
-          }
-        }
-        // for (let j = 0; j < expectedArgs.length - 1; j++) {
-        //   // has arg been calculated to literal already
-        //   if (
-        //     splitStr[index + 1 + 2 * j] === "," &&
-        //     literalsIndexes.includes(index + 2 + 2 * j)
-        //   ) {
-        //     args.push(literals[literalsIndexes.indexOf(index + 2 + 2 * j)]);
-        //     argsIndexes.push(index + 2 + 2 * j);
-        //   }
-        // }
-        if (args.length === expectedArgs.length) {
-          // console.log(args);
-          // console.log(argsIndexes);
-          const result = actualFunc.evaluate(...args);
-          // update literals lists
-          for (let k = 0; k < expectedArgs.length; k++) {
-            const index = literalsIndexes.indexOf(argsIndexes[k]);
-            literals[index] = "test"; // to avoid resizing while deleting
-            literalsIndexes[index] = "test";
-          }
-          literals = literals.filter((x) => x !== "test");
-          literalsIndexes = literalsIndexes.filter((x) => x !== "test");
-          for (let q = 0; q < literalsIndexes.length; q++) {
-            if (literalsIndexes[q] > index - 1) {
-              literalsIndexes[q] -= expectedArgs.length * 2 - 1;
-            }
-          }
-          literals.push(result);
-          literalsIndexes.push(index - 1);
-
-          // update splitStr
-          splitStr[index - 1] = result;
-          // remove calculated stuff
-          for (let j = 0; j < expectedArgs.length * 2 - 1; j++) {
-            splitStr.splice(index, 1);
-          }
-
-          // reset the literals search
-          break;
-        } else {
-          throw new ParserError(
-            "Invalid number of arguments for " + actualFunc.name
-          );
-        }
-      }
-    }
-    return Number(splitStr[0]); // gwa
   }
 }
 //Equation Parsing / Scanning
