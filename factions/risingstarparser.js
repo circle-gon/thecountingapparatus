@@ -61,9 +61,9 @@ export function parse2(str) {
         }
         if (args.length == expectedArgs.length) {
           const result = foundFunction.evaluate(args);
+          let removedLength = literals[i].length;
           literals[i] = result
           // remove extra used literals
-          let removedLength = 0;
           for (let k = 1; k < args.length; k++) {
             removedLength += literals[i + k].length + 1;
             literals[i + k] = "remove";
@@ -71,8 +71,16 @@ export function parse2(str) {
           }
           // collapse (remove right sided brackets as well)
           literalsIndexes[i] -= foundLength;
-          adaptedStr[literalsIndexes[i]] = ';';
-          adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr
+          adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
+          let bracketsBeGone = 0;
+          while (adaptedStr[literalsIndexes[i] + 1] == ")") {
+            adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
+            bracketsBeGone++;
+          }
+          // offset later remaining literals
+          for (let k = i + 1; k < literals.length; k++) {
+            literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
+          }
         }
       }
     }

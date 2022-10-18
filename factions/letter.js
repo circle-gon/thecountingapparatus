@@ -11,8 +11,6 @@ class LetterFaction extends FactionBase {
         (Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1) / 25 - 1
       )
     );
-    // warning current code does not support
-    // this format
     this.count = [0];
     this.hasChal = false;
     //this.letterStock = 0;
@@ -56,10 +54,10 @@ class LetterFaction extends FactionBase {
     let oom = Math.log(Math.abs(difference))/Math.log(26)
     
     if(oom == Math.floor(oom)){
-      
+      if(oom > maxDigitIncr-1)return false
       let remainingStock = this.letterStock - this.usedStock()
         if(this.count[oom] == undefined)this.count[oom]=0
-        if( remainingStock >= oom){
+        if( remainingStock >= oom || (Math.sign(this.count[oom]) == -1 && Math.sign(difference) == 1)|| (Math.sign(this.count[oom]) == 1 && Math.sign(difference) == -1)){
           this.count[oom]+= Math.sign(difference);
           return true} else return false
       
