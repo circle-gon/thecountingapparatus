@@ -31,6 +31,9 @@ export function parse2(str) {
   // just copying code for each direction atm, there's prolly a better way
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
+    if (adaptedStr.length == 1) {
+      break;
+    }
     console.log("adaptedStr: " + adaptedStr);
     console.log("literals:");
     console.log(literals);
@@ -50,8 +53,14 @@ export function parse2(str) {
         if (foundFunction == null) {
           subString = subString.replace(/[()]/g, '');
         }
-        const actualFunc = Object.values(FUNCTIONS).find(
-          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === subString
+        const actualFunc = Object.values(FUNCTIONS).find( function (i) {
+          // possibly split up operators to prioritize
+          const syntaxSub = i.syntax.substring(0, i.syntax.indexOf("("));
+          if (syntaxSub == '') {
+            return false;
+          }
+          return i.syntax === subString || syntaxSub === subString;
+        }
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
         if (actualFunc != undefined && actualFunc.isUnlocked) {
@@ -77,7 +86,9 @@ export function parse2(str) {
             args.push(literals[i+1]); // literals is ordered and should be kept that way
             checkingIndex++;
           }
-        }  
+        }
+        console.log("args:");
+        console.log(args);
         if (args.length == expectedArgs.length) {
           const result = foundFunction.evaluate(args);
           let removedLength = literalsLengths[i];
@@ -150,23 +161,19 @@ export function parse2(str) {
           const result = foundFunction.evaluate(args);
           console.log("result:");
           console.log(result);
-          let addFunc = Object.values(FUNCTIONS).find(
-            (i) => i.syntax === '+'
-          );
-          console.log(addFunc.evaluate([3,4]));
           let removedLength = literalsLengths[i];
           literals[i] = result
           literalsLengths[i] = 1;
           // remove extra used literals
           for (let k = 1; k < args.length; k++) {
-            removedLength += literalsLengths[i + k] + 1;
+            removedLength += literalsLengths[i + k];
             literals[i + k] = "remove";
             literalsIndexes[i + k] = "remove";
             literalsLengths[i + k] = "remove";
           }
           // collapse (remove left sided brackets as well) // equal to number of right brackets?
           // literalsIndexes[i] -= foundLength;
-          adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
+          adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end, dunno about the -1*/);
           let bracketsBeGone = 0;
           while (adaptedStr[literalsIndexes[i] - 1] == "(") {
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
@@ -179,7 +186,7 @@ export function parse2(str) {
           literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
-            literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
+            literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone - 1;
           }
         }
       }
