@@ -257,7 +257,7 @@ export const FUNCTIONS = {
   
   AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
   
-  BIN: new Bin("Binary Representation", "BIN", "bin[n]x")
+  BIN: new Bin("Binary Representation", "BIN", "bin(x)", (args) => (args[0] >>> 0).tostring(2)),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 

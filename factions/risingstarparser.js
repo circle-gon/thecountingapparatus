@@ -1,5 +1,8 @@
 import {
-  FUNCTIONS
+  FUNCTIONS,
+  Right,
+  Bin,
+  Operator
 } from "../functions/functionList.js";
 
 export function parse2(str) {
@@ -102,16 +105,19 @@ export function parse2(str) {
           if (i instanceof Right) {
             return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
           }
-          else if (i instanceof Operator) {
-            return i.syntax.substring(i.syntax.indexOf("a") + 1) === subString;
+          else if (i instanceof Bin) {
+            return i.syntax === subString;
           }
+          else if (i instanceof Operator) {
+            return i.syntax.substring(i.syntax.indexOf("x") + 1) === subString;
+          }
+          return false;
         }
-          (i) => i.syntax.substring(i.syntax.indexOf(")") + 1) === subString
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
         if (actualFunc.isUnlocked) {
           foundFunction = actualFunc;
-          foundLength = distanceLeft;
+          foundLength = distanceRight;
         }
       }
     }
