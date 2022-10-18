@@ -15,7 +15,7 @@ class CountFaction extends FactionBase {
       () => this.milestones >= 10,
       () => this.rewardUsed >= 10,
       () => this.rewardUsed >= 50,
-      () => this.count >= 1e6
+      () => this.count >= 1e6,
     ];
   }
 
@@ -29,12 +29,12 @@ class CountFaction extends FactionBase {
       one:
         (this.spireEffect * (Math.pow(this.milestones, 2) + this.milestones)) /
         2,
-      two: this.milestones
+      two: this.milestones,
     };
   }
 
   isCorrectCount(count) {
-    return count === this.nextCount.toString()
+    return count === this.nextCount.toString();
   }
   useRewardOne() {
     if (this.rewardOneUsed < this.milestoneRewards.one) {
@@ -44,15 +44,17 @@ class CountFaction extends FactionBase {
       return false;
     }
   }
-doCount(count) {
+  doCount(count) {
     if (this.isCorrectCount(count)) {
       this.count = this.nextCount;
       this.updateMilestones();
       this.updateGoals();
+    } else if (
+      count.startsWith("unban") &&
+      this.rewardOneUsed < this.milestoneRewards.one
+    ) {
+      this.useRewardOne();
     }
-  else if(count.startsWith("unban") && this.rewardOneUsed < this.milestoneRewards.one){
-    useRewardOne()
-  }
   }
   spireBoost() {
     if (this.isSpire) {

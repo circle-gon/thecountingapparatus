@@ -74,7 +74,7 @@ export class TextChannel {
       bot,
       ...this.extraData(msg),
     });
-    this.eventListener.emit("message", msg);
+    this.eventListener.emit("message", msg, bot);
     if (this.messages.length > this.max) {
       this.messages.shift();
     }

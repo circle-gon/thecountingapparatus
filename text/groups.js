@@ -58,7 +58,7 @@ class TextGroupDisplay extends HTMLElement {
   }
 }
 
-new TextGroup("faction", "Factions", "faction", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
+new TextGroup("faction", "Factions", "faction", "Parser Testing", "Classic", "Tree", "Letter", "X X", "Ones", "Factorial")
 
 // internalName, realName, maxMessages, maxLimit
 new TextChannel("chat", "Chat", 100, 100)

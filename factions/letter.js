@@ -42,10 +42,10 @@ class LetterFaction extends FactionBase {
     console.log(count, this.count);
     const maxStockIndex = Math.max(...this.count)
     const maxDigitIncr = Math.max(maxStockIndex, this.digitLength);
-    let difference = this.LetterToNumber(count) - this.extensionCount;
+    const difference = this.LetterToNumber(count) - this.extensionCount;
     if (difference === 0) return false;
     if (difference === 1) {
-      this.count[0]++;
+      this.count = this.nextCount
       return true;
     }
     const oom = Math.log(Math.abs(difference)) / Math.log(26);

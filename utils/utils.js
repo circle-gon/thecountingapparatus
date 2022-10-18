@@ -101,10 +101,10 @@ export class EventListener {
     return () => this.handlers.delete(data)
   }
   
-  emit(type, data) {
+  emit(type, ...data) {
     this.handlers.forEach(i => {
       if (i.type === type) {
-        i.handler(data)
+        i.handler(...data)
       }
     })
   }
