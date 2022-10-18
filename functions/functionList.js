@@ -25,19 +25,19 @@ class SingleNumSeq extends FunctionBase {
   }
 }
 
-class Operator extends FunctionBase {
+export class Operator extends FunctionBase {
   constructor(name, unlock, symbol, evaluate) {
     super(name, unlock, symbol, evaluate);
   }
 }
 
-class Left extends Operator {
+export class Left extends Operator {
   constructor(name, unlock, symbol, evaluate) {
     super(name, unlock, symbol, evaluate);
   }
 }
 
-class Right extends Operator {
+export class Right extends Operator {
   constructor(name, unlock, symbol, evaluate) {
     super(name, unlock, symbol, evaluate);
   }
@@ -49,7 +49,7 @@ class Wrap extends Operator {
   }
 }
 
-class Bin extends Operator {
+export class Bin extends Operator {
   constructor(name, unlock, symbol, evaluate) {
     super(name, unlock, symbol, evaluate);
   }

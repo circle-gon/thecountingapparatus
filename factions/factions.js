@@ -151,7 +151,7 @@ export class FactionBase {
   }
 
   static parseFunction(str) {
-    parse2(str);
+    return parse2(str);
     // ASSUMES FULL BRACKETING
     // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
     // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
