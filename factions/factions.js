@@ -12,7 +12,7 @@ class ParserError extends Error {}
 
 //Faction superclass
 export class FactionBase {
-  constructor(name, msReq) {
+  constructor(name, msReq, challenges = []) {
     //Constant data
     this.name = name;
     this.msReq = msReq;
@@ -20,6 +20,7 @@ export class FactionBase {
     this.count = 0;
     this.goals = [];
     this.goalsCompleted = [];
+    this.challengeDetails = challenges;
     this.inChallenge = null;
     this.challenges = [];
 
@@ -37,7 +38,7 @@ export class FactionBase {
       (i) => {
         const ele = ce("div");
         const txt = ce("span");
-        txt.innerHTML = addEmoji(escapeHtml(i.msg))
+        txt.innerHTML = addEmoji(escapeHtml(i.msg));
 
         ele.append(txt);
         ele.style.color = i.isCorrect ? "green" : "red";
@@ -45,8 +46,8 @@ export class FactionBase {
       }
     );
     this.textBox.on((i, type) => {
-      if (type) return
-      this.doCount(i)
+      if (type) return;
+      this.doCount(i);
     }, "message");
     factions[name] = this;
   }
@@ -66,26 +67,38 @@ export class FactionBase {
   get milestoneRewards() {
     return {};
   }
-  
-  get challengeEffects() {
-    return this.challenges.map(i => i.effect())
+
+  challengeEffect(i) {
+    return this.challengeDetails[i];
   }
 
   countToDisplay(c) {
     return c;
   }
 
+  get realCount() {
+    return this.challenges[this.inChallenge] ?? this.count;
+  }
+  
+  enterChallenge(i) {
+    this.inChallenge = i
+  }
+
   //Count & Milestones
 
   get nextCount() {
-    return this.count + 1;
+    return this.realCount + 1;
   }
 
   doCount(count) {
-    console.log(this.isCorrectCount(count))
+    console.log(this.isCorrectCount(count));
     if (this.isCorrectCount(count)) {
-      this.count = this.nextCount;
-      this.updateMilestones();
+      if (this.inChallenge !== null) {
+        this.challenges[this.inChallenge] = this.nextCount;
+      } else {
+        this.count = this.nextCount;
+        this.updateMilestones();
+      }
       this.updateGoals();
     }
   }
@@ -198,9 +211,7 @@ export class FactionBase {
         break;
       } else if (w === originalLength + 1) {
         // + 1 just cuz I cba to do the math
-        throw new ParserError(
-          "Oops, we ran into an error. Check your syntax!"
-        );
+        throw new ParserError("Oops, we ran into an error. Check your syntax!");
       }
       // console.log(splitStr);
       // console.log(literals);
@@ -221,7 +232,7 @@ export class FactionBase {
         console.log(splitStr);
         // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")));
         // console.log(onesF.syntax.substring(0, onesF.syntax.indexOf("(")) === leftFunc);
-        
+
         const actualFunc = Object.values(FUNCTIONS).find(
           (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === leftFunc
         );
@@ -254,7 +265,9 @@ export class FactionBase {
             lastLiteralIndex += 2;
             args.push(literals[literalsIndexes.indexOf(lastLiteralIndex)]);
             argsIndexes.push(lastLiteralIndex);
-          } else { break; }
+          } else {
+            break;
+          }
         }
         // for (let j = 0; j < expectedArgs.length - 1; j++) {
         //   // has arg been calculated to literal already
@@ -310,13 +323,13 @@ export class FactionBase {
 class FactionDisplay extends HTMLElement {
   updateHTML() {
     const c = (co) => this.faction.countToDisplay(co);
-    this.info.innerHTML = `Count: ${c(this.faction.count)}<br>
+    this.info.innerHTML = `Count: ${c(this.faction.realCount)}<br>
     Next count: ${c(this.faction.nextCount)}<br>
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
       const treeGridSize = factions.Tree.grid;
-      this.c.style.display = this.faction.count === 0 ? "none" : "block";
+      this.c.style.display = this.faction.realCount === 0 ? "none" : "block";
       this.c.width = factions.Tree.grid * 10;
       this.c.height = factions.Tree.grid * 10;
       const ctx = this.c.getContext("2d");
@@ -324,7 +337,7 @@ class FactionDisplay extends HTMLElement {
       ctx.fillStyle = "gray";
       ctx.fillRect(0, 0, this.c.width, this.c.height);
       // ctx.fillStyle = randomColor(); //create randomColor function
-      for (let x = 0; x < factions.Tree.count; x++) {
+      for (let x = 0; x < factions.Tree.realCount; x++) {
         // random colour per cell
         ctx.fillStyle = randomColor();
         ctx.fillRect(
