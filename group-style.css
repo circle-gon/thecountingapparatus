@@ -9,9 +9,9 @@
 
 .channel {
   width: 100%;
-  height: 22px;
+  height: fit-content;
   font-size: 20px;
-  margin-top: 2px;
+  margin: 0, 2px;
 }
 .channel:hover {
   /* example */
