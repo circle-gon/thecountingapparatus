@@ -392,7 +392,7 @@ export const FUNCTIONS = {
 
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
 
-  ADDITION: new Bin("Addition", "ADD", "+", (x, y) => x + y),
+  ADDITION: new Bin("Addition", "ADD", "+", (args) => args[0] + args[1]),
 
   SUBTRACTION: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
 

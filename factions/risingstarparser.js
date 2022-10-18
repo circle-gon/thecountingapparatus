@@ -9,7 +9,7 @@ import {
 export function parse2(str) {
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
-  const literals = str.match(/\d+/g); // this doesn't get index gwa
+  let literals = str.match(/\d+/g); // this doesn't get index gwa
   let literalsIndexes = [];
   let literalsLengths = [];
   let replaceString = str;
@@ -18,8 +18,9 @@ export function parse2(str) {
     let index = replaceString.indexOf(literals[i]);
     literalsIndexes.push(index);
     literalsLengths.push(literals[i].length);
+    literals[i] = Number(literals[i]);
     // replace the index with a not number of same length
-    replaceString = replaceString.replace(literals[i], new Array(literals[i].length + 1).join("a"));
+    replaceString = replaceString.replace(literals[i], new Array(literalsLengths[i] + 1).join("a"));
   }
   
   // going through the literals, look for the longest valid function
@@ -136,15 +137,23 @@ export function parse2(str) {
       if (foundFunction != null) {
         console.log(foundFunction);
         // look for other args
-        const expectedArgs = foundFunction.syntax.split(",");
+        // const expectedArgs = foundFunction.syntax.split(",");
         let args = [literals[i]];
         if (foundFunction instanceof Bin) {
           if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
             args.push(literals[i + 1]);
           }
         }
-        if (args.length == expectedArgs.length) {
+        console.log("args:");
+        console.log(args);
+        if (args.length == (foundFunction instanceof Bin ? 2 : 1)) {
           const result = foundFunction.evaluate(args);
+          console.log("result:");
+          console.log(result);
+          let addFunc = Object.values(FUNCTIONS).find(
+            (i) => i.syntax === '+'
+          );
+          console.log(addFunc.evaluate([3,4]));
           let removedLength = literalsLengths[i];
           literals[i] = result
           literalsLengths[i] = 1;
