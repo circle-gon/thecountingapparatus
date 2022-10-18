@@ -31,9 +31,6 @@ export function parse2(str) {
   // just copying code for each direction atm, there's prolly a better way
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
-    if (adaptedStr.length == 1) {
-      break;
-    }
     console.log("adaptedStr: " + adaptedStr);
     console.log("literals:");
     console.log(literals);
@@ -41,6 +38,9 @@ export function parse2(str) {
     console.log(literalsIndexes);
     console.log("literalsLengths:");
     console.log(literalsLengths);
+    if (adaptedStr.length == 1) {
+      break;
+    }
     // check literals in order, if nothing happens, check next
     for (let i = 0; i < literals.length; i++) {
       // left existence
@@ -76,11 +76,11 @@ export function parse2(str) {
         let checkingIndex = i;
         if (!(foundFunction instanceof Left)) {
           while (checkingIndex < literals.length) {
-            if (adaptedStr[literalsIndexes[i] + literalsLengths[i]] != ',') {
+            if (adaptedStr[literalsIndexes[checkingIndex] + literalsLengths[checkingIndex]] != ',') {
               break;
             }
             //should be a literal on the other side
-            if (!literalsIndexes.includes(literalsIndexes[i] + literalsLengths[i])) {
+            if (checkingIndex >= literals.length || literalsIndexes[checkingIndex + 1] != literalsIndexes[checkingIndex] + literalsLengths[checkingIndex] + 1) {
               break;
             }
             args.push(literals[i+1]); // literals is ordered and should be kept that way
@@ -176,7 +176,7 @@ export function parse2(str) {
           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end, dunno about the -1*/);
           let bracketsBeGone = 0;
           while (adaptedStr[literalsIndexes[i] - 1] == "(") {
-            adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
+            adaptedStr = adaptedStr.substr(0,literalsIndexes[i] - 1) + adaptedStr.substr(literalsIndexes[i]);
             bracketsBeGone++;
           }
           literalsIndexes[i] -= bracketsBeGone;

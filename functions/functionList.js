@@ -408,6 +408,6 @@ export const FUNCTIONS = {
 
   PREDECESSOR: new Right("Predecessor", "PRE", "--", (x, y) => --x),
 
-  SUCCESSOR: new Right("Successor", "ADD", "++", (x, y) => ++x),
+  SUCCESSOR: new Right("Successor", "SUC", "++", (args) => ++args[0]),
 };
 // trole !
