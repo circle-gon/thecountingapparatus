@@ -72,6 +72,10 @@ class LetterFaction extends FactionBase {
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
+  
+  useStock(newText) {
+    for (const text of )
+  }
   /*useStock(index, amount, countText) {
     if (
       getBaseLog(this.baseCount + 1, 26) > index ||
