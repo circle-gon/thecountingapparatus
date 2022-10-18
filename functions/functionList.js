@@ -263,9 +263,25 @@ export const FUNCTIONS = {
 
   BLG: new Logarithm("Binary Logarithm", "BLG", "log2(x)", 2),
 
-  SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
+  CAS: new FunctionBase(
+    "CAS Function",
+    "CAS",
+    "cas(x)",
+    (args) => Math.sin(args[0]) + Math.cos(args[0])
+  ),
 
+  CAT: new FunctionBase(
+    "Czarnowski's Cat Function",
+    "CAT",
+    "🐱(x,n)",
+    (args) => Math.sin(args[0]) ** args[1] + Math.cos(args[0])
+  ),
+
+  CHN: new FunctionBase("Centered Hexagonal Numbers", "CHN", "hex(x)", (args) => 3*args[0]*(args[0] + 1) + 1),
+  
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
+  
+  SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
 
