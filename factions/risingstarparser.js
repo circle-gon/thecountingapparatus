@@ -90,6 +90,11 @@ export function parse2(str) {
         console.log("args:");
         console.log(args);
         if (args.length == expectedArgs.length) {
+          // check extra args don't have a unary operator to go through first
+          for (let l = 1; l < args.length; l++) {
+            //specifically right unary is the only problem
+            
+          }
           const result = foundFunction.evaluate(args);
           let removedLength = literalsLengths[i];
           literals[i] = result
@@ -158,6 +163,7 @@ export function parse2(str) {
         console.log("args:");
         console.log(args);
         if (args.length == (foundFunction instanceof Bin ? 2 : 1)) {
+          // check extra args don't have a unary operator to go through first
           const result = foundFunction.evaluate(args);
           console.log("result:");
           console.log(result);
