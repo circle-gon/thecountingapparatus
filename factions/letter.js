@@ -81,7 +81,7 @@ class LetterFaction extends FactionBase {
   }
 
   get nextCount() {
-    let sum;
+    let sum = 0;
     for (let i = 0; i < this.digitLength; i++) {
       sum += this.count[i] * 26 ** i;
     }
