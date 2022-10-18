@@ -12,6 +12,9 @@ export function parse2(str) {
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
   let literals = str.match(/\d+/g); // this doesn't get index gwa
+  if (literals == undefined) {
+    return false;
+  }
   let literalsIndexes = [];
   let literalsLengths = [];
   let replaceString = str;
@@ -45,7 +48,7 @@ export function parse2(str) {
     }
     // check literals in order, if nothing happens, check next
     for (let i = 0; i < literals.length + 1; i++) {
-      if (i == literals.length + 1) {
+      if (i == literals.length) {
         // nothing was found
         if (adaptedStr.length != literalsLengths[0]) {
           throw new ParserError("no operation found but not finished");

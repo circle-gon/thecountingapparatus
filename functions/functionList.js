@@ -401,13 +401,9 @@ export const FUNCTIONS = {
 
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
 
-  ADDITION: new Bin("Addition", "ADD", "+", (args) => args[0] + args[1]),
-
   SUBTRACTION: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
 
   MULTIPLICATION: new Bin("Multiply", "MLT", "*", (x, y) => x * y),
-
-  DIVISION: new Bin("Addition", "DIV", "/", (x, y) => x / y),
 
   EXPONENTIATION: new Bin("Power", "POW", "+", (x, y) => x ** y),
 
