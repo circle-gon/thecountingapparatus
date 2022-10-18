@@ -41,6 +41,12 @@ class LetterFaction extends FactionBase {
   
   //Counting Logic
   isCorrectCount(count) {
+    let maxStockIndex = 0
+    for(let i=0;i<this.count.length;i++){
+      if(this.count[i]!=0) maxStockIndex = i
+    }
+    let maxDigitIncr = Math.max(maxStockIndex,this.digitLength())
+    
     return count === this.NumberToLetter(this.nextCount)
   }
   
@@ -54,13 +60,16 @@ class LetterFaction extends FactionBase {
     }
   }
   get digitLength(){
-    let count = Math.max(baseCount(), extensionCount())
-    return Math.floor(Math.logBase(25*count+1, 26)-1)
+    let count = Math.max(this.baseCount, this.extensionCount)
+    return Math.floor(Math.log(25*count+1)/Math.log(26))
   }
   
   get nextCount(){
-    for (let i=0;i<this.count.length)
-    return this.count[0]+1;
+    let sum;
+    for (let i=0;i<this.digitLength;i++){
+      sum+=this.count[i]
+    }
+    return sum+1;
   }
   
   countToDisplay(count) {

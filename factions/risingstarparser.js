@@ -20,12 +20,19 @@ export function parse2(str) {
   // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
   // if something's processed, collapse it and adjust literals/indexes
   // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
+  let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
     // check literals in order, if nothing happens, check next
     for (let i = 0; i < literals.length; i++) {
       // left existence
-      for (let distanceLeft = 0; distanceLeft < literalsIndexes[i]; distanceLeft++) {
+      let foundFunction = null;
+      for (let distanceLeft = 1; distanceLeft <= literalsIndexes[i]; distanceLeft++) {
         // find if there's a function with fitting syntax
+        // ignore brackets if no function has been found yet
+        let subString = adaptedStr.substring(literalsIndexes[i] - distanceLeft, literalsIndexes[i]);
+        if (foundFunction == null) {
+          subString = subString.replace(/)
+        }
       }
     }
   }
