@@ -21,12 +21,6 @@ export function parse2(str) {
     // replace the index with a not number of same length
     replaceString = replaceString.replace(literals[i], new Array(literals[i].length + 1).join("a"));
   }
-  console.log("literals:");
-  console.log(literals);
-  console.log("literalsIndexes:");
-  console.log(literalsIndexes);
-  console.log("literalsLengths:");
-  console.log(literalsLengths);
   
   // going through the literals, look for the longest valid function
   // start left, then right, then binary, then enclosing
@@ -36,6 +30,13 @@ export function parse2(str) {
   // just copying code for each direction atm, there's prolly a better way
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
+    console.log("adaptedStr: " + adaptedStr);
+    console.log("literals:");
+    console.log(literals);
+    console.log("literalsIndexes:");
+    console.log(literalsIndexes);
+    console.log("literalsLengths:");
+    console.log(literalsLengths);
     // check literals in order, if nothing happens, check next
     for (let i = 0; i < literals.length; i++) {
       // left existence
@@ -52,7 +53,7 @@ export function parse2(str) {
           (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === subString
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-        if (actualFunc.isUnlocked) {
+        if (actualFunc != undefined && actualFunc.isUnlocked) {
           foundFunction = actualFunc;
           foundLength = distanceLeft;
         }
@@ -69,7 +70,7 @@ export function parse2(str) {
               break;
             }
             //should be a literal on the other side
-            if (!literalsIndexes.contains(literalsIndexes[i] + literalsLengths[i])) {
+            if (!literalsIndexes.includes(literalsIndexes[i] + literalsLengths[i])) {
               break;
             }
             args.push(literals[i+1]); // literals is ordered and should be kept that way
@@ -127,7 +128,7 @@ export function parse2(str) {
         }
         );
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-        if (actualFunc.isUnlocked) {
+        if (actualFunc != undefined && actualFunc.isUnlocked) {
           foundFunction = actualFunc;
           foundLength = distanceRight;
         }

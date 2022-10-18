@@ -335,6 +335,30 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+  
+  DWS: new FunctionBase("Derangement Weighted Sum", "DWS", "dws(n)", (args) => 1-args[0]),
+  
+  ENG: new FunctionBase("English", "ENG", "eng(n)", function eng(args) {
+    let x = args[0];
+    if(x == 0) return 4
+    let val = 0
+    if(x < 1e3) {
+      val += [0,10,10,12,11,11,10,12,12,11][Math.floor(x/100)]
+      if(x > 9 && x < 20) {
+        val += [3,6,6,8,8,7,7,9,9,8][x-10]
+      } else {
+        val += [0,0,6,6,5,5,5,7,7,6][Math.floor(x%100/10)]
+      }
+      val += [0,3,3,5,4,4,3,5,5,4][Math.floor(x%10)]
+      return val
+    }
+    if(val < 1e6) {
+      return 8+eng(Math.floor(x/1000))+eng(x%1000)
+    }
+    if(val < 1e9) {
+      return 7+eng(Math.floor(x/1000000))+eng(x%1000000)+7
+    }
+  }),
 
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
