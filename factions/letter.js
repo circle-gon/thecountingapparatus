@@ -41,6 +41,8 @@ class LetterFaction extends FactionBase {
   
   //Counting Logic
   isCorrectCount(count) {
+    
+    console.log(count, this.count)
     let maxStockIndex = 0
     for(let i=0;i<this.count.length;i++){
       if(this.count[i]!=0) maxStockIndex = i
@@ -52,15 +54,15 @@ class LetterFaction extends FactionBase {
       this.count[0]++;
       return true}
     let oom = Math.log(Math.abs(difference))/Math.log(26)
+    
     if(oom == Math.floor(oom)){
+      
       let remainingStock = this.letterStock - this.usedStock()
-      if(Math.sign(this.count[oom]) == Math.sign(difference)){
+        if(this.count[oom] == undefined)this.count[oom]=0
         if( remainingStock >= oom){
           this.count[oom]+= Math.sign(difference);
           return true} else return false
-      } else {
-        this.count[oom]-= Math.sign(difference);
-        return true}
+      
     } else return false
     //return count === this.NumberToLetter(this.nextCount)
   }
@@ -68,7 +70,7 @@ class LetterFaction extends FactionBase {
   doCount(count) {
     if (this.isCorrectCount(count)) {
       //this.count[1] = this.nextCount; // going to take care of changing count in the isCorrectCount()
-      console.log(this.count);
+      //console.log(this.count);
       this.unlockFunction();
       this.updateMilestones();
       this.updateGoals();
@@ -129,16 +131,6 @@ class LetterFaction extends FactionBase {
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
-  // useStock is no longer needed as it's handled in the count checking
-  // fine newText is a letter
-  /*useStock(newText) {
-    const countLetter = this.countToDisplay(this.count)
-    // not implemented
-    if (newText.length !== countLetter.length) throw new Error("Invalid use of stock")
-    for (const text of countLetter) {
-      
-    }
-  }*/
   
   /*useStock(index, amount, countText) {
     if (

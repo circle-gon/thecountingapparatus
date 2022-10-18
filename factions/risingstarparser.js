@@ -63,9 +63,16 @@ export function parse2(str) {
           const result = foundFunction.evaluate(args);
           literals[i] = result
           // remove extra used literals
-          for (let )
-          // collapse
-          
+          let removedLength = 0;
+          for (let k = 1; k < args.length; k++) {
+            removedLength += literals[i + k].length + 1;
+            literals[i + k] = "remove";
+            literalsIndexes[i + k] = "remove";
+          }
+          // collapse (remove right sided brackets as well)
+          literalsIndexes[i] -= foundLength;
+          adaptedStr[literalsIndexes[i]] = ';';
+          adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr
         }
       }
     }
