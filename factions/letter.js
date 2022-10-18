@@ -11,13 +11,32 @@ class LetterFaction extends FactionBase {
         (Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1) / 25 - 1
       )
     );
-    this.baseCount = this.count;
-    this.extensionCount = this.count;
+    // warning current code does not support
+    // this format
+    this.count = [0];
+    //this.baseCount = this.count;
+    //this.extensionCount = this.count;
     this.hasChal = false;
     //this.letterStock = 0;
-    this.usedStock = 0;
+    //this.usedStock = 0;
   }
-
+  baseCount(){
+    return this.count[0]
+  }
+  extensionCount(){
+    let a=0
+    for(let i =0; i<this.count.length;i++){
+      a+=(26**i)*this.count[i]
+    }
+    return a
+  }
+  usedStock(){
+    let a=0
+    for(let i =0; i<this.count.length;i++){
+      a+=i*this.count[i]
+    }
+    return a
+  }
   //Counting Logic
   isCorrectCount(count) {
     return count === this.NumberToLetter(this.nextCount)
