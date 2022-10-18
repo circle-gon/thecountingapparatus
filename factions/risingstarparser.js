@@ -20,6 +20,7 @@ export function parse2(str) {
   // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
   // if something's processed, collapse it and adjust literals/indexes
   // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
+  const directions = ["left", "right", "around"];
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
     // check literals in order, if nothing happens, check next
