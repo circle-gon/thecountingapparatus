@@ -19,6 +19,7 @@ export class TextChannel {
     this.messages = {
       default: []
     }; //array,string
+    this.currentChat = "default"
     this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
     this.eventListener = new EventListener();
@@ -42,8 +43,18 @@ export class TextChannel {
     this.eventListener.emit("channelName", name);
     this.realName = name;
   }
+  switchToChat(name) {
+    if (this.messages[name] === undefined) {
+      this.messages[name] = []
+    }
+    this.currentChat = name
+    this.eventListener.emit("chatChange", name)
+  }
+  get currentMessages() {
+    return this.messages[this.currentChat]
+  }
   deleteMessage(ind) {
-    this.messages.splice(ind, 1);
+    this.currentMessages.splice(ind, 1);
   }
   on(func, type) {
     return this.eventListener.on(func, type);
@@ -70,15 +81,15 @@ export class TextChannel {
   sendMessage(msg, bot = true) {
     if (this.isFrozen) return;
     if (!bot) this.msgCounter++;
-    this.messages.push({
+    this.currentMessages.push({
       msg: String(msg),
       num: this.msgCounter,
       bot,
       ...this.extraData(msg),
     });
     this.eventListener.emit("message", msg, bot);
-    if (this.messages.length > this.max) {
-      this.messages.shift();
+    if (this.currentMessages.length > this.max) {
+      this.currentMessages.shift();
     }
     this.updateText();
   }
@@ -101,7 +112,7 @@ class TextChannelDisp extends HTMLElement {
     // oh shoot js injection
     this.texts.innerHTML = "";
     console.log(this.textInstance.messages);
-    this.textInstance.messages.forEach((i) => {
+    this.textInstance.currentMessages.forEach((i) => {
       const ele = this.textInstance.toHTML(i);
       ele.onmouseover = () => (ele.style.backgroundColor = "grey");
       ele.onmouseout = () => (ele.style.backgroundColor = "inherit");
@@ -158,6 +169,7 @@ class TextChannelDisp extends HTMLElement {
       this.textInstance.on((f) => {
         this.wrapper.style.display = f ? "block" : "none";
       }, "show"),
+      this.textInstance.on(() => this.updateText(), "chatChange")
     ];
 
     this.textInstance.updateText = () => this.updateText();
