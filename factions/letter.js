@@ -73,8 +73,14 @@ class LetterFaction extends FactionBase {
     return basicCount.milestones + factorialCount.challengeReward;
   }
   
+  // fine newText is a letter
   useStock(newText) {
-    for (const text of )
+    const countLetter = this.countToDisplay(this.count)
+    // not implemented
+    if (newText.length !== countLetter.length) throw new Error("Invalid use of stock")
+    for (const text of this.countToDisplay(this.count)) {
+      
+    }
   }
   /*useStock(index, amount, countText) {
     if (

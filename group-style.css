@@ -35,7 +35,6 @@
   messing up the timing. For widely variable height content, best not to animate. Switch display attribute instead */
   height: 0;
   overflow: hidden;
-  margin-left: 5px;
 }
 
 .control {
