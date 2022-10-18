@@ -358,14 +358,14 @@ export const FUNCTIONS = {
 
       return val;
     } else {
-      let suffix = [0, 8, 7, 7, 8, 11, 11, 10, 10, 9, 9][0];
-      return;
-    }
-    if (val < 1e6) {
-      return 8 + eng(Math.floor(x / 1000)) + eng(x % 1000);
-    }
-    if (val < 1e9) {
-      return 7 + eng(Math.floor(x / 1000000)) + eng(x % 1000000) + 7;
+      let suffix = [0, 8, 7, 7, 8, 11, 11, 10, 10, 9, 9, 9, 11, 12, 12, 17][
+        Math.floor(Math.log10(x) / 3)
+      ];
+      return (
+        suffix +
+        eng(Math.floor(x / 10 ** (3 * Math.floor(Math.log10(x) / 3)))) +
+        eng(x % 10 ** (3 * Math.floor(Math.log10(x) / 3)))
+      );
     }
   }),
 
