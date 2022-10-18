@@ -211,6 +211,32 @@ export const FUNCTIONS = {
 
   PI: new FunctionBase("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
 
+  QF: new FunctionBase(
+    "Quad Factorial",
+    "QF",
+    "x!!!!",
+    (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 1)
+  ),
+
+  RF: new FunctionBase(
+    "Rising Factorial",
+    "FF",
+    "x_n",
+    (args) => gamma(args[0] + args[1]) / gamma(args[0])
+  ),
+
+  SF: new FunctionBase("Super Factorial", "SF", "sf(x)", function (args) {
+    let output = 1;
+    for (let i = 1; i <= args[0]; i++) {
+      output *= gamma(i + 1);
+    }
+    return output;
+  }),
+
+  SI: new Integral("Sine Integral", "SI", "Si(x)", (args) =>
+    integral((t) => Math.sin(t) / t, 0, args[0])
+  ),
+
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
   ADD: new Operator("Addition", "ADD", "a+b", (args) => args[0] + args[1]),
