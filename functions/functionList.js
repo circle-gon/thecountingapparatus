@@ -199,12 +199,17 @@ export const FUNCTIONS = {
   ),
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
-  
+
   OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
-  
-  PF: new FunctionBase("Pairity Factorial", "PF", "x!!", function (args) {
-    
-  }),
+
+  PF: new FunctionBase(
+    "Pairity Factorial",
+    "PF",
+    "x!!",
+    (args) => (2 ** args[0] * gamma(0.5 + args[0])) / Math.sqrt(Math.PI)
+  ),
+
+  PI: new FunctionBase("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
 
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
