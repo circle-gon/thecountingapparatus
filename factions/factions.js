@@ -179,7 +179,6 @@ export class FactionBase {
     }
     for (let i = 0; i < literals.length; i++) {
       // check if the literal is just a number, or an operator with numbers attached
-      console.log(Number(literals[i]));
       if (Number(literals[i]) === NaN) {
         console.log("literal not number");
         console.log(literals[i]);

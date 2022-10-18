@@ -78,7 +78,7 @@ class LetterFaction extends FactionBase {
     const countLetter = this.countToDisplay(this.count)
     // not implemented
     if (newText.length !== countLetter.length) throw new Error("Invalid use of stock")
-    for (const text of this.countToDisplay(this.count)) {
+    for (const text of countLetter) {
       
     }
   }
