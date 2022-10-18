@@ -3,14 +3,12 @@
   box-sizing: border-box;
 }
 
-.container {
-}
-
 .channel {
   width: 100%;
-  height: fit-content;
   font-size: 20px;
   margin: 0, 2px;
+  padding-left: 16px;
+  overflow: hidden;
 }
 .channel:hover {
   /* example */
@@ -27,9 +25,10 @@
   position: relative;
   display: block;
   overflow: hidden;
-  text-indent: 15px;
+  padding-left: 16px;
 }
 .label:before {
+  margin-left: 2px;
   content: "";
   position: absolute;
   left: 0px;
