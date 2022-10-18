@@ -80,7 +80,7 @@ export function parse2(str) {
             literalsIndexes[i + k] = "remove";
             literalsLengths[i + k] = "remove";
           }
-          // collapse (remove right sided brackets as well)
+          // collapse (remove right sided brackets as well) // equal to number of left brackets?
           literalsIndexes[i] -= foundLength;
           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
           let bracketsBeGone = 0;
@@ -141,7 +141,7 @@ export function parse2(str) {
             literalsIndexes[i + k] = "remove";
             literalsLengths[i + k] = "remove";
           }
-          // collapse (remove right sided brackets as well)
+          // collapse (remove left sided brackets as well) // equal to number of right brackets?
           literalsIndexes[i] -= foundLength;
           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
           let bracketsBeGone = 0;
