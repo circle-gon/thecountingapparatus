@@ -78,6 +78,7 @@ export function parse2(str) {
             removedLength += literalsLengths[i + k] + 1;
             literals[i + k] = "remove";
             literalsIndexes[i + k] = "remove";
+            literalsLengths[i + k] = "remove";
           }
           // collapse (remove right sided brackets as well)
           literalsIndexes[i] -= foundLength;
@@ -87,6 +88,10 @@ export function parse2(str) {
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
             bracketsBeGone++;
           }
+          // actually remove used literals
+          literals = literals = literals.filter((x) => x !== "remove");
+          literalsIndexes = literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
+          literalsLengths = literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
@@ -134,6 +139,7 @@ export function parse2(str) {
             removedLength += literalsLengths[i + k] + 1;
             literals[i + k] = "remove";
             literalsIndexes[i + k] = "remove";
+            literalsLengths[i + k] = "remove";
           }
           // collapse (remove right sided brackets as well)
           literalsIndexes[i] -= foundLength;
@@ -143,6 +149,10 @@ export function parse2(str) {
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
             bracketsBeGone++;
           }
+          // actually remove used literals
+          literals = literals = literals.filter((x) => x !== "remove");
+          literalsIndexes = literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
+          literalsLengths = literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
