@@ -363,12 +363,14 @@ export const FUNCTIONS = {
       ];
       return (
         suffix +
-        eng(Math.floor(x / 10 ** (3 * Math.floor(Math.log10(x) / 3)))) +
-        eng(x % 10 ** (3 * Math.floor(Math.log10(x) / 3)))
+        eng([Math.floor(x / 10 ** (3 * Math.floor(Math.log10(x) / 3)))]) +
+        eng([x % 10 ** (3 * Math.floor(Math.log10(x) / 3))])
       );
     }
   }),
 
+  ERF: new Integral("Error Function", "ERF", "erf(x)", (args) => integral((t) => 2*Math.E**(-(t**2))/Math.sqrt(Math.PI), 0, args[0])),
+  
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
