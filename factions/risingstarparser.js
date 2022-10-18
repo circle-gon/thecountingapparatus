@@ -2,6 +2,13 @@ import {
   Functions
 } from "../functions/functionClass.js";
 
+function parse2(str) {
+  // find all the actual numbers and their indexes
+  const literals = str.match(/\d/);
+  console.log(literals);
+}
+parse2("a2nf453j");
+
 function parse(str) {
   // ASSUMES FULL BRACKETING
   // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)

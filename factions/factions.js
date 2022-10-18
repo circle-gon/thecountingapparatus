@@ -177,16 +177,6 @@ export class FactionBase {
         literalsIndexes.push(i);
       }
     }
-    for (let i = 0; i < literals.length; i++) {
-      // check if the literal is just a number, or an operator with numbers attached
-      if (Number(literals[i]).isNaN) {
-        console.log("literal not number");
-        console.log(literals[i]);
-      } else {
-        console.log("literal number");
-        console.log(literals[i]);
-      }
-    }
     // so how is this expected to work with operators :trol:
     // so you're basically just gonna turn expressions into function expressions?
     // that is what the all caps at the top says yes

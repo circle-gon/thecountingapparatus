@@ -14,22 +14,28 @@ class LetterFaction extends FactionBase {
     // warning current code does not support
     // this format
     this.count = [0];
-    //this.baseCount = this.count;
-    //this.extensionCount = this.count;
     this.hasChal = false;
     //this.letterStock = 0;
     //this.usedStock = 0;
   }
-  baseCount(){
+  
+  get baseCount(){
     return this.count[0]
   }
-  extensionCount(){
+  
+  get extensionCount(){
     let a=0
     for(let i =0; i<this.count.length;i++){
       a+=(26**i)*this.count[i]
     }
     return a
   }
+  
+  get nextCount() {
+    if(isNaN(Number(this.count[0])))
+    return this.count[0] + 1;
+  }
+  
   usedStock(){
     let a=0
     for(let i =0; i<this.count.length;i++){
