@@ -42,7 +42,10 @@ export class FactionBase {
         return ele;
       }
     );
-    this.textBox.on((i) => this.doCount(i), "message");
+    this.textBox.on((i, type) => {
+      if (type) return
+      this.doCount(i)
+    }, "message");
     factions[name] = this;
   }
 

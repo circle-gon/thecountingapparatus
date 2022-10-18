@@ -69,7 +69,7 @@ export class TextChannel {
     if (this.isFrozen) return;
     if (!bot) this.msgCounter++;
     this.messages.push({
-      msg,
+      msg: String(msg),
       num: this.msgCounter,
       bot,
       ...this.extraData(msg),
@@ -98,6 +98,7 @@ class TextChannelDisp extends HTMLElement {
   updateText() {
     // oh shoot js injection
     this.texts.innerHTML = "";
+    console.log(this.textInstance.messages);
     this.textInstance.messages.forEach((i) => {
       const ele = this.textInstance.toHTML(i);
       ele.onmouseover = () => (ele.style.backgroundColor = "grey");
@@ -105,7 +106,7 @@ class TextChannelDisp extends HTMLElement {
       if (!i.bot) ele.innerHTML += `<sub>#${i.num}</sub>`;
       this.texts.append(ele);
     });
-    if (this.texts.childNodes.length === 0) return
+    if (this.texts.childNodes.length === 0) return;
     [...this.texts.childNodes].at(-1).scrollIntoView({
       behavior: "smooth",
       block: "end",
