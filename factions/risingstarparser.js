@@ -26,6 +26,7 @@ export function parse2(str) {
     for (let i = 0; i < literals.length; i++) {
       // left existence
       let foundFunction = null;
+      let foundLength = 0;
       for (let distanceLeft = 1; distanceLeft <= literalsIndexes[i]; distanceLeft++) {
         // find if there's a function with fitting syntax
         // ignore brackets if no function has been found yet
@@ -39,10 +40,12 @@ export function parse2(str) {
         // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
         if (actualFunc.isUnlocked) {
           foundFunction = actualFunc;
+          foundLength = distanceLeft;
         }
       }
       if (foundFunction != null) {
         // look for other args
+        const expectedArgs = foundFunction.syntax.split(",");
         let args = [literals[i]];
         let checkingIndex = i;
         while (checkingIndex < literals.length) {
@@ -55,6 +58,14 @@ export function parse2(str) {
           }
           args.push(literals[i+1]); // literals is ordered and should be kept that way
           checkingIndex++;
+        }
+        if (args.length == expectedArgs.length) {
+          const result = foundFunction.evaluate(args);
+          literals[i] = result
+          // remove extra used literals
+          for (let )
+          // collapse
+          
         }
       }
     }

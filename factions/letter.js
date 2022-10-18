@@ -45,15 +45,15 @@ class LetterFaction extends FactionBase {
     for(let i=0;i<this.count.length;i++){
       if(this.count[i]!=0) maxStockIndex = i
     }
-    let maxDigitIncr = Math.max(maxStockIndex,this.digitLength())
-    let difference = this.LetterToNumber(count) - this.extensionCount()
+    let maxDigitIncr = Math.max(maxStockIndex,this.digitLength)
+    let difference = this.LetterToNumber(count) - this.extensionCount
     if(difference == 0)return false
     if(difference == 1){
       this.count[0]++;
       return true}
     let oom = Math.log(Math.abs(difference))/Math.log(26)
     if(oom == Math.floor(oom)){
-      let remainingStock = this.letterStock() - this.usedStock()
+      let remainingStock = this.letterStock - this.usedStock()
       if(Math.sign(this.count[oom]) == Math.sign(difference)){
         if( remainingStock >= oom){
           this.count[oom]+= Math.sign(difference);
@@ -129,16 +129,17 @@ class LetterFaction extends FactionBase {
   get letterStock() {
     return basicCount.milestones + factorialCount.challengeReward;
   }
-  
+  // useStock is no longer needed as it's handled in the count checking
   // fine newText is a letter
-  useStock(newText) {
+  /*useStock(newText) {
     const countLetter = this.countToDisplay(this.count)
     // not implemented
     if (newText.length !== countLetter.length) throw new Error("Invalid use of stock")
     for (const text of countLetter) {
       
     }
-  }
+  }*/
+  
   /*useStock(index, amount, countText) {
     if (
       getBaseLog(this.baseCount + 1, 26) > index ||
