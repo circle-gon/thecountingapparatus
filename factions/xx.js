@@ -25,6 +25,14 @@ class XxFaction extends FactionBase {
     let actualCount = count.split("=")[1]
     let amountOfX = (actualCount.match(new RegExp(this.rawX, "g")))
     let ruleFollowed = (amountOfX == Math.ceil(this.rawX == "i" ? 1 : this.rawX))
+    if(ruleFollowed){
+      let numbersUsed = actualCount.match(/\d+/g)
+      for(let i=0;i<numbersUsed.length;i++){
+        if(Number(numbersUsed[i]) != this.rawX){
+          ruleFollowed = false
+        }
+      }
+    }
     return (
       // this.nextCount === this.parseCount(count)
       Math.abs(this.nextCount - this.parseCount(count)) < 0.00000001 && ruleFollowed
