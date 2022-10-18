@@ -1,6 +1,6 @@
 import {
-  Functions
-} from "../functions/functionClass.js";
+  FUNCTIONS
+} from "../functions/functionList.js";
 
 export function parse2(str) {
   // find all the actual numbers and their indexes
@@ -31,7 +31,30 @@ export function parse2(str) {
         // ignore brackets if no function has been found yet
         let subString = adaptedStr.substring(literalsIndexes[i] - distanceLeft, literalsIndexes[i]);
         if (foundFunction == null) {
-          subString = subString.replace(/)
+          subString = subString.replace(/[()]/g, '');
+        }
+        const actualFunc = Object.values(FUNCTIONS).find(
+          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === subString
+        );
+        // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
+        if (actualFunc.isUnlocked) {
+          foundFunction = actualFunc;
+        }
+      }
+      if (foundFunction != null) {
+        // look for other args
+        let args = [literals[i]];
+        let checkingIndex = i;
+        while (checkingIndex < literals.length) {
+          if (adaptedStr[literalsIndexes[i] + literals[i].length] != ',') {
+            break;
+          }
+          //should be a literal on the other side
+          if (!literalsIndexes.contains(literalsIndexes[i] + literals[i].length)) {
+            break;
+          }
+          args.push(literals[i+1]); // literals is ordered and should be kept that way
+          checkingIndex++;
         }
       }
     }

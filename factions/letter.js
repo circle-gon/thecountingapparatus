@@ -46,13 +46,28 @@ class LetterFaction extends FactionBase {
       if(this.count[i]!=0) maxStockIndex = i
     }
     let maxDigitIncr = Math.max(maxStockIndex,this.digitLength())
-    
-    return count === this.NumberToLetter(this.nextCount)
+    let difference = this.LetterToNumber(count) - this.extensionCount()
+    if(difference == 0)return false
+    if(difference == 1){
+      this.count[0]++;
+      return true}
+    let oom = Math.log(Math.abs(difference))/Math.log(26)
+    if(oom == Math.floor(oom)){
+      let remainingStock = this.letterStock() - this.usedStock()
+      if(Math.sign(this.count[oom]) == Math.sign(difference)){
+        if( remainingStock >= oom){
+          this.count[oom]+= Math.sign(difference);
+          return true} else return false
+      } else {
+        this.count[oom]-= Math.sign(difference);
+        return true}
+    } else return false
+    //return count === this.NumberToLetter(this.nextCount)
   }
   
   doCount(count) {
     if (this.isCorrectCount(count)) {
-      this.count[1] = this.nextCount;
+      //this.count[1] = this.nextCount; // going to take care of changing count in the isCorrectCount()
       console.log(this.count);
       this.unlockFunction();
       this.updateMilestones();
@@ -67,7 +82,7 @@ class LetterFaction extends FactionBase {
   get nextCount(){
     let sum;
     for (let i=0;i<this.digitLength;i++){
-      sum+=this.count[i]
+      sum+=(this.count[i]*(26**i));
     }
     return sum+1;
   }
