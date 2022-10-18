@@ -343,17 +343,18 @@ export const FUNCTIONS = {
     if(x == 0) return 4
     let val = 0
     if(x < 1e3) {
-      //Hundreds
-      val += [0,10,10,12,11,11,10,12,12,11][Math.floor(x/100)]
-      
-      if(Math.floor(x%100/10) === 1) {
-        val += [3,6,6,8,8,7,7,9,9,8][x%100-10] //Hundreds
+      val += [0,10,10,12,11,11,10,12,12,11][Math.floor(x/100)] //Hundreds
+      if (Math.floor(x%100/10) === 1) {
+        val += [3,6,6,8,8,7,7,9,9,8][x%100-10] //Teens
       } else {
         val += [0,0,6,6,5,5,5,7,7,6][Math.floor(x%100/10)] //Tens
         val += [0,3,3,5,4,4,3,5,5,4][Math.floor(x%10)] //Ones
       }
       
       return val
+    } else {
+      let suffix = [0,8,7,7,8,11,11,10,10,9,9][0];
+      return 
     }
     if(val < 1e6) {
       return 8+eng(Math.floor(x/1000))+eng(x%1000)
