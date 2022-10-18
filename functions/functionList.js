@@ -186,9 +186,25 @@ export const FUNCTIONS = {
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
 
-  LF: new FunctionBase(""),
+  LF: new FunctionBase("Left Factorial", "LF", "¡x", function (args) {
+    let output = 0;
+    for (let i = 0; i < args[0]; i++) {
+      output += gamma(i + 1);
+    }
+    return output;
+  }),
+
+  LI: new Integral("Logarithmic Integral", "LI", "LI(x)", (args) =>
+    integral((t) => 1 / Math.log(t), 0, args[0])
+  ),
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
+  
+  OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
+  
+  PF: new FunctionBase("Pairity Factorial", "PF", "x!!", function (args) {
+    
+  }),
 
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
