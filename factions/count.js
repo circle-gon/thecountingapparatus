@@ -44,7 +44,16 @@ class CountFaction extends FactionBase {
       return false;
     }
   }
-
+doCount(count) {
+    if (this.isCorrectCount(count)) {
+      this.count = this.nextCount;
+      this.updateMilestones();
+      this.updateGoals();
+    }
+  else if(count.startsWith("unban") && this.rewardOneUsed < this.milestoneRewards.one){
+    useRewardOne()
+  }
+  }
   spireBoost() {
     if (this.isSpire) {
       this.textBox.changeChannelName("Finite Spire");
