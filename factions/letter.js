@@ -40,19 +40,19 @@ class LetterFaction extends FactionBase {
   //Counting Logic
   isCorrectCount(count) {
     console.log(count, this.count);
-    let maxStockIndex = Math.max(...this.count)
-    let maxDigitIncr = Math.max(maxStockIndex, this.digitLength);
+    const maxStockIndex = Math.max(...this.count)
+    const maxDigitIncr = Math.max(maxStockIndex, this.digitLength);
     let difference = this.LetterToNumber(count) - this.extensionCount;
     if (difference === 0) return false;
     if (difference === 1) {
       this.count[0]++;
       return true;
     }
-    let oom = Math.log(Math.abs(difference)) / Math.log(26);
+    const oom = Math.log(Math.abs(difference)) / Math.log(26);
 
-    if (oom === Math.floor(oom)) {
+    if (oom % 1 === 0) {
       if (oom > maxDigitIncr - 1) return false;
-      let remainingStock = this.letterStock - this.usedStock();
+      const remainingStock = this.letterStock - this.usedStock
       if (this.count[oom] == undefined) this.count[oom] = 0;
       if (
         remainingStock >= oom ||

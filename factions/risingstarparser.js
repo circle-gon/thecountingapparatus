@@ -91,9 +91,36 @@ export function parse2(str) {
         console.log(args);
         if (args.length == expectedArgs.length) {
           // check extra args don't have a unary operator to go through first
+          foundFunction = null;
           for (let l = 1; l < args.length; l++) {
             //specifically right unary is the only problem
-            
+            // shh yes this is bad code
+            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
+              // find if there's a function with fitting syntax
+              // DONT ignore brackets if no function has been found yet
+              let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
+              const actualFunc = Object.values(FUNCTIONS).find( function (i) {
+                // possibly split up operators to prioritize
+                const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1);
+                if (syntaxSub == '' || !(i instanceof Right)) {
+                  return false;
+                }
+                return i.syntax === subString || syntaxSub === subString;
+              }
+              );
+              // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
+              if (actualFunc != undefined && actualFunc.isUnlocked) {
+                foundFunction = actualFunc;
+                break;
+              }
+            }
+            if (foundFunction != null) {
+              break;
+            }
+          }
+          if (foundFunction != null) {
+            // arg has a right unary, so wait
+            continue;
           }
           const result = foundFunction.evaluate(args);
           let removedLength = literalsLengths[i];

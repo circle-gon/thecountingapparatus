@@ -35,7 +35,7 @@ class XxFaction extends FactionBase {
     }
     return (
       // this.nextCount === this.parseCount(count)
-      Math.abs(this.nextCount - this.parseCount(count)) < 0.00000001 && ruleFollowed
+      Math.abs(this.nextCount - this.parseCount(actualCount)) < 0.00000001 && ruleFollowed
     );
   }
 
