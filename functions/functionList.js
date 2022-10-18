@@ -64,10 +64,14 @@ class Integral extends FunctionBase {
 export const FUNCTIONS = {
   A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (args) {
     switch (args[0]) {
-      case 0: return args[1] + 1;
-      case 1: return args[1] + 2;
-      case 2: return 2 * args[1] + 3;
-      case 3: return 2 ** (args[1] + 3) - 3;
+      case 0:
+        return args[1] + 1;
+      case 1:
+        return args[1] + 2;
+      case 2:
+        return 2 * args[1] + 3;
+      case 3:
+        return 2 ** (args[1] + 3) - 3;
       case 4:
         if (args[1] === 0) return 13;
         else if (args[1] === 1) return 65533;
@@ -156,8 +160,14 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  CI: new Integral("Cosine Integral", "CI", "Ci(x)", (args) =>
-    0.5772156649015328 + Math.log(args[0]) + integral(t => (Math.cos(t)-1)/t, 0, args[0])
+  CI: new Integral(
+    "Cosine Integral",
+    "CI",
+    "Ci(x)",
+    (args) =>
+      0.5772156649015328 +
+      Math.log(args[0]) +
+      integral((t) => (Math.cos(t) - 1) / t, 0, args[0])
   ),
 
   DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
@@ -175,6 +185,8 @@ export const FUNCTIONS = {
     "x_n",
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
+
+  LF: new FunctionBase(""),
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
 
