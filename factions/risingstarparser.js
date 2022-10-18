@@ -91,34 +91,35 @@ export function parse2(str) {
         console.log(args);
         if (args.length == expectedArgs.length) {
           // check extra args don't have a unary operator to go through first
-          foundFunction = null;
+          let foundFunction2 = null;
           for (let l = 1; l < args.length; l++) {
             //specifically right unary is the only problem
             // shh yes this is bad code
-            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
+            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i + l]; distanceRight++) {
               // find if there's a function with fitting syntax
               // DONT ignore brackets if no function has been found yet
-              let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
-              const actualFunc = Object.values(FUNCTIONS).find( function (i) {
+              let subString = adaptedStr.substring(literalsIndexes[i + l] + literalsLengths[i + l], literalsIndexes[i + l] + literalsLengths[i + l] + distanceRight);
+              const actualFunc = Object.values(FUNCTIONS).find( function (f) {
                 // possibly split up operators to prioritize
-                const syntaxSub = i.syntax.substring(i.syntax.indexOf("x") + 1);
-                if (syntaxSub == '' || !(i instanceof Right)) {
+                const syntaxSub = f.syntax.substring(f.syntax.indexOf("x") + 1);
+                if (syntaxSub == '' || !(f instanceof Right)) {
                   return false;
                 }
-                return i.syntax === subString || syntaxSub === subString;
+                return f.syntax === subString || syntaxSub === subString;
               }
               );
               // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
               if (actualFunc != undefined && actualFunc.isUnlocked) {
-                foundFunction = actualFunc;
+                foundFunction2 = actualFunc;
+                console.log("arg has right unary");
                 break;
               }
             }
-            if (foundFunction != null) {
+            if (foundFunction2 != null) {
               break;
             }
           }
-          if (foundFunction != null) {
+          if (foundFunction2 != null) {
             // arg has a right unary, so wait
             continue;
           }
@@ -191,6 +192,38 @@ export function parse2(str) {
         console.log(args);
         if (args.length == (foundFunction instanceof Bin ? 2 : 1)) {
           // check extra args don't have a unary operator to go through first
+          let foundFunction2 = null;
+          for (let l = 1; l < args.length; l++) {
+            //specifically right unary is the only problem
+            // shh yes this is bad code
+            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i + l]; distanceRight++) {
+              // find if there's a function with fitting syntax
+              // DONT ignore brackets if no function has been found yet
+              let subString = adaptedStr.substring(literalsIndexes[i + l] + literalsLengths[i + l], literalsIndexes[i + l] + literalsLengths[i + l] + distanceRight);
+              const actualFunc = Object.values(FUNCTIONS).find( function (f) {
+                // possibly split up operators to prioritize
+                const syntaxSub = f.syntax.substring(f.syntax.indexOf("x") + 1);
+                if (syntaxSub == '' || !(f instanceof Right)) {
+                  return false;
+                }
+                return f.syntax === subString || syntaxSub === subString;
+              }
+              );
+              // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
+              if (actualFunc != undefined && actualFunc.isUnlocked) {
+                foundFunction2 = actualFunc;
+                console.log("arg has right unary");
+                break;
+              }
+            }
+            if (foundFunction2 != null) {
+              break;
+            }
+          }
+          if (foundFunction2 != null) {
+            // arg has a right unary, so wait
+            continue;
+          }
           const result = foundFunction.evaluate(args);
           console.log("result:");
           console.log(result);
@@ -223,6 +256,8 @@ export function parse2(str) {
           }
         }
       }
+      // enclosing existance trol
+      
     }
   }
   console.log(literals[0]);
