@@ -205,7 +205,7 @@ export const FUNCTIONS = {
   PF: new FunctionBase("Pairity Factorial", "PF", "x!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 2) {
-      output *= i
+      output *= i;
     }
   }),
 
@@ -237,12 +237,14 @@ export const FUNCTIONS = {
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
 
-  TF: new FunctionBase(
-    "Triple Factorial",
-    "TF",
-    "x!!!",
-    (args) => (2 ** args[0] * gamma(0.5 + args[0])) / Math.sqrt(Math.PI)
-  ),
+  TF: new FunctionBase("Triple Factorial", "TF", "x!!!", function (args) {
+    let output = 1;
+    for (let i = args[0]; i > 0; i -= 3) 
+      output *= i;
+    return output;
+  }),
+
+  UN: new FunctionBase("Unary Representation", "UN", "1️⃣(x)", (args) => Math.floor(10**args[0] / 9)),
   
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 

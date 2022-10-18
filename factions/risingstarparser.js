@@ -6,11 +6,13 @@ export function parse2(str) {
   // find all the actual numbers and their indexes
   const literals = str.match(/\d+/g); // this doesn't get index gwa
   let literalsIndexes = [];
+  let literalsLengths = [];
   let replaceString = str;
   for (let i = 0; i < literals.length; i++) {
     //get first index, literals is ordered
     let index = replaceString.indexOf(literals[i]);
     literalsIndexes.push(index);
+    literalsLengths.push(literals[i].length);
     // replace the index with a not number of same length
     replaceString = replaceString.replace(literals[i], new Array(literals[i].length + 1).join("a"));
   }
@@ -20,7 +22,7 @@ export function parse2(str) {
   // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
   // if something's processed, collapse it and adjust literals/indexes
   // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
-  const directions = ["left", "right", "around"];
+  // just copying code for each direction atm, there's prolly a better way
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
     // check literals in order, if nothing happens, check next
@@ -50,11 +52,11 @@ export function parse2(str) {
         let args = [literals[i]];
         let checkingIndex = i;
         while (checkingIndex < literals.length) {
-          if (adaptedStr[literalsIndexes[i] + literals[i].length] != ',') {
+          if (adaptedStr[literalsIndexes[i] + literalsLengths[i]] != ',') {
             break;
           }
           //should be a literal on the other side
-          if (!literalsIndexes.contains(literalsIndexes[i] + literals[i].length)) {
+          if (!literalsIndexes.contains(literalsIndexes[i] + literalsLengths[i])) {
             break;
           }
           args.push(literals[i+1]); // literals is ordered and should be kept that way
@@ -62,11 +64,12 @@ export function parse2(str) {
         }
         if (args.length == expectedArgs.length) {
           const result = foundFunction.evaluate(args);
-          let removedLength = literals[i].length;
+          let removedLength = literalsLengths[i];
           literals[i] = result
+          literalsLengths[i] = 1;
           // remove extra used literals
           for (let k = 1; k < args.length; k++) {
-            removedLength += literals[i + k].length + 1;
+            removedLength += literalsLengths[i + k] + 1;
             literals[i + k] = "remove";
             literalsIndexes[i + k] = "remove";
           }
@@ -82,6 +85,26 @@ export function parse2(str) {
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
           }
+        }
+      }
+      
+      // right existence
+      foundFunction = null;
+      foundLength = 0;
+      for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
+        // find if there's a function with fitting syntax
+        // ignore brackets if no function has been found yet
+        let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i]);
+        if (foundFunction == null) {
+          subString = subString.replace(/[()]/g, '');
+        }
+        const actualFunc = Object.values(FUNCTIONS).find(
+          (i) => i.syntax.substring(0, i.syntax.indexOf("(")) === subString
+        );
+        // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
+        if (actualFunc.isUnlocked) {
+          foundFunction = actualFunc;
+          foundLength = distanceLeft;
         }
       }
     }
