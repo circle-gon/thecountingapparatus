@@ -310,8 +310,6 @@ export const FUNCTIONS = {
     parseInt((args[1] >>> 0).toString(), args[0]).toString(10)
   ),
 
-  //DET: new FunctionBase("Determinant", "DET", "det(A)", )
-
   DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
   DRT: new Left("Digital Root", "DRT", "D√)", function drt(args) {
@@ -450,8 +448,6 @@ export const FUNCTIONS = {
   
   ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
   
-  //Dvoid (please do not move)
-  
   POW: new Bin("Power", "POW", "^", (args) => args[0] ** args[1]),
   
   PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
@@ -464,7 +460,9 @@ export const FUNCTIONS = {
   
   SUC: new Right("Succ Deez Nuts", "SUC", "++", (args) => ++args[0]),
   
-  //REF: new Matrix("")
+  //Dvoid (please do not move)
+  
+  RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) => Math.sqrt((args.reduce((prev, curr) => prev + curr**2, 0))/args.length)),
   
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
   
