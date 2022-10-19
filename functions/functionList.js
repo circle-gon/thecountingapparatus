@@ -145,7 +145,13 @@ export const FUNCTIONS = {
     }
     return output;
   }),
-
+  AS: new Operator("Aliquot Sum", "AS", "s(x)", function(args){
+    let sum = 0
+    for(let i=1;i<args[0];i++){
+      if (args[0]%i==0) sum+=i;
+    }
+    return sum
+  }),
   AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (args) {
     const a = args[0];
     const b = args[1];
@@ -189,7 +195,7 @@ export const FUNCTIONS = {
     "x_n",
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
-
+  IM: new Operator("Imaginary Part", "IM", "im(x)", (args) => 0),
   LF: new Left("Left Factorial", "LF", "¡", function (args) {
     let output = 0;
     for (let i = 0; i < args[0]; i++) {
@@ -222,7 +228,7 @@ export const FUNCTIONS = {
     "!!!!",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 1)
   ),
-
+  RE: new Operator("Real Part", "RE", "re(x)", (args) => args[0]),
   RF: new Right(
     "Rising Factorial",
     "FF",
@@ -250,7 +256,7 @@ export const FUNCTIONS = {
 
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
-  UN: new Operator("Unary Representation", "UN", "1️⃣(x)", (args) =>
+  UR: new Operator("Unary Representation", "UR", "1️⃣(x)", (args) =>
     Math.floor(10 ** args[0] / 9)
   ),
 
@@ -288,7 +294,16 @@ export const FUNCTIONS = {
     "hex(x)",
     (args) => 3 * args[0] * (args[0] + 1) + 1
   ),
-
+  COL:new Operator("Collatz Conjecture", "COL", "COL(x)", function(args){
+    let steps = 0
+    let num = args[0]
+    while(num!=1){
+      if(num%2==1)num=3*num+1
+      else num/=2
+      steps++
+    }
+    return steps
+  }),
   COS: new Operator("Cosine", "COS", "cos(x)", Math.cos),
 
   COT: new Operator(
@@ -309,24 +324,28 @@ export const FUNCTIONS = {
     "Doublets",
     "DBL",
     "2️⃣(x)",
-    (args) => args[0] + 10 ** Math.floor(Math.log10(args[0]) + 1) * args[0]
+    (args) => Number(args[0].toString()+args[0].toString())
   ),
 
   DEC: new Operator("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(10)
   ),
-
+  DEF: new Operator("Number Deficiency", "DEF", "def(x)", function(args){
+    let sum = 0
+    for(let i=1;i<args[0];i++){
+      if(args[0]%i==0)sum+=i
+    }
+    return args[0]-sum// def(x) = x-s(x)
+  }),
   DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
   DRT: new Left("Digital Root", "DRT", "D√)", function drt(args) {
     let input = args[0].toString();
     if (input.length === 1) return parseInt(input);
     else {
-      let output = 0;
-      for (let i = 0; i < input.length; i++) {
-        output += parseInt(input.charAt(i));
-      }
-      return drt([output]);
+      let x = args[0]%9
+      if(x==0)x=9
+      return x
     }
   }),
 
@@ -345,7 +364,7 @@ export const FUNCTIONS = {
     "dws(n)",
     (args) => 1 - args[0]
   ),
-
+  EGG: new Operator("Egg", "EGG", "🥚(x)", (args) => 420*args[0]-119),
   ENG: new Operator("English", "ENG", "eng(n)", function eng(args) {
     let x = args[0];
     if (x === 0) return 4;

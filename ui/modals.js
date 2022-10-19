@@ -15,6 +15,11 @@ const exampleModals = {
     
     div.innerHTML = "Some text"
     div.append(ce("br"), btn)
+    
+    div.style.display = "flex"
+    div.style.flexDirection = "column"
+    div.style.justifyContent = "space-between"
+    div.style.alignItems = "center"
     return div
   }
 }
