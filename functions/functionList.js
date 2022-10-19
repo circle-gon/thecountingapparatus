@@ -428,14 +428,24 @@ export const FUNCTIONS = {
 
   LEO: new Operator("Leonardo Numbers", "LEO", "leo(n)", (args) =>
     Math.round(
-      (((1 + Math.sqrt(5)) / 2) ** (args[0] + 1) -
-        ((1 - Math.sqrt(5)) / 2) ** (args[0] + 1)) /
-        ((1 + Math.sqrt(5)) / 2 - (1 - Math.sqrt(5)) / 2)
+      (2 / Math.sqrt(5)) *
+        (((1 + Math.sqrt(5)) / 2) ** (args[0] + 1) -
+        ((1 - Math.sqrt(5)) / 2) ** (args[0] + 1)) +1
     )
   ),
 
-  LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
+  LOG: new Logarithm("Logarithm", "LOG", "log(x)", 10),
+  
+  MAX: new Operator("Maximum", "MAX", "max(...)", Math.max),
 
+  MIN: new Operator("Minimum", "MIN", "min(...)", Math.min),
+  
+  MLT: new Bin("Multiply", "MLT", "*", (x, y) => x * y),
+  
+  MOD: new Bin("Modulo", "MOD", "%", (x, y) => x % y),
+  
+  NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~args[0]),
+  
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
@@ -466,18 +476,14 @@ export const FUNCTIONS = {
 
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
 
-  SUBTRACTION: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
+  SUB: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
 
-  MULTIPLICATION: new Bin("Multiply", "MLT", "*", (x, y) => x * y),
+  POW: new Bin("Power", "POW", "^", (x, y) => x ** y),
 
-  EXPONENTIATION: new Bin("Power", "POW", "^", (x, y) => x ** y),
+  PI: new Right("Factorial", "PI", "!", (x) => gamma(x + 1)),
 
-  FACTORIAL: new Right("Factorial", "PI", "!", (x) => gamma(x + 1)),
+  PRE: new Right("Predecessor", "PRE", "--", (x, y) => --x),
 
-  MODULO: new Bin("Modulo", "MOD", "%", (x, y) => x % y),
-
-  PREDECESSOR: new Right("Predecessor", "PRE", "--", (x, y) => --x),
-
-  SUCCESSOR: new Right("Successor", "SUC", "++", (args) => ++args[0]),
+  SUC: new Right("Successor", "SUC", "++", (args) => ++args[0]),
 };
 // trole !
