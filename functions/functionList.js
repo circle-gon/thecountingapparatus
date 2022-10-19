@@ -395,7 +395,7 @@ export const FUNCTIONS = {
     (args) => args[0] + Math.floor(Math.log2(args[0] + Math.log2(args[0])))
   ),
 
-  INT: new Operator("Integral", "INT", "∫(x,dx,LB,UB)", (args) =>
+  INT: new Operator("Integral", "INT", "∫(f,dx,LB,UB)", (args) =>
     integral(args[0], args[2], args[3])
   ),
 
@@ -428,60 +428,66 @@ export const FUNCTIONS = {
     Math.round(
       (2 / Math.sqrt(5)) *
         (((1 + Math.sqrt(5)) / 2) ** (args[0] + 1) -
-        ((1 - Math.sqrt(5)) / 2) ** (args[0] + 1)) +1
+          ((1 - Math.sqrt(5)) / 2) ** (args[0] + 1)) +
+        1
     )
   ),
 
   LOG: new Logarithm("Logarithm", "LOG", "log(x)", 10),
-  
+
   MAX: new Operator("Maximum", "MAX", "max(...)", Math.max),
 
   MIN: new Operator("Minimum", "MIN", "min(...)", Math.min),
-  
+
   MLT: new Bin("Multiply", "MLT", "*", (args) => args[0] * args[1]),
-  
+
   MOD: new Bin("Modulo", "MOD", "%", (args) => args[0] % args[1]),
-  
+
   NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~args[0]),
-  
-  ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2*args[0]+1),
-  
+
+  ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2 * args[0] + 1),
+
   ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
-  
+
   POW: new Bin("Power", "POW", "^", (args) => args[0] ** args[1]),
-  
+
   PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
+
+  RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) =>
+    Math.sqrt(args.reduce((prev, curr) => prev + curr ** 2, 0) / args.length)
+  ),
+  
+  SEC: new Operator("Secant", "SEC", "sec(x)"),
   
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
-  
+
   SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
-  
+
   SUB: new Bin("Subtraction", "SUB", "-", (args) => args[0] - args[1]),
-  
+
   SUC: new Right("Succ Deez Nuts", "SUC", "++", (args) => ++args[0]),
+
+  //please do not move this comment
   
-  //Dvoid (please do not move)
-  
-  RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) => Math.sqrt((args.reduce((prev, curr) => prev + curr**2, 0))/args.length)),
   
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
-  
+
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
-  
+
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
-  
+
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
-  
+
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
-  
+
   ZERO: new SingleNumSeq("All Zeros Sequence", "ZERO", "zero(x)", 0),
-  
+
   EIGHT: new SingleNumSeq("All Eights Sequence", "EIGHT", "eight(x)", 8),
 
   SEVEN: new SingleNumSeq("All Sevens Sequence", "SEVEN", "seven(x)", 7),
 
   THREE: new SingleNumSeq("All Threes Sequence", "THREE", "three(x)", 3),
-  
+
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
 
   ELEVEN: new SingleNumSeq("All 11 Albanias", "ELEVEN", "🇦🇱(x)", 11),
