@@ -99,7 +99,7 @@ export class FactionBase {
   }
 
   doCount(count) {
-    console.trace()
+
     if (this.isCorrectCount(count)) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;

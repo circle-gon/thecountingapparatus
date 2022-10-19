@@ -49,6 +49,7 @@ const exampleModals = {
       radio.addEventListener("change", function () {
         challSelected = Number(this.value);
         chalSelectedText.innerHTML = `Challenge selected: ${factionInstance.challengeDetails[challSelected].title}`;
+        btn.disabled = false
       });
       selection.classList.add("container");
       selection.append(content);
@@ -64,7 +65,8 @@ const exampleModals = {
       }
       hideModal();
     };
-    btn.innerHTML = "Do this challenge!";
+    btn.innerHTML = factionInstance.inChallenge !== null ? "Exit Challenge" : "Do this challenge!";
+    btn.disabled = factionInstance.inChallenge === null;
 
     cancelBtn.classList.add("fancy-btn");
     cancelBtn.onclick = hideModal;

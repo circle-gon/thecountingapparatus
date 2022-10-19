@@ -51,9 +51,14 @@
   vertical-align: top;
 }
 
-.fancy-btn:hover {
+.fancy-btn:hover:not(.fancy-button:disabled) {
   color: #ffffff;
   background: #5ac467;
+}
+
+.fancy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .columns {

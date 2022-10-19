@@ -219,7 +219,7 @@ export const FUNCTIONS = {
     (args) =>
       1 / (args.reduce((prev, curr) => prev + 1 / curr, 0), 1 / args.length)
   ),
-  HP: new Operator("Hyperprime")
+  HP: new Operator("Hyperprime", "HP", "hp(x)", (args)=>prime(prime(prime(args[0])))),
   IM: new Operator("Imaginary Part", "IM", "im(x)", (args) => 0),
 
   LF: new Left("Left Factorial", "LF", "¡", function (args) {
@@ -275,7 +275,7 @@ export const FUNCTIONS = {
   SI: new Operator("Sine Integral", "SI", "Si(x)", (args) =>
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
-
+  SP: new Operator("Superprime", "SP", "sp(x)", (args)=>prime(prime(args[0]))),
   TF: new Right("Triple Factorial", "TF", "!!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 3) output *= i;
@@ -520,7 +520,13 @@ export const FUNCTIONS = {
   POW: new Bin("Power", "POW", "^", (args) => args[0] ** args[1]),
 
   PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
-
+  PRI: new Operator("Primorial", "PRI", "x#", (args)=>{
+  let result = 1
+  for(let i=1;i<=args[0];i++){
+    result *= prime(i)
+  }
+    return result
+  }),
   RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) =>
     Math.sqrt(args.reduce((prev, curr) => prev + curr ** 2, 0) / args.length)
   ),
