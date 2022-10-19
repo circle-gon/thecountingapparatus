@@ -281,18 +281,39 @@ export function parse2(str) {
   return literals[0];
 }
 
-function findFunction(str, startIndex, direction, ignoreBrackets, delimiterArgs) {
+function findFunction(str, startIndex, startLength, direction, ignoreBrackets, delimiterArgs, operatorType) {
   let foundFunction = null;
   let foundLength = 0;
-  for (let distanceLeft = 1; distanceLeft <= startIndex; distanceLeft++) {
+  let maxDistance = startIndex;
+  if (direction == "right") {
+    maxDistance = str.length - startIndex;
+  }
+  
+  for (let distance = 1; distance <= startIndex; distance++) {
     // find if there's a function with fitting syntax
     // ignore brackets if no function has been found yet
-    let subString = str.substring(startIndex - distanceLeft, startIndex);
+    let subString = null;
+    if (direction == "left") {
+      subString = str.substring(startIndex - distance, startIndex);
+    }
+    else if (direction == "right") {
+      subString = str.substring(startIndex + startLength, startIndex + startLength + distance);
+    }
     if (foundFunction === null && ignoreBrackets) {
       subString = subString.replace(/[()]/g, '');
     }
     const actualFunc = Object.values(FUNCTIONS).find( function (i) {
       // possibly split up operators to prioritize
+      if (!(i instanceof operatorType)) {
+        return false;
+      }
+      let comparisonStrings = [i.syntax];
+      for (const delimiters of delimiterArgs) {
+        const syntaxSub = i.syntax.substring((delimiters[0] typeof "") ? i.syntax.indexOf(delimiters[0]) : delimiters[0], i.syntax.indexOf(delimiters[1]));
+        if (syntaxSub !== '') {
+          comparisonStrings.push(syntaxSub);
+        }
+      }
       const syntaxSub = i.syntax.substring(0, i.syntax.indexOf("("));
       if (syntaxSub === '') {
         return false;

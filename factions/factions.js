@@ -76,6 +76,9 @@ export class FactionBase {
     return this.challenges[this.inChallenge] ?? this.count;
   }
   
+  isInChallenge(n) {
+    return this.inChallenge === n
+  }
   enterChallenge(i) {
     this.inChallenge = i
     this.textBox.switchToChat(this.challengeDetails[i].name)  
@@ -237,6 +240,7 @@ class FactionDisplay extends HTMLElement {
     this.info.style.top = "0";
     this.info.style.right = "0";
     this.info.style.margin = "5px";
+    this.info.style.border = "1px solid black"
 
     const root = ce("div");
     const chatInstance = ce("text-box");
