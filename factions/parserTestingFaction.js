@@ -15,13 +15,13 @@ class FactionTesting extends FactionBase {
         unlocked() {
           return true
         }
-      }, {
+      }, ...Array(20).fill({
         title: "Another example",
         description: "Something...",
         unlocked() {
           return true
         }
-      }
+      })
     ])
   }
   get nextCount() {

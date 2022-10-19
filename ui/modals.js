@@ -25,8 +25,7 @@ const exampleModals = {
       
       selection.innerHTML = `<input type="checkbox"
         id="check${int}" 
-        class="control"
-        checked />
+        class="control" />
       <label for="check${int}" title="${i.title}" class="label">
         <div style="display: flex; align-items: center; justify-content: space-between;">
           ${i.title}
@@ -43,6 +42,10 @@ const exampleModals = {
       content.append(count)
       content.classList.add("content")
       
+      const radio = selection.querySelector('input[type="radio"]')
+      radio.addEventListener("change", () => {
+        
+      })
       selection.classList.add("container")
       selection.append(content)
       challStuffs.append(selection)
@@ -58,13 +61,8 @@ const exampleModals = {
     cancelBtn.style.marginLeft = "20px"
     
     buttonCollection.append(btn, cancelBtn)
-    buttonCollection.style.position = "absolute"
-    buttonCollection.style.bottom = "0"
-    buttonCollection.style.left = "50%"
-    buttonCollection.style.transform = "translateX(-50%)"
+    
     div.append(challStuffs, buttonCollection)
-    div.style.position = "relative"
-    div.style.height = "100%"
     return div
   }
 }
