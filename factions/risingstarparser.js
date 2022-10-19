@@ -59,14 +59,15 @@ export function parse2(str) {
         }
       }
       // left existence
-      let foundFunction, foundLength = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
-      // let foundFunction = functionProperties[0];
-      // let foundLength = functionProperties[1];
-      
-      if (foundFunction !== null) {
+      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
+      let foundFunction = functionProperties[0];
+      let foundLength = functionProperties[1];
+      if (foundFunction !== undefined) {
         console.log(foundFunction);
         // look for other args
-        let args, expectedArgs = gatherArgs();
+        let argsProperties = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
+        let args = argsProperties[0];
+        let expectedArgs = argsProperties[1];
         // const expectedArgs = foundFunction.syntax.split(",");
         // let args = [literals[i]];
         // let checkingIndex = i;
@@ -151,20 +152,23 @@ export function parse2(str) {
       }
       
       // right existence
-      foundFunction, foundLength = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
-      // foundFunction = functionProperties[0];
-      // foundLength = functionProperties[1];
+      functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
+      foundFunction = functionProperties[0];
+      foundLength = functionProperties[1];
       
-      if (foundFunction !== null) {
+      if (foundFunction !== undefined) {
         console.log(foundFunction);
         // look for other args
         // const expectedArgs = foundFunction.syntax.split(",");
-        let args = [literals[i]];
-        if (foundFunction instanceof Bin) {
-          if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
-            args.push(literals[i + 1]);
-          }
-        }
+        let argsProperties = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
+        let args = argsProperties[0];
+        let expectedArgs = argsProperties[1];
+        // let args = [literals[i]];
+        // if (foundFunction instanceof Bin) {
+        //   if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
+        //     args.push(literals[i + 1]);
+        //   }
+        // }
         console.log("args:");
         console.log(args);
         if (args.length === (foundFunction instanceof Bin ? 2 : 1)) {
@@ -242,7 +246,7 @@ export function parse2(str) {
   return literals[0];
 }
 
-function gatherArgs(str, i, literals, lengths, indexes, func) {
+function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {
   let expectedArgs = func.syntax.split(",").length; // usually 1
   let args = [literals[i]];
   if (expectedArgs > 1) { // multi arg function
@@ -260,7 +264,10 @@ function gatherArgs(str, i, literals, lengths, indexes, func) {
     }
   }
   if (func instanceof Bin) {
-    
+    expectedArgs = 2;
+    if (i + 1 < literals.length && indexes[i + 1] == indexes[i] + lengths[i] + foundLength) {
+      args.push(literals[i + 1]);
+    }
   }
   return [args, expectedArgs];
 }
@@ -306,7 +313,6 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
         }
         else {
           syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0]);
-          console.log(syntaxSub);
         }
         if (syntaxSub !== '') {
           comparisonStrings.push(syntaxSub);
