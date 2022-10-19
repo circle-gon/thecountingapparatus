@@ -186,7 +186,7 @@ export const FUNCTIONS = {
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
 
-  LF: new Left("Left Factorial", "LF", "¡x", function (args) {
+  LF: new Left("Left Factorial", "LF", "¡", function (args) {
     let output = 0;
     for (let i = 0; i < args[0]; i++) {
       output += gamma(i + 1);
@@ -200,9 +200,9 @@ export const FUNCTIONS = {
 
   LN: new Logarithm("Natural Log", "LN", "ln(x)", Math.E),
 
-  OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
+  OR: new Bin("Bitwise OR", "OR", "|", (args) => args[0] | args[1]),
 
-  PF: new Right("Parity Factorial", "PF", "x!!", function (args) {
+  PF: new Right("Parity Factorial", "PF", "!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 2) {
       output *= i;
@@ -210,19 +210,19 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  PI: new Right("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
+  PI: new Right("Pi Function", "PI", "!", (args) => gamma(args[0] + 1)),
 
   QF: new Right(
     "Quad Factorial",
     "QF",
-    "x!!!!",
+    "!!!!",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 1)
   ),
 
   RF: new Right(
     "Rising Factorial",
     "FF",
-    "x_n",
+    "_n",
     (args) => gamma(args[0] + args[1]) / gamma(args[0])
   ),
 
@@ -238,7 +238,7 @@ export const FUNCTIONS = {
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
 
-  TF: new Right("Triple Factorial", "TF", "x!!!", function (args) {
+  TF: new Right("Triple Factorial", "TF", "!!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 3) output *= i;
     return output;
@@ -252,11 +252,11 @@ export const FUNCTIONS = {
 
   ABS: new Wrap("Absolute Value", "ABS", "|x|", Math.abs),
 
-  ADD: new Bin("Addition", "ADD", "x+y", (args) => args[0] + args[1]),
+  ADD: new Bin("Addition", "ADD", "+", (args) => args[0] + args[1]),
 
-  ADI: new Left("Additive Inverse", "ADI", "-x", (args) => -args[0]),
+  ADI: new Left("Additive Inverse", "ADI", "-", (args) => -args[0]),
 
-  AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
+  AND: new Bin("Bitwise And", "AND", "&", (args) => args[0] & args[1]),
 
   BIN: new Operator("Binary Numbers", "BIN", "bin[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(2)
@@ -316,7 +316,7 @@ export const FUNCTIONS = {
 
   DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
-  DRT: new Left("Digital Root", "DRT", "D√n)", function drt(args) {
+  DRT: new Left("Digital Root", "DRT", "D√)", function drt(args) {
     let input = args[0].toString();
     if (input.length === 1) return parseInt(input);
     else {
@@ -328,7 +328,7 @@ export const FUNCTIONS = {
     }
   }),
 
-  DSM: new Left("Digit Sum", "DSM", "D+n", function (args) {
+  DSM: new Left("Digit Sum", "DSM", "D+", function (args) {
     args[0] = args[0].toString();
     let output = 0;
     for (let i = 0; i < args[0].length; i++) {
@@ -373,6 +373,8 @@ export const FUNCTIONS = {
   ERF: new Integral("Error Function", "ERF", "erf(x)", (args) => integral((t) => 2*Math.E**(-(t**2))/Math.sqrt(Math.PI), 0, args[0])),
   
   EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
+  
+  FIB: new Operator(),
   
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
