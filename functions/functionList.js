@@ -369,10 +369,10 @@ export const FUNCTIONS = {
       );
     }
   }),
-  
-  EXP: new FunctionBase("Exponential", "")
 
   ERF: new Integral("Error Function", "ERF", "erf(x)", (args) => integral((t) => 2*Math.E**(-(t**2))/Math.sqrt(Math.PI), 0, args[0])),
+  
+  EXP: new FunctionBase("Exponential Function", "EXP", "exp(x)", Math.exp),
   
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
