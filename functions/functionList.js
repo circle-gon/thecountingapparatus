@@ -321,7 +321,7 @@ export const FUNCTIONS = {
   ),
 
   DBL: new Operator("Doublets", "DBL", "2️⃣(x)", (args) =>
-    Number(args[0].toString().repeat(2)),
+    Number(args[0].toString().repeat(2))
   ),
 
   DEC: new Operator("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
@@ -336,7 +336,12 @@ export const FUNCTIONS = {
   }),
   DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
-  DRT: new Left("Digital Root", "DRT", "D√)", (args) => (args[0]-1)%9+1),
+  DRT: new Left(
+    "Digital Root",
+    "DRT",
+    "D√)",
+    (args) => ((args[0] - 1) % 9) + 1
+  ),
 
   DSM: new Left("Digit Sum", "DSM", "D+", function (args) {
     args[0] = args[0].toString();
@@ -406,7 +411,7 @@ export const FUNCTIONS = {
     "Impolite Numbers",
     "IMP",
     "😠(n)",
-    (args) => args[0] + Math.floor(Math.log2(args[0] + Math.log2(args[0])))
+    (args) => args[0] + 2 ** (args[0] - 1)
   ),
 
   INT: new Operator("Integral", "INT", "∫(f,dx,LB,UB)", (args) =>
@@ -447,6 +452,13 @@ export const FUNCTIONS = {
     )
   ),
 
+  LIG: new Integral(
+    "Lower Incomplete Gamma Function",
+    "LIG",
+    "γ(x,y)",
+    (args) => integral((t) => t ** (args[0] - 1) * Math.exp(-t), 0, args[1])
+  ),
+
   LOG: new Logarithm("Logarithm", "LOG", "log(x)", 10),
 
   MAX: new Operator("Maximum", "MAX", "max(...)", Math.max),
@@ -457,7 +469,7 @@ export const FUNCTIONS = {
 
   MOD: new Bin("Modulo", "MOD", "%", (args) => args[0] % args[1]),
 
-  NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~args[0]),
+  NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~(args[0]) >>> 0),
 
   ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2 * args[0] + 1),
 

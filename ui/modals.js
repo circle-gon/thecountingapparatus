@@ -1,4 +1,5 @@
 import {ce} from '../text/channel.js'
+import {randomInt} from '../utils/utils.js'
 
 const modal = document.getElementById("modal")
 const content = document.getElementById("content")
@@ -8,23 +9,41 @@ const exampleModals = {
   challengeSelector(factionInstance) {
     const div = ce("div")
     const btn = ce("button")
+    const cancelBtn = ce("button")
     const challStuffs = ce("div")
+    const count = ce("span")
+    const currChallenge = ce("span")
     
-    factionInstance.challengeDetails.forEach(i => {
+    factionInstance.challengeDetails.forEach((i, ind) => {
       const selection = ce("div")
+      const content = ce("div")
+      const int = randomInt()
+      const challengeInt = randomInt()
+      
       selection.innerHTML = `<input type="checkbox"
-      id="check${int}" 
-      class="control"
-      checked />
-    <label for="check${int}" title="${this.textGroup.name}" class="label">${this.textGroup.name}</label>`
+        id="check${int}" 
+        class="control"
+        checked />
+      <label for="check${int}" title="${i.name}" class="label">
+        ${i.name}<input type="radio" name="challSelect${challengeInt}" style="margin-left: auto;margin-right: 0" />
+      </label>`
+      
+      content.innerHTML = `
+        <div>${i.description}</div>
+        Best count in this challenge: 
+      `
+      count.innerText = factionInstance.challenges[ind] 
+      
+      content.append(count)
+      content.classList.add("content")
     })
     
     btn.classList.add("fancy-btn")
     btn.onclick = hideModal
-    btn.innerHTML = "Okay."
+    btn.innerHTML = "Do this challenge!"
     
-    text.innerHTML = "Some text"
-    div.append(text, btn)
+    challStuffs.classList.add("container")
+    div.append(challStuffs, btn)
     
     div.classList.add("columns")
     return div
