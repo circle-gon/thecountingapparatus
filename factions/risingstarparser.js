@@ -154,7 +154,7 @@ export function parse2(str) {
           // literalsIndexes[i] -= foundLength;
           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end, dunno about the -1*/);
           let bracketsBeGone = 0;
-          while (adaptedStr[literalsIndexes[i] - 1] == "(") {
+          while (adaptedStr[literalsIndexes[i] - 1] === "(") {
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] - 1) + adaptedStr.substr(literalsIndexes[i]);
             bracketsBeGone++;
           }
@@ -197,18 +197,18 @@ function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {
   }
   if (func instanceof Bin) {
     expectedArgs = 2;
-    if (i + 1 < literals.length && indexes[i + 1] == indexes[i] + lengths[i] + foundLength) {
+    if (i + 1 < literals.length && indexes[i + 1] === indexes[i] + lengths[i] + foundLength) {
       args.push(literals[i + 1]);
     }
   }
-  return args.length == expectedArgs ? args : null;
+  return args.length === expectedArgs ? args : null;
 }
 
 function findFunction(str, startIndex, startLength, direction, ignoreBrackets, delimiterArgs, operatorType) {
   let foundFunction = null;
   let foundLength = 0;
   let maxDistance = startIndex;
-  if (direction == "right") {
+  if (direction === "right") {
     maxDistance = str.length - startIndex;
   }
   
@@ -216,10 +216,10 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     // find if there's a function with fitting syntax
     // ignore brackets if no function has been found yet
     let subString = null;
-    if (direction == "left") {
+    if (direction === "left") {
       subString = str.substring(startIndex - distance, startIndex);
     }
-    else if (direction == "right") {
+    else if (direction === "right") {
       subString = str.substring(startIndex + startLength, startIndex + startLength + distance);
     }
     if (foundFunction === null && ignoreBrackets) {

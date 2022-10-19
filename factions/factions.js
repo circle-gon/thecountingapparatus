@@ -22,7 +22,7 @@ export class FactionBase {
     this.goalsCompleted = [];
     this.challengeDetails = challenges;
     this.inChallenge = null;
-    this.challenges = new Array(challenges.length).fill(0)
+    this.challenges = Array(challenges.length).fill(0)
 
     //Text box logic
     this.textBox = new TextChannel(
