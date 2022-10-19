@@ -376,17 +376,13 @@ export const FUNCTIONS = {
 
   EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
 
-  FIB: new Operator(
-    "Fibonacci Numbers",
-    "FIB",
-    "fib(n)",
-    (args) =>
-      Math.round((
-        ((1 + Math.sqrt(5)) / 2) ** args[0] -
-          ((1 - Math.sqrt(5)) / 2) ** args[0]
-      ) /
-      ((1 + Math.sqrt(5)) / 2 - (1 - Math.sqrt(5)) / 2)
-  )),
+  FIB: new Operator("Fibonacci Numbers", "FIB", "fib(n)", (args) =>
+    Math.round(
+      (((1 + Math.sqrt(5)) / 2) ** args[0] -
+        ((1 - Math.sqrt(5)) / 2) ** args[0]) /
+        ((1 + Math.sqrt(5)) / 2 - (1 - Math.sqrt(5)) / 2)
+    )
+  ),
 
   GCD: new Operator("Greatest Common Denominator", "GCD", "gcd(...)", (args) =>
     args.reduce(function gcd(a, b) {
@@ -422,6 +418,21 @@ export const FUNCTIONS = {
     const gcd = (a, b) => (b ? gcd(b, a % b) : a);
     return args.reduce((a, b) => (a * b) / gcd(a, b));
   }),
+
+  LCS: new Operator(
+    "Lazy Caterer's Sequence",
+    "LCS",
+    "lc(n)",
+    (args) => (args[0](args[0] + 1) + 2) / 2
+  ),
+
+  LEO: new Operator("Leonardo Numbers", "LEO", "leo(n)", (args) =>
+    Math.round(
+      (((1 + Math.sqrt(5)) / 2) ** (args[0] + 1) -
+        ((1 - Math.sqrt(5)) / 2) ** (args[0] + 1)) /
+        ((1 + Math.sqrt(5)) / 2 - (1 - Math.sqrt(5)) / 2)
+    )
+  ),
 
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 

@@ -187,7 +187,6 @@ class FactionDisplay extends HTMLElement {
   updateHTML() {
     const c = (co) => this.faction.countToDisplay(co);
     this.info.innerHTML = `Count: ${c(this.faction.realCount)}<br>
-    Next count: ${c(this.faction.nextCount)}<br>
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
     Current amount of milestones: ${this.faction.milestones}`;
     if (this.getAttribute("name") === "Tree") {
