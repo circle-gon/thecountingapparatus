@@ -62,7 +62,7 @@ class Integral extends FunctionBase {
 }
 //Functions (organize by Unlock)
 export const FUNCTIONS = {
-  A: new FunctionBase("Ackermann Function", "A", "A(a,b)", function (args) {
+  A: new Operator("Ackermann Function", "A", "A(a,b)", function (args) {
     switch (args[0]) {
       case 0:
         return args[1] + 1;
@@ -84,7 +84,7 @@ export const FUNCTIONS = {
     }
   }),
 
-  B: new FunctionBase(
+  B: new Operator(
     "Beta Function",
     "B",
     "B(x,y)",
@@ -92,14 +92,14 @@ export const FUNCTIONS = {
       (gamma(args[0] + 1) * gamma(args[1] + 1)) / gamma(args[0] + args[1] + 1)
   ),
 
-  C: new FunctionBase(
+  C: new Operator(
     "Catalan Numbers",
     "C",
     "C(x)",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 2) / gamma(args[0] + 1)
   ),
 
-  H: new FunctionBase("Harmonic Numbers", "H", "H(a,b)", function (args) {
+  H: new Operator("Harmonic Numbers", "H", "H(a,b)", function (args) {
     let output = 0;
     for (let i = 1; i <= args[0]; i++) {
       output += 1 / i ** args[1];
@@ -107,7 +107,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  J: new Integral("Bessel Function of the First Kind", "J", "J[n]x", (args) =>
+  J: new Operator("Bessel Function of the First Kind", "J", "J[n]x", (args) =>
     integral(
       (t) => Math.cos(args[0] * t - args[1] * Math.sin(t)) / Math.PI,
       0,
@@ -115,7 +115,7 @@ export const FUNCTIONS = {
     )
   ),
 
-  L: new FunctionBase(
+  L: new Operator(
     "Lucas Numbers",
     "L",
     "L(x)",
@@ -123,7 +123,7 @@ export const FUNCTIONS = {
       ((1 + Math.sqrt(5)) / 2) ** args[0] + ((1 - Math.sqrt(5)) / 2) ** args[0]
   ),
 
-  Y: new Integral("Bessel Function of the Second Kind", "Y", "Y[n]x", (args) =>
+  Y: new Operator("Bessel Function of the Second Kind", "Y", "Y[n]x", (args) =>
     integral(
       (t) => Math.sin(args[1] * Math.sin(t) - args[0] * t) / Math.PI,
       0,
@@ -131,7 +131,7 @@ export const FUNCTIONS = {
     )
   ),
 
-  AF: new FunctionBase("Alternating Factorial", "AF", "x¡!", function (args) {
+  AF: new Right("Alternating Factorial", "AF", "¡!", function (args) {
     let output = 0;
     const x = args[0];
     for (let i = 1; i <= x; i++) {
@@ -140,7 +140,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  AT: new FunctionBase("Area of a Triangle", "AT", "🔺(a,b,c)", function (
+  AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (
     args
   ) {
     const a = args[0];
@@ -149,7 +149,7 @@ export const FUNCTIONS = {
     return Math.sqrt((-a + b + c) * (a - b + c) * (a + b - c) * (a + b + c));
   }),
 
-  CF: new FunctionBase("Central Factorial", "CF", "x^[!]", function (args) {
+  CF: new Right("Central Factorial", "CF", "^[!]", function (args) {
     let output = 0;
     const x = args[0];
     for (let i = 1; i <= x - 2; i++) {
@@ -170,7 +170,7 @@ export const FUNCTIONS = {
       integral((t) => (Math.cos(t) - 1) / t, 0, args[0])
   ),
 
-  DP: new FunctionBase("Ditigal Product", "DP", "(D*n)", function (args) {
+  DP: new Wrap("Ditigal Product", "DP", "(D*n)", function (args) {
     let output = 1;
     const x = args[0];
     for (const i of x.toString()) {
@@ -179,14 +179,14 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  FF: new FunctionBase(
+  FF: new Right(
     "Falling Factorial",
     "FF",
     "x_n",
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
 
-  LF: new FunctionBase("Left Factorial", "LF", "¡x", function (args) {
+  LF: new Left("Left Factorial", "LF", "¡x", function (args) {
     let output = 0;
     for (let i = 0; i < args[0]; i++) {
       output += gamma(i + 1);
@@ -202,7 +202,7 @@ export const FUNCTIONS = {
 
   OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
 
-  PF: new FunctionBase("Parity Factorial", "PF", "x!!", function (args) {
+  PF: new Right("Parity Factorial", "PF", "x!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 2) {
       output *= i;
@@ -210,23 +210,23 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  PI: new FunctionBase("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
+  PI: new Right("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),
 
-  QF: new FunctionBase(
+  QF: new Right(
     "Quad Factorial",
     "QF",
     "x!!!!",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 1)
   ),
 
-  RF: new FunctionBase(
+  RF: new Right(
     "Rising Factorial",
     "FF",
     "x_n",
     (args) => gamma(args[0] + args[1]) / gamma(args[0])
   ),
 
-  SF: new FunctionBase("Super Factorial", "SF", "sf(x)", function (args) {
+  SF: new Operator("Super Factorial", "SF", "sf(x)", function (args) {
     let output = 1;
     for (let i = 1; i <= args[0]; i++) {
       output *= gamma(i + 1);
@@ -234,11 +234,11 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  SI: new Integral("Sine Integral", "SI", "Si(x)", (args) =>
+  SI: new Operator("Sine Integral", "SI", "Si(x)", (args) =>
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
 
-  TF: new FunctionBase("Triple Factorial", "TF", "x!!!", function (args) {
+  TF: new Right("Triple Factorial", "TF", "x!!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 3) output *= i;
     return output;
@@ -246,77 +246,77 @@ export const FUNCTIONS = {
 
   TN: new NChooseR("Triangular Numbers", "TN", "T(x)", (x) => --x, 2),
 
-  UN: new FunctionBase("Unary Representation", "UN", "1️⃣(x)", (args) =>
+  UN: new Operator("Unary Representation", "UN", "1️⃣(x)", (args) =>
     Math.floor(10 ** args[0] / 9)
   ),
 
-  ABS: new FunctionBase("Absolute Value", "ABS", "|x|", Math.abs),
+  ABS: new Wrap("Absolute Value", "ABS", "|x|", Math.abs),
 
   ADD: new Bin("Addition", "ADD", "x+y", (args) => args[0] + args[1]),
 
-  ADI: new FunctionBase("Additive Inverse", "ADI", "-x", (args) => -args[0]),
+  ADI: new Left("Additive Inverse", "ADI", "-x", (args) => -args[0]),
 
   AND: new Bin("Bitwise And", "AND", "a&b", (args) => args[0] & args[1]),
 
-  BIN: new Bin("Binary Numbers", "BIN", "bin[n](x)", (args) =>
+  BIN: new Operator("Binary Numbers", "BIN", "bin[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(2)
   ),
 
   BLG: new Logarithm("Binary Logarithm", "BLG", "log2(x)", 2),
 
-  CAS: new FunctionBase(
+  CAS: new Operator(
     "CAS Function",
     "CAS",
     "cas(x)",
     (args) => Math.sin(args[0]) + Math.cos(args[0])
   ),
 
-  CAT: new FunctionBase(
+  CAT: new Operator(
     "Czarnowski's Cat Function",
     "CAT",
     "🐱(x,n)",
     (args) => Math.sin(args[0]) ** args[1] + Math.cos(args[0])
   ),
 
-  CHN: new FunctionBase(
+  CHN: new Operator(
     "Centered Hexagonal Numbers",
     "CHN",
     "hex(x)",
     (args) => 3 * args[0] * (args[0] + 1) + 1
   ),
 
-  COS: new FunctionBase("Cosine", "COS", "cos(x)", Math.cos),
+  COS: new Operator("Cosine", "COS", "cos(x)", Math.cos),
 
-  COT: new FunctionBase(
+  COT: new Operator(
     "Cotangent",
     "COT",
     "cot(x)",
     (args) => 1 / Math.tan(args[0])
   ),
 
-  CSC: new FunctionBase(
+  CSC: new Operator(
     "Cosecent",
     "CSC",
     "csc(x)",
     (args) => 1 / Math.sin(args[0])
   ),
 
-  DBL: new FunctionBase(
+  DBL: new Operator(
     "Doublets",
     "DBL",
     "2️⃣(x)",
     (args) => args[0] + 10 ** Math.floor(Math.log10(args[0]) + 1) * args[0]
   ),
 
-  DEC: new Bin("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
+  DEC: new Operator("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(10)
   ),
 
   //DET: new FunctionBase("Determinant", "DET", "det(A)", )
 
-  DIV: new FunctionBase("Division", "DIV", "x/y", (args) => args[0] / args[1]),
+  DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
-  DRT: new FunctionBase("Digital Root", "DRT", "D√n)", function drt(args) {
+  DRT: new Left("Digital Root", "DRT", "D√n)", function drt(args) {
     let input = args[0].toString();
     if (input.length === 1) return parseInt(input);
     else {
@@ -328,7 +328,7 @@ export const FUNCTIONS = {
     }
   }),
 
-  DSM: new FunctionBase("Digit Sum", "DSM", "D+n", function (args) {
+  DSM: new Left("Digit Sum", "DSM", "D+n", function (args) {
     args[0] = args[0].toString();
     let output = 0;
     for (let i = 0; i < args[0].length; i++) {
@@ -337,14 +337,14 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  DWS: new FunctionBase(
+  DWS: new Operator(
     "Derangement Weighted Sum",
     "DWS",
     "dws(n)",
     (args) => 1 - args[0]
   ),
 
-  ENG: new FunctionBase("English", "ENG", "eng(n)", function eng(args) {
+  ENG: new Operator("English", "ENG", "eng(n)", function eng(args) {
     let x = args[0];
     if (x === 0) return 4;
     let val = 0;
@@ -372,7 +372,7 @@ export const FUNCTIONS = {
 
   ERF: new Integral("Error Function", "ERF", "erf(x)", (args) => integral((t) => 2*Math.E**(-(t**2))/Math.sqrt(Math.PI), 0, args[0])),
   
-  EXP: new FunctionBase("Exponential Function", "EXP", "exp(x)", Math.exp),
+  EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
   
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
