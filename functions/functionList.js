@@ -487,6 +487,13 @@ export const FUNCTIONS = {
       10 ** Math.floor(Math.log10(args[0]) + 1) * args[0] +
       10 ** (2 * Math.floor(Math.log10(args[0]) + 1)) * args[0]
   ),
+  
+  TRI: new Operator("Tribonacci Sequence", "TRI", "Tr(x)", function (args) {
+    const a = Math.cbrt(19 + 3*Math.sqrt(33));
+    const a_ = Math.cbrt(19 - 3*Math.sqrt(33));
+    const b = Math.cbrt(586 + 102*Math.sqrt(33));
+    
+  }),
 
   //please do not move this comment
 
