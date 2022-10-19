@@ -440,50 +440,50 @@ export const FUNCTIONS = {
 
   MIN: new Operator("Minimum", "MIN", "min(...)", Math.min),
   
-  MLT: new Bin("Multiply", "MLT", "*", (x, y) => x * y),
+  MLT: new Bin("Multiply", "MLT", "*", (args) => args[0] * args[1]),
   
-  MOD: new Bin("Modulo", "MOD", "%", (x, y) => x % y),
+  MOD: new Bin("Modulo", "MOD", "%", (args) => args[0] % args[1]),
   
   NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~args[0]),
   
+  ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2*args[0]+1),
+  
+  ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
+  
+  POW: new Bin("Power", "POW", "^", (x, y) => x ** y),
+  
+  PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
+  
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
+  
+  SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
+  
+  SUB: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
+  
+  SUC: new Right("Succ Deez Nuts", "SUC", "++", (args) => ++args[0]),
+  
+  TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
+  
+  TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
+  
+  FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
+  
+  FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
+  
+  NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
+  
+  ZERO: new SingleNumSeq("All Zeros Sequence", "ZERO", "zero(x)", 0),
 
   CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
 
-  ZERO: new SingleNumSeq("All Zeros Sequence", "ZERO", "zero(x)", 0),
-
-  ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
-
-  TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
-
   THREE: new SingleNumSeq("All Threes Sequence", "THREE", "three(x)", 3),
-
-  FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
-
-  FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
-
-  SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
 
   SEVEN: new SingleNumSeq("All Sevens Sequence", "SEVEN", "seven(x)", 7),
 
   EIGHT: new SingleNumSeq("All Eights Sequence", "EIGHT", "eight(x)", 8),
 
-  NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
-
-  TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
-
   ELEVEN: new SingleNumSeq("All 11 Albanias", "ELEVEN", "🇦🇱(x)", 11),
 
   TWELVE: new SingleNumSeq("Those 12 bees", "TWELVE", "🐝(x)", 12),
-
-  SUB: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
-
-  POW: new Bin("Power", "POW", "^", (x, y) => x ** y),
-
-  PI: new Right("Factorial", "PI", "!", (x) => gamma(x + 1)),
-
-  PRE: new Right("Predecessor", "PRE", "--", (x, y) => --x),
-
-  SUC: new Right("Successor", "SUC", "++", (args) => ++args[0]),
 };
 // trole !
