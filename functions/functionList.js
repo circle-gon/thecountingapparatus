@@ -140,9 +140,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (
-    args
-  ) {
+  AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (args) {
     const a = args[0];
     const b = args[1];
     const c = args[2];
@@ -174,7 +172,7 @@ export const FUNCTIONS = {
     let output = 1;
     const x = args[0];
     for (const i of x.toString()) {
-      output *= Number(i)
+      output *= Number(i);
     }
     return output;
   }),
@@ -365,19 +363,54 @@ export const FUNCTIONS = {
       return (
         eng([Math.floor(x / 10 ** (3 * Math.floor(Math.log10(x) / 3)))]) +
         suffix +
-        (x % 10 ** (3 * Math.floor(Math.log10(x) / 3))?eng([x % 10 ** (3 * Math.floor(Math.log10(x) / 3))]):0)
+        (x % 10 ** (3 * Math.floor(Math.log10(x) / 3))
+          ? eng([x % 10 ** (3 * Math.floor(Math.log10(x) / 3))])
+          : 0)
       );
     }
   }),
 
-  ERF: new Integral("Error Function", "ERF", "erf(x)", (args) => integral((t) => 2*Math.E**(-(t**2))/Math.sqrt(Math.PI), 0, args[0])),
-  
+  ERF: new Integral("Error Function", "ERF", "erf(x)", (args) =>
+    integral((t) => (2 * Math.E ** -(t ** 2)) / Math.sqrt(Math.PI), 0, args[0])
+  ),
+
   EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
-  
+
   FIB: new Operator("Fibonacci Numbers", "FIB", "fib(n)"),
-  
-  GCD: new Operator("Greatest Common Denominator", "GCD", "gcd(...)", (args) => args.reduce(gcd = (vals) => (vals[1] ? gcd(b,a%b) : vals[0]))),
-  
+
+  GCD: new Operator("Greatest Common Denominator", "GCD", "gcd(...)", (args) =>
+    args.reduce(function gcd(a, b) {
+      return b ? gcd(b, a % b) : a;
+    })
+  ),
+
+  IMP: new Operator(
+    "Impolite Numbers",
+    "IMP",
+    "😠(n)",
+    (args) => args[0] + Math.floor(Math.log2(args[0] + Math.log2(args[0])))
+  ),
+
+  INT: new Operator("Integral", "INT", "∫(x,dx,LB,UB)", (args) =>
+    integral(args[0], args[2], args[3])
+  ),
+
+  LAH: new Operator(
+    "Unsigned Lah Numbers",
+    "LAH",
+    "lah(n,k)",
+    (args) =>
+      (gamma(args[0] + 1) * gamma(args[0])) /
+      gamma(args[1] + 1) /
+      gamma(args[1]) /
+      gamma(args[0] - args[1] + 1)
+  ),
+
+  LCM: new Operator("Least Common Multiple", "LCM", "lcm(...)", function (args) {
+    const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+    return args.reduce((a, b) => (a * b) / gcd(a, b));
+  }),
+
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
