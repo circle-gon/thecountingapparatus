@@ -6,7 +6,7 @@ const close = document.getElementById("close")
 
 const exampleModals = {
   challengeSelector(factionInstance) {
-    const 
+    return "Oops, this is not supported yet!"
   }
 }
 
@@ -15,9 +15,18 @@ close.onclick = function () {
 }
 export function showModal(i, ...args) {
   modal.style.display = "block"
+  
+  // TODO: better method?
+  content.innerHTML = ""
   const mod = exampleModals[i]
   const result = typeof mod === 'string' ? mod : mod(...args)
-  if (t)
+  if (typeof result === 'string') {
+    content.innerHTML = result
+  } else if (Array.isArray(result)) {
+    content.append(...result)
+  } else {
+    content.append(result)
+  }
 }
 
 export function hideModal() {

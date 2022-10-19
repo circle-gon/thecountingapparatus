@@ -59,10 +59,9 @@ export function parse2(str) {
         }
       }
       // left existence
-      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [FunctionBase]);
+      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
       let foundFunction = functionProperties[0];
       let foundLength = functionProperties[1];
-      console.log(functionProperties);
       
       if (foundFunction !== null) {
         console.log(foundFunction);
@@ -154,35 +153,7 @@ export function parse2(str) {
       functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
       foundFunction = functionProperties[0];
       foundLength = functionProperties[1];
-      console.log(functionProperties);
-      // foundFunction = null;
-      // foundLength = 0;
-      // for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
-      //   // find if there's a function with fitting syntax
-      //   // ignore brackets if no function has been found yet
-      //   let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
-      //   if (foundFunction === null) {
-      //     subString = subString.replace(/[()]/g, '');
-      //   }
-      //   const actualFunc = Object.values(FUNCTIONS).find( function (i) {
-      //     // possibly split up operators to prioritize
-      //     let syntaxSubx = i.syntax.substring(i.syntax.indexOf("x") + 1);
-      //     if (syntaxSubx == '') {
-      //       syntaxSubx = null;
-      //     }
-      //     let syntaxSubxy = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y"));
-      //     if (syntaxSubxy == '') {
-      //       syntaxSubxy = null;
-      //     }
-      //     return i.syntax === subString || syntaxSubx === subString || syntaxSubxy === subString;
-      //   }
-      //   );
-      //   // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-      //   if (actualFunc !== undefined && actualFunc.isUnlocked) {
-      //     foundFunction = actualFunc;
-      //     foundLength = distanceRight;
-      //   }
-      // }
+      
       if (foundFunction !== null) {
         console.log(foundFunction);
         // look for other args

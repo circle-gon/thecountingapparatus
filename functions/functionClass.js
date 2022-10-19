@@ -7,11 +7,12 @@ export const Wrap = {};
 export const Bin = {};
 
 export class FunctionBase {
-  constructor(name, unlock, syntax, evaluate) {
+  constructor(name, unlock, syntax, evaluate, expectedArgs = []) {
     this.name = name; // Name of function
     this.unlock = unlock; // Letter unlock string
     this.syntax = syntax; // In-text Syntax
     this.evaluate = evaluate; // Function definition
+    this.expectedArgs = expectedArgs; // Parser aid to know how many functions it needs to find, and how far apart they are (list of distances between arguments, one arg just has [])
     this.counter = {
       // Total count of function per function based faction
       xx: 0,
