@@ -66,57 +66,18 @@ export function parse2(str) {
         console.log(foundFunction);
         // look for other args
         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-        // let args = argsProperties[0];
-        // let expectedArgs = argsProperties[1];
-        // const expectedArgs = foundFunction.syntax.split(",");
-        // let args = [literals[i]];
-        // let checkingIndex = i;
-        // if (!(foundFunction instanceof Left)) {
-        //   while (checkingIndex < literals.length) {
-        //     if (adaptedStr[literalsIndexes[checkingIndex] + literalsLengths[checkingIndex]] != ',') {
-        //       break;
-        //     }
-        //     //should be a literal on the other side
-        //     if (checkingIndex >= literals.length || literalsIndexes[checkingIndex + 1] != literalsIndexes[checkingIndex] + literalsLengths[checkingIndex] + 1) {
-        //       break;
-        //     }
-        //     args.push(literals[i+1]); // literals is ordered and should be kept that way
-        //     checkingIndex++;
-        //   }
-        // }
         console.log("args:");
         console.log(args);
         if (args != null) {
           // check extra args don't have a unary operator to go through first
-          let foundFunction2 = null;
+          let testForUnary = [null];
           for (let l = 1; l < args.length; l++) {
-            //specifically right unary is the only problem
-            // shh yes this is bad code
-            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i + l]; distanceRight++) {
-              // find if there's a function with fitting syntax
-              // DONT ignore brackets if no function has been found yet
-              let subString = adaptedStr.substring(literalsIndexes[i + l] + literalsLengths[i + l], literalsIndexes[i + l] + literalsLengths[i + l] + distanceRight);
-              const actualFunc = Object.values(FUNCTIONS).find( function (f) {
-                // possibly split up operators to prioritize
-                const syntaxSub = f.syntax.substring(f.syntax.indexOf("x") + 1);
-                if (syntaxSub == '' || !(f instanceof Right)) {
-                  return false;
-                }
-                return f.syntax === subString || syntaxSub === subString;
-              }
-              );
-              // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-              if (actualFunc !== undefined && actualFunc.isUnlocked) {
-                foundFunction2 = actualFunc;
-                console.log("arg has right unary");
-                break;
-              }
-            }
-            if (foundFunction2 !== null) {
+            testForUnary = findFunction(adaptedStr, literalsIndexes[i + l], literalsLengths[i + l], "right", false, [["x", null]], [Right]);
+            if (testForUnary[0] !== null) {
               break;
             }
           }
-          if (foundFunction2 !== null) {
+          if (testForUnary[0] !== null) {
             // arg has a right unary, so wait
             continue;
           }
@@ -161,47 +122,18 @@ export function parse2(str) {
         // look for other args
         // const expectedArgs = foundFunction.syntax.split(",");
         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-        // let args = argsProperties[0];
-        // let expectedArgs = argsProperties[1];
-        // let args = [literals[i]];
-        // if (foundFunction instanceof Bin) {
-        //   if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
-        //     args.push(literals[i + 1]);
-        //   }
-        // }
         console.log("args:");
         console.log(args);
         if (args != null) {
           // check extra args don't have a unary operator to go through first
-          let foundFunction2 = null;
+          let testForUnary = [null];
           for (let l = 1; l < args.length; l++) {
-            //specifically right unary is the only problem
-            // shh yes this is bad code
-            for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i + l]; distanceRight++) {
-              // find if there's a function with fitting syntax
-              // DONT ignore brackets if no function has been found yet
-              let subString = adaptedStr.substring(literalsIndexes[i + l] + literalsLengths[i + l], literalsIndexes[i + l] + literalsLengths[i + l] + distanceRight);
-              const actualFunc = Object.values(FUNCTIONS).find( function (f) {
-                // possibly split up operators to prioritize
-                const syntaxSub = f.syntax.substring(f.syntax.indexOf("x") + 1);
-                if (syntaxSub == '' || !(f instanceof Right)) {
-                  return false;
-                }
-                return f.syntax === subString || syntaxSub === subString;
-              }
-              );
-              // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-              if (actualFunc !== undefined && actualFunc.isUnlocked) {
-                foundFunction2 = actualFunc;
-                console.log("arg has right unary");
-                break;
-              }
-            }
-            if (foundFunction2 !== null) {
+            testForUnary = findFunction(adaptedStr, literalsIndexes[i + l], literalsLengths[i + l], "right", false, [["x", null]], [Right]);
+            if (testForUnary[0] !== null) {
               break;
             }
           }
-          if (foundFunction2 !== null) {
+          if (testForUnary[0] !== null) {
             // arg has a right unary, so wait
             continue;
           }
