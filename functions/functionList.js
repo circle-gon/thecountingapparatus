@@ -376,7 +376,17 @@ export const FUNCTIONS = {
 
   EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
 
-  FIB: new Operator("Fibonacci Numbers", "FIB", "fib(n)"),
+  FIB: new Operator(
+    "Fibonacci Numbers",
+    "FIB",
+    "fib(n)",
+    (args) =>
+      Math.round((
+        ((1 + Math.sqrt(5)) / 2) ** args[0] -
+          ((1 - Math.sqrt(5)) / 2) ** args[0]
+      ) /
+      ((1 + Math.sqrt(5)) / 2 - (1 - Math.sqrt(5)) / 2)
+  )),
 
   GCD: new Operator("Greatest Common Denominator", "GCD", "gcd(...)", (args) =>
     args.reduce(function gcd(a, b) {
@@ -406,7 +416,9 @@ export const FUNCTIONS = {
       gamma(args[0] - args[1] + 1)
   ),
 
-  LCM: new Operator("Least Common Multiple", "LCM", "lcm(...)", function (args) {
+  LCM: new Operator("Least Common Multiple", "LCM", "lcm(...)", function (
+    args
+  ) {
     const gcd = (a, b) => (b ? gcd(b, a % b) : a);
     return args.reduce((a, b) => (a * b) / gcd(a, b));
   }),
