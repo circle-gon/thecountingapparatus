@@ -102,7 +102,7 @@ function stringToChunked(str) {
           .map((n) => n[0])
           .filter((n) => n != chunk[0])
           .includes(chunk[chunk.length - 1]) ||
-          chunk[chunk.length - 1] != 
+          chunk[chunk.length - 1] != doubleSidedOps[j][0]
         )
       ) {
         parenDepth++;
