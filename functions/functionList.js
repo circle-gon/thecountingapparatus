@@ -202,7 +202,7 @@ export const FUNCTIONS = {
 
   OR: new Bin("Bitwise OR", "OR", "a|b", (args) => args[0] | args[1]),
 
-  PF: new FunctionBase("Pairity Factorial", "PF", "x!!", function (args) {
+  PF: new FunctionBase("Parity Factorial", "PF", "x!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 2) {
       output *= i;

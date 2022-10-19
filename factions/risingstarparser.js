@@ -154,6 +154,7 @@ export function parse2(str) {
       functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
       foundFunction = functionProperties[0];
       foundLength = functionProperties[1];
+      console.log(functionProperties);
       // foundFunction = null;
       // foundLength = 0;
       // for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
@@ -277,7 +278,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     maxDistance = str.length - startIndex;
   }
   
-  for (let distance = 1; distance <= startIndex; distance++) {
+  for (let distance = 1; distance <= maxDistance; distance++) {
     // find if there's a function with fitting syntax
     // ignore brackets if no function has been found yet
     let subString = null;
@@ -290,9 +291,11 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     if (foundFunction === null && ignoreBrackets) {
       subString = subString.replace(/[()]/g, '');
     }
+    console.log(subString);
     const actualFunc = Object.values(FUNCTIONS).find( function (i) {
       // possibly split up operators to prioritize
       let validOperator = false;
+      console.log(i);
       for (const operator of operatorType) {
         if (i instanceof operator) {
           validOperator = true;
@@ -327,6 +330,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       return false;
     }
     );
+    console.log(actualFunc);
     // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
     if (actualFunc !== null && actualFunc.isUnlocked) {
       foundFunction = actualFunc;

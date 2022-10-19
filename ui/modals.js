@@ -1,4 +1,4 @@
-const modal = document.getElementById("modal")
+const modal = document.getElementById("center-flex")
 const content = document.getElementById("content")
 const close = document.getElementById("close")
 
