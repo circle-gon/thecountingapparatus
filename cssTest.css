@@ -19,6 +19,8 @@
 
 #content {
   height: 100%;
+  width: 100%;
+  border: 3px solid black;
 }
 /* The Close Button */
 #close {
@@ -58,6 +60,7 @@
 
 .columns {
   height: 100%;
+  width: 100%;
   display: flex; /* defines flexbox */
   flex-direction: column; /* top to bottom */
   justify-content: space-between; /* first item at start, last at end */
