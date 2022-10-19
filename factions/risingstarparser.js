@@ -54,6 +54,7 @@ export function parse2(str) {
           throw new ParserError("no operation found but not finished");
         }
       }
+      let collapseAlgo = null;
       // left existence
       let foundFunction = null;
       let foundLength = 0;
@@ -80,6 +81,7 @@ export function parse2(str) {
         }
       }
       if (foundFunction !== null) {
+        collapseAlgo = "left";
         console.log(foundFunction);
         // look for other args
         const expectedArgs = foundFunction.syntax.split(",");
