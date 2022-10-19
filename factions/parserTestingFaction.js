@@ -15,6 +15,12 @@ class FactionTesting extends FactionBase {
         unlocked() {
           return true
         }
+      }, {
+        title: "Another example",
+        description: "Something...",
+        unlocked() {
+          return true
+        }
       }
     ])
   }

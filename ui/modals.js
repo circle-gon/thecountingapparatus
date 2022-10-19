@@ -14,6 +14,7 @@ const exampleModals = {
     const challStuffs = ce("div")
     const count = ce("span")
     const currChallenge = ce("span")
+    const challengeInt = randomInt()
     
     let challSelected;
     
@@ -21,7 +22,6 @@ const exampleModals = {
       const selection = ce("div")
       const content = ce("div")
       const int = randomInt()
-      const challengeInt = randomInt()
       
       selection.innerHTML = `<input type="checkbox"
         id="check${int}" 
@@ -29,8 +29,8 @@ const exampleModals = {
         checked />
       <label for="check${int}" title="${i.title}" class="label">
         <div style="display: flex; align-items: center; justify-content: space-between;">
-        ${i.title}
-        <input type="radio" name="challSelect${challengeInt}" />
+          ${i.title}
+          <input type="radio" name="challSelect${challengeInt}" />
         </div>
       </label>`
       
@@ -39,8 +39,7 @@ const exampleModals = {
         Best count in this challenge: 
       `
       count.innerText = factionInstance.challenges[ind] 
-      
-      content.classList.add("channel")
+    
       content.append(count)
       content.classList.add("content")
       
@@ -59,9 +58,13 @@ const exampleModals = {
     cancelBtn.style.marginLeft = "20px"
     
     buttonCollection.append(btn, cancelBtn)
+    buttonCollection.style.position = "absolute"
+    buttonCollection.style.bottom = "0"
+    buttonCollection.style.left = "50%"
+    buttonCollection.style.transform = "translateX(-50%)"
     div.append(challStuffs, buttonCollection)
-    
-    div.classList.add("columns")
+    div.style.position = "relative"
+    div.style.height = "100%"
     return div
   }
 }
