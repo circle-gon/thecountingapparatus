@@ -22,7 +22,12 @@ let int = 0;
 export function randomInt() {
   return int++;
 }
+function factorial(x){
+  if(x<3) return x
+  return factorial(x-1)*x
+}
 export function gamma(z) {
+  if(z==Math.floor(z))return factorial(z+1)
   const g = 7;
   const C = [
     0.99999999999980993, 676.5203681218851, -1259.1392167224028,
@@ -38,9 +43,8 @@ export function gamma(z) {
     for (let i = 1; i < g + 2; i++) x += C[i] / (z + i);
 
     const t = z + g + 0.5;
-    let out = Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
-    if (z==Math.floor(z)) out=Math.round(out)
-    return out
+    return Math.sqrt(2 * Math.PI) * Math.pow(t, z + 0.5) * Math.exp(-t) * x;
+    
   }
 }
 
