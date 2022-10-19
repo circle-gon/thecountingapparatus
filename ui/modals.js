@@ -27,8 +27,9 @@ const exampleModals = {
         id="check${int}" 
         class="control"
         checked />
-      <label for="check${int}" title="${i.name}" class="label">
-        ${i.name}<input type="radio" name="challSelect${challengeInt}" style="margin-left: auto;margin-right: 0" />
+      <label for="check${int}" title="${i.title}" class="label">
+        ${i.title}
+        <input type="radio" name="challSelect${challengeInt}" style="margin-left: auto;margin-right: 0" />
       </label>`
       
       content.innerHTML = `
@@ -39,7 +40,9 @@ const exampleModals = {
       
       content.append(count)
       content.classList.add("content")
-      select
+      selection.classList.add("container")
+      selection.append(content)
+      challStuffs.append(selection)
     })
     
     btn.classList.add("fancy-btn")
@@ -52,7 +55,6 @@ const exampleModals = {
     cancelBtn.style.marginLeft = "20px"
     
     buttonCollection.append(btn, cancelBtn)
-    challStuffs.classList.add("container")
     div.append(challStuffs, buttonCollection)
     
     div.classList.add("columns")

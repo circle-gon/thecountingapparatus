@@ -55,11 +55,6 @@ export class Bin extends Operator {
   }
 }
 
-class Integral extends FunctionBase {
-  constructor(name, unlock, syntax, evaluate) {
-    super(name, unlock, syntax, evaluate);
-  }
-}
 //Functions (organize by Unlock)
 export const FUNCTIONS = {
   A: new Operator("Ackermann Function", "A", "A(a,b)", function (args) {
@@ -170,7 +165,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  CI: new Integral(
+  CI: new Operator(
     "Cosine Integral",
     "CI",
     "Ci(x)",
@@ -204,7 +199,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  LI: new Integral("Logarithmic Integral", "LI", "LI(x)", (args) =>
+  LI: new Operator("Logarithmic Integral", "LI", "LI(x)", (args) =>
     integral((t) => 1 / Math.log(t), 0, args[0])
   ),
 
@@ -387,7 +382,7 @@ export const FUNCTIONS = {
     }
   }),
 
-  ERF: new Integral("Error Function", "ERF", "erf(x)", (args) =>
+  ERF: new Operator("Error Function", "ERF", "erf(x)", (args) =>
     integral((t) => (2 * Math.E ** -(t ** 2)) / Math.sqrt(Math.PI), 0, args[0])
   ),
 
@@ -452,7 +447,7 @@ export const FUNCTIONS = {
     )
   ),
 
-  LIG: new Integral(
+  LIG: new Operator(
     "Lower Incomplete Gamma Function",
     "LIG",
     "γ(x,y)",
@@ -469,7 +464,12 @@ export const FUNCTIONS = {
 
   MOD: new Bin("Modulo", "MOD", "%", (args) => args[0] % args[1]),
 
-  NOT: new Right("Bitwise Not", "NOT", "~", (args) => 2**Math.ceil(Math.log2(args[0])) + ~(args[0])),
+  NOT: new Right(
+    "Bitwise Not",
+    "NOT",
+    "~",
+    (args) => 2 ** Math.ceil(Math.log2(args[0])) + ~args[0]
+  ),
 
   ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2 * args[0] + 1),
 
@@ -521,9 +521,16 @@ export const FUNCTIONS = {
 
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
 
+  UIG: new Operator(
+    "Upper Incomplete Gamma Function",
+    "UIG",
+    "uig(x)",
+    (args) =>
+      gamma(args[0]) -
+      integral((t) => t ** (args[0] - 1) * Math.exp(-t), 0, args[1])
+  ),
+
   XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0] ^ args[1]),
-  
-  
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 

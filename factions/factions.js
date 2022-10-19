@@ -5,7 +5,7 @@ import { FUNCTIONS } from "../functions/functionList.js";
 import { parse2 } from "./risingstarparser.js";
 
 //Factions Objects
-export const factions = {};
+export const factions = window.factions = {};
 
 // base class to differernate standard js errors vs compilation errors
 class ParserError extends Error {}
