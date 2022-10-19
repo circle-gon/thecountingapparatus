@@ -450,7 +450,9 @@ export const FUNCTIONS = {
   
   ONE: new SingleNumSeq("All Ones Sequence", "ONE", "one(x)", 1),
   
-  POW: new Bin("Power", "POW", "^", (x, y) => x ** y),
+  //Dvoid (please do not move)
+  
+  POW: new Bin("Power", "POW", "^", (args) => args[0] ** args[1]),
   
   PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
   
@@ -458,9 +460,11 @@ export const FUNCTIONS = {
   
   SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
   
-  SUB: new Bin("Subtraction", "SUB", "-", (x, y) => x - y),
+  SUB: new Bin("Subtraction", "SUB", "-", (args) => args[0] - args[1]),
   
   SUC: new Right("Succ Deez Nuts", "SUC", "++", (args) => ++args[0]),
+  
+  //REF: new Matrix("")
   
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
   
@@ -473,14 +477,14 @@ export const FUNCTIONS = {
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
   
   ZERO: new SingleNumSeq("All Zeros Sequence", "ZERO", "zero(x)", 0),
-
-  CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
-
-  THREE: new SingleNumSeq("All Threes Sequence", "THREE", "three(x)", 3),
+  
+  EIGHT: new SingleNumSeq("All Eights Sequence", "EIGHT", "eight(x)", 8),
 
   SEVEN: new SingleNumSeq("All Sevens Sequence", "SEVEN", "seven(x)", 7),
 
-  EIGHT: new SingleNumSeq("All Eights Sequence", "EIGHT", "eight(x)", 8),
+  THREE: new SingleNumSeq("All Threes Sequence", "THREE", "three(x)", 3),
+  
+  CHOOSE: new NChooseR("nCr", "CHOOSE", "xCy"),
 
   ELEVEN: new SingleNumSeq("All 11 Albanias", "ELEVEN", "🇦🇱(x)", 11),
 
