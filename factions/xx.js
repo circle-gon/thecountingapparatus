@@ -48,7 +48,7 @@ class XxFaction extends FactionBase {
     }
     if (!count.includes("=")) return false;
     let number = count.split("=")[0];
-    
+    if(Number(number) != this.nextCount)return false;
     let actualCount = count.split("=")[1];
     let amountOfX = actualCount.match(new RegExp(this.rawX, "g"));
     let ruleFollowed = amountOfX == Math.ceil(this.rawX == "i" ? 1 : this.rawX);

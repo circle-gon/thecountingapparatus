@@ -59,29 +59,30 @@ export function parse2(str) {
         }
       }
       // left existence
-      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
-      let foundFunction = functionProperties[0];
-      let foundLength = functionProperties[1];
+      let foundFunction, foundLength = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
+      // let foundFunction = functionProperties[0];
+      // let foundLength = functionProperties[1];
       
       if (foundFunction !== null) {
         console.log(foundFunction);
         // look for other args
-        const expectedArgs = foundFunction.syntax.split(",");
-        let args = [literals[i]];
-        let checkingIndex = i;
-        if (!(foundFunction instanceof Left)) {
-          while (checkingIndex < literals.length) {
-            if (adaptedStr[literalsIndexes[checkingIndex] + literalsLengths[checkingIndex]] != ',') {
-              break;
-            }
-            //should be a literal on the other side
-            if (checkingIndex >= literals.length || literalsIndexes[checkingIndex + 1] != literalsIndexes[checkingIndex] + literalsLengths[checkingIndex] + 1) {
-              break;
-            }
-            args.push(literals[i+1]); // literals is ordered and should be kept that way
-            checkingIndex++;
-          }
-        }
+        let args, expectedArgs = gatherArgs();
+        // const expectedArgs = foundFunction.syntax.split(",");
+        // let args = [literals[i]];
+        // let checkingIndex = i;
+        // if (!(foundFunction instanceof Left)) {
+        //   while (checkingIndex < literals.length) {
+        //     if (adaptedStr[literalsIndexes[checkingIndex] + literalsLengths[checkingIndex]] != ',') {
+        //       break;
+        //     }
+        //     //should be a literal on the other side
+        //     if (checkingIndex >= literals.length || literalsIndexes[checkingIndex + 1] != literalsIndexes[checkingIndex] + literalsLengths[checkingIndex] + 1) {
+        //       break;
+        //     }
+        //     args.push(literals[i+1]); // literals is ordered and should be kept that way
+        //     checkingIndex++;
+        //   }
+        // }
         console.log("args:");
         console.log(args);
         if (args.length === expectedArgs.length) {
@@ -150,9 +151,9 @@ export function parse2(str) {
       }
       
       // right existence
-      functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
-      foundFunction = functionProperties[0];
-      foundLength = functionProperties[1];
+      foundFunction, foundLength = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
+      // foundFunction = functionProperties[0];
+      // foundLength = functionProperties[1];
       
       if (foundFunction !== null) {
         console.log(foundFunction);
@@ -239,6 +240,29 @@ export function parse2(str) {
   }
   console.log(literals[0]);
   return literals[0];
+}
+
+function gatherArgs(str, i, literals, lengths, indexes, func) {
+  let expectedArgs = func.syntax.split(",").length; // usually 1
+  let args = [literals[i]];
+  if (expectedArgs > 1) { // multi arg function
+    let checkingIndex = i;
+    while (checkingIndex < literals.length) {
+      if (str[indexes[checkingIndex] + lengths[checkingIndex]] != ',') {
+        break;
+      }
+      //should be a literal on the other side
+      if (checkingIndex >= literals.length || indexes[checkingIndex + 1] != indexes[checkingIndex] + lengths[checkingIndex] + 1) {
+        break;
+      }
+      args.push(literals[i+1]); // literals is ordered and should be kept that way
+      checkingIndex++;
+    }
+  }
+  if (func instanceof Bin) {
+    
+  }
+  return [args, expectedArgs];
 }
 
 function findFunction(str, startIndex, startLength, direction, ignoreBrackets, delimiterArgs, operatorType) {
