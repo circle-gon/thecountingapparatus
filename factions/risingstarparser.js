@@ -16,7 +16,7 @@ export function parse2(str) {
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
   let literals = str.match(/\d+/g); // this doesn't get index gwa
-  if (literals == undefined) {
+  if (literals === undefined) {
     return false;
   }
   let literalsIndexes = [];
@@ -29,7 +29,7 @@ export function parse2(str) {
     literalsLengths.push(literals[i].length);
     literals[i] = Number(literals[i]);
     // replace the index with a not number of same length
-    replaceString = replaceString.replace(literals[i], new Array(literalsLengths[i] + 1).join("a"));
+    replaceString = replaceString.replace(literals[i], Array(literalsLengths[i] + 1).join("a"));
   }
   
   // going through the literals, look for the longest valid function
@@ -52,14 +52,14 @@ export function parse2(str) {
     }
     // check literals in order, if nothing happens, check next
     for (let i = 0; i < literals.length + 1; i++) {
-      if (i == literals.length) {
+      if (i === literals.length) {
         // nothing was found
-        if (adaptedStr.length != literalsLengths[0]) {
+        if (adaptedStr.length !== literalsLengths[0]) {
           throw new ParserError("no operation found but not finished");
         }
       }
       // left existence
-      const functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [FunctionBase]);
+      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [FunctionBase]);
       let foundFunction = functionProperties[0];
       let foundLength = functionProperties[1];
       console.log(functionProperties);
@@ -134,7 +134,7 @@ export function parse2(str) {
           literalsIndexes[i] -= foundLength;
           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
           let bracketsBeGone = 0;
-          while (adaptedStr[literalsIndexes[i] + 1] == ")") {
+          while (adaptedStr[literalsIndexes[i] + 1] === ")") {
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
             bracketsBeGone++;
           }
@@ -291,11 +291,9 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     if (foundFunction === null && ignoreBrackets) {
       subString = subString.replace(/[()]/g, '');
     }
-    console.log(subString);
     const actualFunc = Object.values(FUNCTIONS).find( function (i) {
       // possibly split up operators to prioritize
       let validOperator = false;
-      console.log(i);
       for (const operator of operatorType) {
         if (i instanceof operator) {
           validOperator = true;
@@ -306,9 +304,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
         return false;
       }
       let comparisonStrings = [i.syntax];
-      console.log(i);
       for (const delimiters of delimiterArgs) {
-        console.log(delimiters);
         let syntaxSub =  null;
         if (delimiters[1] != null) {
           syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0], (typeof delimiters[1] === 'string') ? i.syntax.indexOf(delimiters[1]) : delimiters[1]);
@@ -318,7 +314,6 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
           console.log(syntaxSub);
         }
         if (syntaxSub !== '') {
-          console.log("push");
           comparisonStrings.push(syntaxSub);
         }
       }
@@ -330,9 +325,8 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       return false;
     }
     );
-    console.log(actualFunc);
     // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-    if (actualFunc !== null && actualFunc.isUnlocked) {
+    if (actualFunc !== undefined && actualFunc.isUnlocked) {
       foundFunction = actualFunc;
       foundLength = distance;
     }
