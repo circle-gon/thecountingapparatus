@@ -32,12 +32,17 @@ export function parse2(str) {
     replaceString = replaceString.replace(literals[i], Array(literalsLengths[i] + 1).join("a"));
   }
   
+  let usedFunctions = [];
+  let originalLiterals = literals;
+  
   // going through the literals, look for the longest valid function
   // start left, then right/binary, then enclosing
   // if a function has multiple args, wait until all other args are literals - if there's a non literal in the way, wait/something's wrong
   // if something's processed, collapse it and adjust literals/indexes
   // can process a maximum number of times == length of string (hopefully a vast overestimate, but safe)
   // just copying code for each direction atm, there's prolly a better way
+  
+  // proposed order: right unary, binary (to right), left unary, func, repeat ignoring first brackets
   let adaptedStr = str;
   for (let notUsed = 0; notUsed < str.length; notUsed++) {
     console.log("adaptedStr: " + adaptedStr);
@@ -108,6 +113,7 @@ export function parse2(str) {
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
           }
+          usedFunctions.push(foundFunction);
           break; // reset loop and avoid getting kicked out for reaching the end
         }
       }
@@ -167,6 +173,7 @@ export function parse2(str) {
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone - 1;
           }
+          usedFunctions.push(foundFunction);
           break; // reset loop and avoid getting kicked out for reaching the end
         }
       }
@@ -174,8 +181,8 @@ export function parse2(str) {
       
     }
   }
-  console.log(literals[0]);
-  return literals[0];
+  console.log([literals[0], usedFunctions, originalLiterals]);
+  return [literals[0], usedFunctions, originalLiterals];
 }
 
 function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {

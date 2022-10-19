@@ -22,7 +22,6 @@ let int = 0;
 export function randomInt() {
   return int++;
 }
-
 export function gamma(z) {
   const g = 7;
   const C = [

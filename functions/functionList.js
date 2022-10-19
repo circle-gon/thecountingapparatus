@@ -1,6 +1,16 @@
 import { FunctionBase } from "./functionClass.js";
 import { gamma, integral } from "../utils/utils.js";
-
+function prime(x) {
+  let p = 1;
+  for (let i = 1; (i = 2 ** x); i++) {
+    let s = 0;
+    for (let j = 1; j <= i; j++) {
+      s += Math.floor((Math.cos(Math.PI * (1+gamma(j)) / j))**2)
+    }
+    p += Math.floor((x / s) ** (1/x))
+  }
+  return p
+}
 //Subclasses
 class NChooseR extends FunctionBase {
   constructor(name, unlock, syntax, input1, input2) {
@@ -209,7 +219,7 @@ export const FUNCTIONS = {
     (args) =>
       1 / (args.reduce((prev, curr) => prev + 1 / curr, 0), 1 / args.length)
   ),
-
+  HP: new Operator("Hyperprime")
   IM: new Operator("Imaginary Part", "IM", "im(x)", (args) => 0),
 
   LF: new Left("Left Factorial", "LF", "¡", function (args) {
@@ -570,7 +580,7 @@ export const FUNCTIONS = {
     "🍰(x)",
     (args) => (args[0] ** 3 + 5 * args[0] + 6) / 3
   ),
-  
+
   CBRT: new Left("Cube Root", "CBRT", "³√", Math.cbrt),
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
