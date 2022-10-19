@@ -456,20 +456,40 @@ export const FUNCTIONS = {
   RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) =>
     Math.sqrt(args.reduce((prev, curr) => prev + curr ** 2, 0) / args.length)
   ),
-  
-  SEC: new Operator("Secant", "SEC", "sec(x)"),
-  
+
+  SEC: new Operator("Secant", "SEC", "sec(x)", (args) => 1 / Math.cos(args[0])),
+
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),
 
   SIX: new SingleNumSeq("All Sixes Sequence", "SIX", "six(x)", 6),
+
+  SQR: new Right("Square Numbers", "SQR", "²", (args) => args[0] ** 2),
 
   SUB: new Bin("Subtraction", "SUB", "-", (args) => args[0] - args[1]),
 
   SUC: new Right("Succ Deez Nuts", "SUC", "++", (args) => ++args[0]),
 
+  SWF: new Right(
+    "Swinging Factorial",
+    "SWF",
+    "≀",
+    (args) => gamma(args[0] + 1) / gamma(Math.floor(args[0] / 2) + 1) ** 2
+  ),
+
+  TAN: new Operator("Tangent", "TAN", "tan(x)", Math.tan),
+
+  TPL: new Operator(
+    "Triplets",
+    "DBL",
+    "3️⃣(x)",
+    (args) =>
+      args[0] +
+      10 ** Math.floor(Math.log10(args[0]) + 1) * args[0] +
+      10 ** (2 * Math.floor(Math.log10(args[0]) + 1)) * args[0]
+  ),
+
   //please do not move this comment
-  
-  
+
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
 
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
