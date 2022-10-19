@@ -27,12 +27,12 @@ const exampleModals = {
         id="check${int}" 
         class="control"
         checked />
-      <div style="display: flex;align-items: center">
       <label for="check${int}" title="${i.title}" class="label">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
         ${i.title}
-        <input type="radio" name="challSelect${challengeInt}" style="margin-left: auto;margin-right: 0" />
-      </label>
-      </div>`
+        <input type="radio" name="challSelect${challengeInt}" />
+        </div>
+      </label>`
       
       content.innerHTML = `
         <div>${i.description}</div>
@@ -61,7 +61,7 @@ const exampleModals = {
     buttonCollection.append(btn, cancelBtn)
     div.append(challStuffs, buttonCollection)
     
-    //div.classList.add("columns")
+    div.classList.add("columns")
     return div
   }
 }

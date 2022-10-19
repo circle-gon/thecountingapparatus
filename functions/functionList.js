@@ -196,7 +196,10 @@ export const FUNCTIONS = {
   ),
 
   GM: new Operator("Geometric Mean", "GM", "gm(...)", (args) =>
-    Math.pow(args.reduce((prev, curr) => prev * curr), 1 / args.length)
+    Math.pow(
+      args.reduce((prev, curr) => prev * curr),
+      1 / args.length
+    )
   ),
 
   HM: new Operator(
@@ -380,7 +383,9 @@ export const FUNCTIONS = {
     "dws(n)",
     (args) => 1 - args[0]
   ),
+
   EGG: new Operator("Egg", "EGG", "🥚(x)", (args) => 420 * args[0] - 119),
+
   ENG: new Operator("English", "ENG", "eng(n)", function eng(args) {
     let x = args[0];
     if (x === 0) return 4;
@@ -558,6 +563,15 @@ export const FUNCTIONS = {
   ),
 
   XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0] ^ args[1]),
+
+  CAKE: new Operator(
+    "Cake Numbers",
+    "CAKE",
+    "🍰(x)",
+    (args) => (args[0] ** 3 + 5 * args[0] + 6) / 3
+  ),
+  
+  CBRT: new Left("Cube Root", "CBRT", "³√", Math.cbrt),
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 
