@@ -27,10 +27,12 @@ const exampleModals = {
         id="check${int}" 
         class="control"
         checked />
+      <div style="display: flex;align-items: center">
       <label for="check${int}" title="${i.title}" class="label">
         ${i.title}
         <input type="radio" name="challSelect${challengeInt}" style="margin-left: auto;margin-right: 0" />
-      </label>`
+      </label>
+      </div>`
       
       content.innerHTML = `
         <div>${i.description}</div>
@@ -38,8 +40,10 @@ const exampleModals = {
       `
       count.innerText = factionInstance.challenges[ind] 
       
+      content.classList.add("channel")
       content.append(count)
       content.classList.add("content")
+      
       selection.classList.add("container")
       selection.append(content)
       challStuffs.append(selection)
@@ -57,7 +61,7 @@ const exampleModals = {
     buttonCollection.append(btn, cancelBtn)
     div.append(challStuffs, buttonCollection)
     
-    div.classList.add("columns")
+    //div.classList.add("columns")
     return div
   }
 }

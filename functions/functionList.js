@@ -109,6 +109,7 @@ export const FUNCTIONS = {
       Math.PI
     )
   ),
+
   K: new Operator("Hyperfactorial", "K", "K(x)", function (args) {
     let output = 1;
     for (let i = 1; i <= args[0]; i++) {
@@ -116,6 +117,7 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+
   L: new Operator(
     "Lucas Numbers",
     "L",
@@ -140,6 +142,7 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+
   AS: new Operator("Aliquot Sum", "AS", "s(x)", function (args) {
     let sum = 0;
     for (let i = 1; i < args[0]; i++) {
@@ -147,6 +150,7 @@ export const FUNCTIONS = {
     }
     return sum;
   }),
+
   AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (args) {
     const a = args[0];
     const b = args[1];
@@ -190,7 +194,21 @@ export const FUNCTIONS = {
     "x_n",
     (args) => gamma(args[0] + 1) / gamma(args[0] - args[1] + 1)
   ),
+
+  GM: new Operator("Geometric Mean", "GM", "gm(...)", (args) =>
+    Math.pow(args.reduce((prev, curr) => prev * curr), 1 / args.length)
+  ),
+
+  HM: new Operator(
+    "Harmonic Mean",
+    "HM",
+    "hm(...)",
+    (args) =>
+      1 / (args.reduce((prev, curr) => prev + 1 / curr, 0), 1 / args.length)
+  ),
+
   IM: new Operator("Imaginary Part", "IM", "im(x)", (args) => 0),
+
   LF: new Left("Left Factorial", "LF", "¡", function (args) {
     let output = 0;
     for (let i = 0; i < args[0]; i++) {
@@ -223,7 +241,9 @@ export const FUNCTIONS = {
     "!!!!",
     (args) => gamma(2 * args[0] + 1) / gamma(args[0] + 1)
   ),
+
   RE: new Operator("Real Part", "RE", "re(x)", (args) => args[0]),
+
   RF: new Right(
     "Rising Factorial",
     "FF",
@@ -262,6 +282,13 @@ export const FUNCTIONS = {
   ADI: new Left("Additive Inverse", "ADI", "-", (args) => -args[0]),
 
   AND: new Bin("Bitwise And", "AND", "&", (args) => args[0] & args[1]),
+
+  AVG: new Operator(
+    "Arithmetic Mean",
+    "AVG",
+    "am(...)",
+    (args) => args.reduce((prev, curr) => prev + curr) / args.length
+  ),
 
   BIN: new Operator("Binary Numbers", "BIN", "bin[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(2)
