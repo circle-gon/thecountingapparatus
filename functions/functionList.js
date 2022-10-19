@@ -477,6 +477,8 @@ export const FUNCTIONS = {
   ),
 
   TAN: new Operator("Tangent", "TAN", "tan(x)", Math.tan),
+  
+  TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
 
   TPL: new Operator(
     "Triplets",
@@ -492,14 +494,12 @@ export const FUNCTIONS = {
     const a = Math.cbrt(19 + 3*Math.sqrt(33));
     const a_ = Math.cbrt(19 - 3*Math.sqrt(33));
     const b = Math.cbrt(586 + 102*Math.sqrt(33));
-    
+    return Math.round(3*b*((a+a_+1)/3)**args[0]/(b**2-2*b+4));
   }),
 
-  //please do not move this comment
-
-  TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
-
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
+  
+  
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 

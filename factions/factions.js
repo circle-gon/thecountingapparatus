@@ -82,11 +82,13 @@ export class FactionBase {
   enterChallenge(i) {
     this.inChallenge = i
     this.textBox.switchToChat(this.challengeDetails[i].name)  
+    this.challengeDetails[i]?.onStart()
   }
   
   exitChallenge() {
     this.inChallenge = null
     this.textBox.switchToChat("default")
+    this.challengeDetails[this.inChallenge]?.onExit()
   }
 
   //Count & Milestones

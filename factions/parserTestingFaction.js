@@ -2,7 +2,21 @@ import {FactionBase} from "./factions.js"
 
 class FactionTesting extends FactionBase {
   constructor() {
-    super("Parser Testing", () => 1)
+    super("Parser Testing", () => 1, [
+      {
+        title: "An example",
+        description: "Nothing special here...",
+        onStart() {
+          alert("Challenge started!")
+        },
+        onExit() {
+          alert("challenge exited!")
+        },
+        unlocked() {
+          return true
+        }
+      }
+    ])
   }
   get nextCount() {
     return "anything"
