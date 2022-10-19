@@ -62,12 +62,12 @@ export function parse2(str) {
       let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
       let foundFunction = functionProperties[0];
       let foundLength = functionProperties[1];
-      if (foundFunction !== undefined) {
+      if (foundFunction !== null) {
         console.log(foundFunction);
         // look for other args
-        let argsProperties = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-        let args = argsProperties[0];
-        let expectedArgs = argsProperties[1];
+        let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
+        // let args = argsProperties[0];
+        // let expectedArgs = argsProperties[1];
         // const expectedArgs = foundFunction.syntax.split(",");
         // let args = [literals[i]];
         // let checkingIndex = i;
@@ -86,7 +86,7 @@ export function parse2(str) {
         // }
         console.log("args:");
         console.log(args);
-        if (args.length === expectedArgs.length) {
+        if (args != null) {
           // check extra args don't have a unary operator to go through first
           let foundFunction2 = null;
           for (let l = 1; l < args.length; l++) {
@@ -156,13 +156,13 @@ export function parse2(str) {
       foundFunction = functionProperties[0];
       foundLength = functionProperties[1];
       
-      if (foundFunction !== undefined) {
+      if (foundFunction !== null) {
         console.log(foundFunction);
         // look for other args
         // const expectedArgs = foundFunction.syntax.split(",");
-        let argsProperties = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-        let args = argsProperties[0];
-        let expectedArgs = argsProperties[1];
+        let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
+        // let args = argsProperties[0];
+        // let expectedArgs = argsProperties[1];
         // let args = [literals[i]];
         // if (foundFunction instanceof Bin) {
         //   if (i + 1 < literals.length && literalsIndexes[i + 1] == literalsIndexes[i] + literalsLengths[i] + foundLength) {
@@ -171,7 +171,7 @@ export function parse2(str) {
         // }
         console.log("args:");
         console.log(args);
-        if (args.length === (foundFunction instanceof Bin ? 2 : 1)) {
+        if (args != null) {
           // check extra args don't have a unary operator to go through first
           let foundFunction2 = null;
           for (let l = 1; l < args.length; l++) {
@@ -269,7 +269,7 @@ function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {
       args.push(literals[i + 1]);
     }
   }
-  return [args, expectedArgs];
+  return args.length == expectedArgs ? args : null;
 }
 
 function findFunction(str, startIndex, startLength, direction, ignoreBrackets, delimiterArgs, operatorType) {
