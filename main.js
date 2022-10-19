@@ -7,3 +7,4 @@ import "./factions/factorial.js";
 import './factions/parserTestingFaction.js'
 import './text/groups.js'
 import './text/main.js'
+import './ui/modals.js'
