@@ -469,7 +469,7 @@ export const FUNCTIONS = {
 
   MOD: new Bin("Modulo", "MOD", "%", (args) => args[0] % args[1]),
 
-  NOT: new Right("Bitwise Not", "NOT", "~", (args) => ~(args[0]) >>> 0),
+  NOT: new Right("Bitwise Not", "NOT", "~", (args) => 2**Math.ceil(Math.log2(args[0])) + ~(args[0])),
 
   ODD: new Operator("Odd Numbers", "ODD", "odd(n)", (args) => 2 * args[0] + 1),
 
@@ -522,6 +522,8 @@ export const FUNCTIONS = {
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
 
   XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0] ^ args[1]),
+  
+  
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 

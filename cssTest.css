@@ -42,8 +42,8 @@
   background: #f2f2f2;
   font-weight: bold;
   border: 1px solid #127a20;
-  width: 120px;
-  height: 25px;
+  width: 200px;
+  min-height: 20px;
   transition: all 0.2s linear;
   cursor: pointer;
   border-radius: 4px;

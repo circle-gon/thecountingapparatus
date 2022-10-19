@@ -8,11 +8,14 @@ const close = document.getElementById("close")
 const exampleModals = {
   challengeSelector(factionInstance) {
     const div = ce("div")
+    const buttonCollection = ce("div")
     const btn = ce("button")
     const cancelBtn = ce("button")
     const challStuffs = ce("div")
     const count = ce("span")
     const currChallenge = ce("span")
+    
+    let challSelected;
     
     factionInstance.challengeDetails.forEach((i, ind) => {
       const selection = ce("div")
@@ -36,14 +39,21 @@ const exampleModals = {
       
       content.append(count)
       content.classList.add("content")
+      select
     })
     
     btn.classList.add("fancy-btn")
     btn.onclick = hideModal
     btn.innerHTML = "Do this challenge!"
     
+    cancelBtn.classList.add("fancy-btn")
+    cancelBtn.onclick = hideModal
+    cancelBtn.innerHTML = "Go back to normal counting :("
+    cancelBtn.style.marginLeft = "20px"
+    
+    buttonCollection.append(btn, cancelBtn)
     challStuffs.classList.add("container")
-    div.append(challStuffs, btn)
+    div.append(challStuffs, buttonCollection)
     
     div.classList.add("columns")
     return div
