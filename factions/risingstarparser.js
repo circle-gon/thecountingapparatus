@@ -59,9 +59,10 @@ export function parse2(str) {
         }
       }
       // left existence
-      const functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], FunctionBase);
+      const functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [FunctionBase]);
       let foundFunction = functionProperties[0];
       let foundLength = functionProperties[1];
+      console.log(functionProperties);
       
       if (foundFunction !== null) {
         console.log(foundFunction);
@@ -150,34 +151,37 @@ export function parse2(str) {
       }
       
       // right existence
-      foundFunction = null;
-      foundLength = 0;
-      for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
-        // find if there's a function with fitting syntax
-        // ignore brackets if no function has been found yet
-        let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
-        if (foundFunction === null) {
-          subString = subString.replace(/[()]/g, '');
-        }
-        const actualFunc = Object.values(FUNCTIONS).find( function (i) {
-          // possibly split up operators to prioritize
-          let syntaxSubx = i.syntax.substring(i.syntax.indexOf("x") + 1);
-          if (syntaxSubx == '') {
-            syntaxSubx = null;
-          }
-          let syntaxSubxy = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y"));
-          if (syntaxSubxy == '') {
-            syntaxSubxy = null;
-          }
-          return i.syntax === subString || syntaxSubx === subString || syntaxSubxy === subString;
-        }
-        );
-        // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-        if (actualFunc !== undefined && actualFunc.isUnlocked) {
-          foundFunction = actualFunc;
-          foundLength = distanceRight;
-        }
-      }
+      functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
+      foundFunction = functionProperties[0];
+      foundLength = functionProperties[1];
+      // foundFunction = null;
+      // foundLength = 0;
+      // for (let distanceRight = 1; distanceRight <= adaptedStr.length - literalsIndexes[i]; distanceRight++) {
+      //   // find if there's a function with fitting syntax
+      //   // ignore brackets if no function has been found yet
+      //   let subString = adaptedStr.substring(literalsIndexes[i] + literalsLengths[i], literalsIndexes[i] + literalsLengths[i] + distanceRight);
+      //   if (foundFunction === null) {
+      //     subString = subString.replace(/[()]/g, '');
+      //   }
+      //   const actualFunc = Object.values(FUNCTIONS).find( function (i) {
+      //     // possibly split up operators to prioritize
+      //     let syntaxSubx = i.syntax.substring(i.syntax.indexOf("x") + 1);
+      //     if (syntaxSubx == '') {
+      //       syntaxSubx = null;
+      //     }
+      //     let syntaxSubxy = i.syntax.substring(i.syntax.indexOf("x") + 1, i.syntax.indexOf("y"));
+      //     if (syntaxSubxy == '') {
+      //       syntaxSubxy = null;
+      //     }
+      //     return i.syntax === subString || syntaxSubx === subString || syntaxSubxy === subString;
+      //   }
+      //   );
+      //   // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
+      //   if (actualFunc !== undefined && actualFunc.isUnlocked) {
+      //     foundFunction = actualFunc;
+      //     foundLength = distanceRight;
+      //   }
+      // }
       if (foundFunction !== null) {
         console.log(foundFunction);
         // look for other args
@@ -288,12 +292,25 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     }
     const actualFunc = Object.values(FUNCTIONS).find( function (i) {
       // possibly split up operators to prioritize
-      if (!(i instanceof operatorType)) {
+      let validOperator = false;
+      for (const operator of operatorType) {
+        if (i instanceof operator) {
+          validOperator = true;
+          break;
+        }
+      }
+      if (!validOperator) {
         return false;
       }
       let comparisonStrings = [i.syntax];
       for (const delimiters of delimiterArgs) {
-        const syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0], (typeof delimiters[1] === 'string') ? i.syntax.indexOf(delimiters[1]) : delimiters[1]);
+        const syntaxSub =  null;
+        if (delimiters[1] != null) {
+          syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0], (typeof delimiters[1] === 'string') ? i.syntax.indexOf(delimiters[1]) : delimiters[1]);
+        }
+        else {
+          syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0]);
+        }
         if (syntaxSub !== '') {
           comparisonStrings.push(syntaxSub);
         }
@@ -311,7 +328,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     }
     );
     // check actualFunc exists, dunno how tho, so just assume it isn't if it's locked
-    if (actualFunc !== undefined && actualFunc.isUnlocked) {
+    if (actualFunc !== null && actualFunc.isUnlocked) {
       foundFunction = actualFunc;
       foundLength = distance;
     }
