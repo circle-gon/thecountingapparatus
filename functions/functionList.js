@@ -114,12 +114,12 @@ export const FUNCTIONS = {
       Math.PI
     )
   ),
-  K: new Operator("Hyperfactorial", "K", "K(x)", function (args){
+  K: new Operator("Hyperfactorial", "K", "K(x)", function (args) {
     let output = 1;
     for (let i = 1; i <= args[0]; i++) {
-      output *= i**i
+      output *= i ** i;
     }
-    return output
+    return output;
   }),
   L: new Operator(
     "Lucas Numbers",
@@ -145,12 +145,12 @@ export const FUNCTIONS = {
     }
     return output;
   }),
-  AS: new Operator("Aliquot Sum", "AS", "s(x)", function(args){
-    let sum = 0
-    for(let i=1;i<args[0];i++){
-      if (args[0]%i==0) sum+=i;
+  AS: new Operator("Aliquot Sum", "AS", "s(x)", function (args) {
+    let sum = 0;
+    for (let i = 1; i < args[0]; i++) {
+      if (args[0] % i == 0) sum += i;
     }
-    return sum
+    return sum;
   }),
   AT: new Operator("Area of a Triangle", "AT", "🔺(a,b,c)", function (args) {
     const a = args[0];
@@ -294,15 +294,15 @@ export const FUNCTIONS = {
     "hex(x)",
     (args) => 3 * args[0] * (args[0] + 1) + 1
   ),
-  COL:new Operator("Collatz Conjecture", "COL", "COL(x)", function(args){
-    let steps = 0
-    let num = args[0]
-    while(num!=1){
-      if(num%2==1)num=3*num+1
-      else num/=2
-      steps++
+  COL: new Operator("Collatz Conjecture", "COL", "COL(x)", function (args) {
+    let steps = 0;
+    let num = args[0];
+    while (num != 1) {
+      if (num % 2 == 1) num = 3 * num + 1;
+      else num /= 2;
+      steps++;
     }
-    return steps
+    return steps;
   }),
   COS: new Operator("Cosine", "COS", "cos(x)", Math.cos),
 
@@ -320,34 +320,23 @@ export const FUNCTIONS = {
     (args) => 1 / Math.sin(args[0])
   ),
 
-  DBL: new Operator(
-    "Doublets",
-    "DBL",
-    "2️⃣(x)",
-    (args) => Number(args[0].toString()+args[0].toString())
+  DBL: new Operator("Doublets", "DBL", "2️⃣(x)", (args) =>
+    Number(args[0].toString().repeat(2)),
   ),
 
   DEC: new Operator("Decimal Numbers", "DEC", "dec[n](x)", (args) =>
     parseInt((args[1] >>> 0).toString(), args[0]).toString(10)
   ),
-  DEF: new Operator("Number Deficiency", "DEF", "def(x)", function(args){
-    let sum = 0
-    for(let i=1;i<args[0];i++){
-      if(args[0]%i==0)sum+=i
+  DEF: new Operator("Number Deficiency", "DEF", "def(x)", function (args) {
+    let sum = 0;
+    for (let i = 1; i < args[0]; i++) {
+      if (args[0] % i == 0) sum += i;
     }
-    return args[0]-sum// def(x) = x-s(x)
+    return args[0] - sum; // def(x) = x-s(x)
   }),
   DIV: new Bin("Division", "DIV", "/", (args) => args[0] / args[1]),
 
-  DRT: new Left("Digital Root", "DRT", "D√)", function drt(args) {
-    let input = args[0].toString();
-    if (input.length === 1) return parseInt(input);
-    else {
-      let x = args[0]%9
-      if(x==0)x=9
-      return x
-    }
-  }),
+  DRT: new Left("Digital Root", "DRT", "D√)", (args) => (args[0]-1)%9+1),
 
   DSM: new Left("Digit Sum", "DSM", "D+", function (args) {
     args[0] = args[0].toString();
@@ -364,7 +353,7 @@ export const FUNCTIONS = {
     "dws(n)",
     (args) => 1 - args[0]
   ),
-  EGG: new Operator("Egg", "EGG", "🥚(x)", (args) => 420*args[0]-119),
+  EGG: new Operator("Egg", "EGG", "🥚(x)", (args) => 420 * args[0] - 119),
   ENG: new Operator("English", "ENG", "eng(n)", function eng(args) {
     let x = args[0];
     if (x === 0) return 4;
@@ -501,30 +490,26 @@ export const FUNCTIONS = {
     (args) => gamma(args[0] + 1) / gamma(Math.floor(args[0] / 2) + 1) ** 2
   ),
 
-  TAN: new Operator("Tangent", "TAN", "tan(x)", Math.tan),
-  
+  TAN: new FunctionBase("Tangent", "TAN", "tan(x)", Math.tan),
+
   TEN: new SingleNumSeq("All Tens Sequence", "TEN", "ten(x)", 10),
 
-  TPL: new Operator(
-    "Triplets",
-    "DBL",
-    "3️⃣(x)",
-    (args) =>
-      args[0] +
-      10 ** Math.floor(Math.log10(args[0]) + 1) * args[0] +
-      10 ** (2 * Math.floor(Math.log10(args[0]) + 1)) * args[0]
+  TPL: new FunctionBase("Triplets", "DBL", "3️⃣(x)", (args) =>
+    Number(args[0].toString().repeat(3))
   ),
-  
-  TRI: new Operator("Tribonacci Sequence", "TRI", "Tr(x)", function (args) {
-    const a = Math.cbrt(19 + 3*Math.sqrt(33));
-    const a_ = Math.cbrt(19 - 3*Math.sqrt(33));
-    const b = Math.cbrt(586 + 102*Math.sqrt(33));
-    return Math.round(3*b*((a+a_+1)/3)**args[0]/(b**2-2*b+4));
+
+  TRI: new FunctionBase("Tribonacci Sequence", "TRI", "Tr(x)", function (args) {
+    const a = Math.cbrt(19 + 3 * Math.sqrt(33));
+    const a_ = Math.cbrt(19 - 3 * Math.sqrt(33));
+    const b = Math.cbrt(586 + 102 * Math.sqrt(33));
+    return Math.round(
+      (3 * b * ((a + a_ + 1) / 3) ** args[0]) / (b ** 2 - 2 * b + 4)
+    );
   }),
 
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
-  
-  XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0]^args[1]),
+
+  XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0] ^ args[1]),
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 

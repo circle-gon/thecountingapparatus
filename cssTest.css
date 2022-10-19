@@ -17,6 +17,9 @@
   display: none;
 }
 
+#content {
+  height: 100%;
+}
 /* The Close Button */
 #close {
   position: absolute;
@@ -35,20 +38,28 @@
 }
 
 .fancy-btn {
-    color: black;
-    background: #F2F2F2;
-    font-weight: bold;
-    border: 1px solid #127A20;
-    width: 120px;
-    height: 25px;
-    transition-duration: 0.2s;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 13px;
-    vertical-align: top;
+  color: black;
+  background: #f2f2f2;
+  font-weight: bold;
+  border: 1px solid #127a20;
+  width: 120px;
+  height: 25px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+  vertical-align: top;
 }
 
 .fancy-btn:hover {
-    color: #FFFFFF;
-    background: #5AC467;
+  color: #ffffff;
+  background: #5ac467;
+}
+
+.columns {
+  height: 100%;
+  display: flex; /* defines flexbox */
+  flex-direction: column; /* top to bottom */
+  justify-content: space-between; /* first item at start, last at end */
+  align-items: center;
 }

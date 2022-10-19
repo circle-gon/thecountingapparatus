@@ -8,18 +8,25 @@ const exampleModals = {
   challengeSelector(factionInstance) {
     const div = ce("div")
     const btn = ce("button")
+    const challStuffs = ce("div")
+    
+    factionInstance.challengeDetails.forEach(i => {
+      const selection = ce("div")
+      selection.innerHTML = `<input type="checkbox"
+      id="check${int}" 
+      class="control"
+      checked />
+    <label for="check${int}" title="${this.textGroup.name}" class="label">${this.textGroup.name}</label>`
+    })
     
     btn.classList.add("fancy-btn")
     btn.onclick = hideModal
     btn.innerHTML = "Okay."
     
-    div.innerHTML = "Some text"
-    div.append(ce("br"), btn)
+    text.innerHTML = "Some text"
+    div.append(text, btn)
     
-    div.style.display = "flex"
-    div.style.flexDirection = "column"
-    div.style.justifyContent = "space-between"
-    div.style.alignItems = "center"
+    div.classList.add("columns")
     return div
   }
 }
