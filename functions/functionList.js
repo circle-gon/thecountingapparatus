@@ -376,6 +376,8 @@ export const FUNCTIONS = {
   
   FIB: new Operator("Fibonacci Numbers", "FIB", "fib(n)"),
   
+  GCD: new Operator("Greatest Common Denominator", "GCD", "gcd(...)", (args) => args.reduce(gcd = (vals) => (vals[1] ? gcd(b,a%b) : vals[0]))),
+  
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 
   SIN: new FunctionBase("Sine", "SIN", "sin(x)", Math.sin),

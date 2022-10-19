@@ -102,7 +102,8 @@ function stringToChunked(str) {
           .map((n) => n[0])
           .filter((n) => n != chunk[0])
           .includes(chunk[chunk.length - 1]) ||
-          /[0123456789]/.test(chunk[chunk.length - 1]))
+          chunk[chunk.length - 1] != 
+        )
       ) {
         parenDepth++;
         if (parenDepth > 1) {
