@@ -6,7 +6,16 @@ const close = document.getElementById("close")
 
 const exampleModals = {
   challengeSelector(factionInstance) {
-    return "Oops, this is not supported yet!"
+    const div = ce("div")
+    const btn = ce("button")
+    
+    btn.classList.add("fancy-btn")
+    btn.onclick = hideModal
+    btn.innerHTML = "Okay."
+    
+    div.innerHTML = "Some text"
+    div.append(ce("br"), btn)
+    return div
   }
 }
 

@@ -114,7 +114,13 @@ export const FUNCTIONS = {
       Math.PI
     )
   ),
-
+  K: new Operator("Hyperfactorial", "K", "K(x)", function (args){
+    let output = 1;
+    for (let i = 1; i <= args[0]; i++) {
+      output *= i**i
+    }
+    return output
+  }),
   L: new Operator(
     "Lucas Numbers",
     "L",
@@ -499,7 +505,7 @@ export const FUNCTIONS = {
 
   TWO: new SingleNumSeq("All Twos Sequence", "TWO", "two(x)", 2),
   
-  
+  XOR: new Bin("Bitwise XOR", "XOR", "^", (args) => args[0]^args[1]),
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 
