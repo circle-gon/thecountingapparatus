@@ -51,14 +51,14 @@
   vertical-align: top;
 }
 
-.fancy-btn:hover:not(.fancy-button:disabled) {
-  color: #ffffff;
-  background: #5ac467;
-}
-
 .fancy-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.fancy-btn:not(.fancy-btn:disabled):hover {
+  color: #ffffff;
+  background: #5ac467;
 }
 
 .columns {

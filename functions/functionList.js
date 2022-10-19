@@ -1,6 +1,6 @@
 import { FunctionBase } from "./functionClass.js";
 import { gamma, integral } from "../utils/utils.js";
-function prime(x) {
+function prime(x) { // the inefficient way
   let p = 1;
   for (let i = 1; (i = 2 ** x); i++) {
     let s = 0;
