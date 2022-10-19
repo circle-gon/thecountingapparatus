@@ -374,7 +374,7 @@ export const FUNCTIONS = {
   
   EXP: new Operator("Exponential Function", "EXP", "exp(x)", Math.exp),
   
-  FIB: new Operator(),
+  FIB: new Operator("Fibonacci Numbers", "FIB", "fib(n)"),
   
   LOG: new Logarithm("Logarithm", "LOG", "log10(x)", 10),
 

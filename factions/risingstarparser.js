@@ -68,7 +68,7 @@ export function parse2(str) {
         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
         console.log("args:");
         console.log(args);
-        if (args != null) {
+        if (args !== null) {
           // check extra args don't have a unary operator to go through first
           let testForUnary = [null];
           for (let l = 1; l < args.length; l++) {
@@ -124,7 +124,7 @@ export function parse2(str) {
         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
         console.log("args:");
         console.log(args);
-        if (args != null) {
+        if (args !== null) {
           // check extra args don't have a unary operator to go through first
           let testForUnary = [null];
           for (let l = 1; l < args.length; l++) {
@@ -184,11 +184,11 @@ function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {
   if (expectedArgs > 1) { // multi arg function
     let checkingIndex = i;
     while (checkingIndex < literals.length) {
-      if (str[indexes[checkingIndex] + lengths[checkingIndex]] != ',') {
+      if (str[indexes[checkingIndex] + lengths[checkingIndex]] !== ',') {
         break;
       }
       //should be a literal on the other side
-      if (checkingIndex >= literals.length || indexes[checkingIndex + 1] != indexes[checkingIndex] + lengths[checkingIndex] + 1) {
+      if (checkingIndex >= literals.length || indexes[checkingIndex + 1] !== indexes[checkingIndex] + lengths[checkingIndex] + 1) {
         break;
       }
       args.push(literals[i+1]); // literals is ordered and should be kept that way
@@ -240,7 +240,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       let comparisonStrings = [i.syntax];
       for (const delimiters of delimiterArgs) {
         let syntaxSub =  null;
-        if (delimiters[1] != null) {
+        if (delimiters[1] !== null) {
           syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0], (typeof delimiters[1] === 'string') ? i.syntax.indexOf(delimiters[1]) : delimiters[1]);
         }
         else {
