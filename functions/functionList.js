@@ -207,6 +207,7 @@ export const FUNCTIONS = {
     for (let i = args[0]; i > 0; i -= 2) {
       output *= i;
     }
+    return output;
   }),
 
   PI: new FunctionBase("Pi Function", "PI", "x!", (args) => gamma(args[0] + 1)),

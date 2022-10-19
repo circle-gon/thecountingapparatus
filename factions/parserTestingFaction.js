@@ -19,6 +19,7 @@ class FactionTesting extends FactionBase {
       this.textBox.sendMessage("Result: " + this.parseCount(count))
     } catch (e) {
       this.textBox.sendMessage("invalid");
+      console.error(e)
       // this.textBox.sendMessage("Failed to parse, error: " + e.stack)
     }
   }

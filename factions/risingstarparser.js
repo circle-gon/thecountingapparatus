@@ -306,21 +306,21 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
         return false;
       }
       let comparisonStrings = [i.syntax];
+      console.log(i);
       for (const delimiters of delimiterArgs) {
-        const syntaxSub =  null;
+        console.log(delimiters);
+        let syntaxSub =  null;
         if (delimiters[1] != null) {
           syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0], (typeof delimiters[1] === 'string') ? i.syntax.indexOf(delimiters[1]) : delimiters[1]);
         }
         else {
           syntaxSub = i.syntax.substring((typeof delimiters[0] === 'string') ? i.syntax.indexOf(delimiters[0]) + 1 : delimiters[0]);
+          console.log(syntaxSub);
         }
         if (syntaxSub !== '') {
+          console.log("push");
           comparisonStrings.push(syntaxSub);
         }
-      }
-      const syntaxSub = i.syntax.substring(0, i.syntax.indexOf("("));
-      if (syntaxSub === '') {
-        return false;
       }
       for (const string of comparisonStrings) {
         if (string === subString) {
