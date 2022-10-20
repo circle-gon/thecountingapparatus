@@ -650,12 +650,14 @@ export const FUNCTIONS = {
   LEFT: new Bin("Bitshift Left", "LEFT", "<<", (args) => args[0] << args[1]),
 
   LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
-    let output = "";
+    let output = [];
     for (let i = 0; i < args[0].toString().length; i++) {
-      output += Math.min(
-        parseInt(args[0].toString().at(i)),
-        parseInt(args[1].toString().at(i))
-      ).toString();
+      for (let j = 0; j < args[1].toString().length; j++) {
+        /*output += Math.min(
+          parseInt(args[0].toString().at(i)),
+          parseInt(args[1].toString().at(i))
+        ).toString();*/
+      }
     }
     return output;
   }),
@@ -669,8 +671,13 @@ export const FUNCTIONS = {
       gamma(args[0] + args[1] + 1) /
       gamma(args[1] - args[0] + 1)
   ),
-  
-  LOGN: new Operator("Logarithm", "LOGN", "log_n(x)", (args) => Math.log(args[1])/Math.log(args[0])),
+
+  LOGN: new Operator(
+    "Logarithm",
+    "LOGN",
+    "log_n(x)",
+    (args) => Math.log(args[1]) / Math.log(args[0])
+  ),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
 
