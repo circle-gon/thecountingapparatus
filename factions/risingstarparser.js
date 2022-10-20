@@ -64,12 +64,59 @@ export function parse2(str) {
         }
       }
       
-      let direction = "right";
-      // right unary respect brackets
-      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", null]], [Right]);
-      if (functionP)
+      let functionPropertiesList = [];
+      // respecting brackets
+      // right unary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", null]], [Right]));
+      // (right) binary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", "y"]], [Bin]));
+      // left unary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", false, [[0, "x"]], [Left]));
+      // function
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", false, [[0, "("]], [Operator]));
+      // ignoring brackets
+      // right unary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null]], [Right]));
+      // (right) binary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", "y"]], [Bin]));
+      // left unary
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "x"]], [Left]));
+      // function
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [Operator]));
+      let functionProperties = null;
+      for (let j = 0; j < functionPropertiesList.length; j++) {
+        if (functionPropertiesList[j] != null) {
+          functionProperties = functionPropertiesList[j];
+          break;
+        }
+      }
+      if (functionProperties != null) {
+        let foundFunction = functionProperties[0];
+        let foundLength = functionProperties[1];
+        let bracketsRemoved = functionProperties[2];
+        let direction = functionProperties[3];
+        
+        let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
+        console.log("args:");
+        console.log(args);
+        
+        if (args !== null) {
+          // check extra args don't have a unary operator to go through first
+          let testForUnary = [null];
+          for (let l = 1; l < args.length; l++) {
+            testForUnary = findFunction(adaptedStr, literalsIndexes[i + l], literalsLengths[i + l], "right", false, [["x", null]], [Right]);
+            if (testForUnary[0] !== null) {
+              break;
+            }
+          }
+          if (testForUnary[0] !== null) {
+            // arg has a right unary, so wait
+            continue;
+          }
+        }
+      }
       // left existence
-      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
+      // let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
       let foundFunction = functionProperties[0];
       let foundLength = functionProperties[1];
       if (foundFunction !== null) {
@@ -281,7 +328,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       foundLength = distance;
     }
   }
-  return foundFunction == null ? null : [foundFunction, foundLength, bracketsSkipped];
+  return foundFunction == null ? null : [foundFunction, foundLength, bracketsSkipped, direction];
 }
 
 // function parse(str) {
