@@ -21,7 +21,7 @@ class TreeFaction extends FactionBase {
   //Counts & Milestones
 
   doCount(count) {
-    if (this.isCorrectCount(count)) {
+    if (this.textBox.currentMessages.at(-1).isCorrectCount) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;
       } else {

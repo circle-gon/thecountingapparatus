@@ -23,18 +23,16 @@ class OnesFaction extends FactionBase {
     if (!count.includes("=")) return false;
     const number = count.split("=")[0];
     if (Number(number) !== this.nextCount) return false;
-    let actualCount = count.split("=")[1];
+    const actualCount = count.split("=")[1];
     const numbersUsed = actualCount.match(/\d+/g);
-    let ruleFollowed = true;
     for (const numberU  of numbersUsed) {
       if (Number(numberU) !== 1) {
-        ruleFollowed = false;
+        return false
       }
     }
     return (
       // this.nextCount === this.parseCount(count)
-      Math.abs(this.nextCount - this.parseCount(actualCount)) < 0.00000001 &&
-      ruleFollowed
+      Math.abs(this.nextCount - this.parseCount(actualCount)) < 0.00000001
     );
   }
 }

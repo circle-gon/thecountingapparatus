@@ -83,7 +83,7 @@ export class FactionBase {
   enterChallenge(i) {
     if (![...this.challengeDetails.keys()].includes(i))
       throw new TypeError("Attempted to enter challenge that does not exist");
-    if (!this.challengeDetails[i].unlocked()) 
+    if (!(this.challengeDetails[i].unlocked?.() ?? true)) 
       throw new TypeError("Attempted to enter challenge that is not unlocked.");
     this.inChallenge = i;
     this.textBox.switchToChat(this.challengeDetails[i].title);
@@ -92,6 +92,7 @@ export class FactionBase {
 
   exitChallenge() {
     this.textBox.switchToChat("default");
+    console.log(this.inChallenge, typeof this.inChallenge)
     this.challengeDetails[this.inChallenge].onExit?.();
     this.inChallenge = null;
   }
@@ -103,7 +104,7 @@ export class FactionBase {
   }
 
   doCount(count) {
-    if (this.isCorrectCount(count)) {
+    if (this.textBox.currentMessges.at(-1).isCorrect) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;
       } else {

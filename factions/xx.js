@@ -3,27 +3,25 @@ import { Functions } from "../functions/functionClass.js";
 
 class XxFaction extends FactionBase {
   constructor() {
-    super("X X", (x) =>
-      Math.pow(
-        x + 1,
-        Math.pow(x + 1, this.milestoneReduction),
-        [
-          0,
-          1,
-          Math.sqrt(2),
-          Math.pow(Math.E, 1 / Math.E),
-          0.5 * (1 + Math.sqrt(5)),
-          (Math.PI * 2) / (0.5 * (1 + Math.sqrt(5))) ** 2,
-          Math.E,
-          Math.PI,
-          3.359885666243177553,
-          "i",
-        ].map((i, ind) => ({
-          name: `XX Challenge ${ind}`,
-          description: `X = ${i}`,
-          x: i,
-        }))
-      )
+    super(
+      "X X",
+      (x) => Math.pow(x + 1, Math.pow(x + 1, this.milestoneReduction)),
+      [
+        0,
+        1,
+        Math.sqrt(2),
+        Math.pow(Math.E, 1 / Math.E),
+        0.5 * (1 + Math.sqrt(5)),
+        (Math.PI * 2) / (0.5 * (1 + Math.sqrt(5))) ** 2,
+        Math.E,
+        Math.PI,
+        3.359885666243177553,
+        "i",
+      ].map((i, ind) => ({
+        name: `XX Challenge ${ind}`,
+        description: `X = ${i}`,
+        x: i,
+      }))
     );
     this.hasChal = true;
     this.goals = [
@@ -63,7 +61,8 @@ class XxFaction extends FactionBase {
     const number = count.split("=")[0];
     if (Number(number) !== this.nextCount) return false;
     const actualCount = count.split("=")[1];
-    const amountOfX = actualCount.match(new RegExp(this.rawX, "g"))?.length ?? 0
+    const amountOfX =
+      actualCount.match(new RegExp(this.rawX, "g"))?.length ?? 0;
     if (amountOfX !== Math.ceil(this.rawX === "i" ? 1 : this.rawX))
       return false;
     const numbersUsed = actualCount.match(/\d+/g);
@@ -85,7 +84,7 @@ class XxFaction extends FactionBase {
   get rawX() {
     return this.inChallenge === null
       ? this.milestones + 1
-    : this.challengeDetails[this.inChallenge].x
+      : this.challengeDetails[this.inChallenge].x;
   }
   get effectiveX() {
     return this.milestones + 1;

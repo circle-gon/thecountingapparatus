@@ -45,7 +45,8 @@ class CountFaction extends FactionBase {
     }
   }
   doCount(count) {
-    if (this.isCorrectCount(count)) {
+    console.log(this.textBox.currentMessages)
+    if (this.textBox.currentMessages.at(-1).isCorrectCount) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;
       } else {
