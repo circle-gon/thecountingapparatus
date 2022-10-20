@@ -86,7 +86,11 @@ export function parse2(str) {
             // arg has a right unary, so wait
             continue;
           }
+          
           const result = foundFunction.evaluate(args);
+          
+          updateLiterals(ref literals, ref literalsLengths, );
+          
           let removedLength = literalsLengths[i];
           literals[i] = result
           literalsLengths[i] = 1;
@@ -214,6 +218,7 @@ function gatherArgs(str, i, literals, lengths, indexes, func, foundLength) {
 function findFunction(str, startIndex, startLength, direction, ignoreBrackets, delimiterArgs, operatorType) {
   let foundFunction = null;
   let foundLength = 0;
+  let bracketsSkipped = 0;
   let maxDistance = startIndex;
   if (direction === "right") {
     maxDistance = str.length - startIndex;
@@ -231,6 +236,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
     }
     if (foundFunction === null && ignoreBrackets) {
       subString = subString.replace(/[()]/g, '');
+      bracketsSkipped = distance - subString.length;
     }
     const actualFunc = Object.values(FUNCTIONS).find( function (i) {
       // possibly split up operators to prioritize
@@ -271,7 +277,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       foundLength = distance;
     }
   }
-  return [foundFunction, foundLength];
+  return [foundFunction, foundLength, bracketsSkipped];
 }
 
 // function parse(str) {
