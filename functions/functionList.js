@@ -618,14 +618,24 @@ export const FUNCTIONS = {
     "ct(n)",
     (args) => (3 * args[0] ** 2 + 3 * args[0] + 2) / 2
   ),
-  
-  CUBE: new Right("Cubes", "CUBE", "³", (args) => args[0]**3),
-  
-  EVEN: new Operator("Even Numbers", "EVEN", "even(n)", (args) => 2*args[0]),
+
+  CUBE: new Right("Cubes", "CUBE", "³", (args) => args[0] ** 3),
+
+  EVEN: new Operator("Even Numbers", "EVEN", "even(n)", (args) => 2 * args[0]),
 
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
+
+  LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
+    let output = "";
+    for (let i = 0; i < args[0].length; i++) {
+      output += Math.max(
+        parseInt(args[0].toString().at(i)),
+        parseInt(args[1].toString().at(i))
+      ).toString();
+    }
+  }),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
 
