@@ -463,7 +463,7 @@ export const FUNCTIONS = {
   LAH: new Operator(
     "Unsigned Lah Numbers",
     "LAH",
-    "lah(n,k)",
+    "Lah(n,k)",
     (args) =>
       (gamma(args[0] + 1) * gamma(args[0])) /
       gamma(args[1] + 1) /
@@ -629,12 +629,35 @@ export const FUNCTIONS = {
 
   LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
     let output = "";
-    for (let i = 0; i < args[0].length; i++) {
+    for (let i = 0; i < args[0].toString().length; i++) {
       output += Math.max(
         parseInt(args[0].toString().at(i)),
         parseInt(args[1].toString().at(i))
       ).toString();
     }
+    return output;
+  }),
+
+  LAHS: new Operator(
+    "Signed Lah Numbers",
+    "LAHS",
+    "Lahs(n,k)",
+    (args) =>
+      ((-1) ** args[0] * gamma(args[0] + 1) * gamma(args[0])) /
+      (gamma(args[1] + 1) * gamma(args[1]) * gamma(args[0] - args[1] + 1))
+  ),
+  
+  LEFT: new Bin("Bitshift Left", "LEFT", "<<", (args) => args[0] << args[1]),
+  
+  LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
+    let output = "";
+    for (let i = 0; i < args[0].toString().length; i++) {
+      output += Math.min(
+        parseInt(args[0].toString().at(i)),
+        parseInt(args[1].toString().at(i))
+      ).toString();
+    }
+    return output;
   }),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
