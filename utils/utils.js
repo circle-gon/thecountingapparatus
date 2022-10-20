@@ -23,6 +23,7 @@ export function randomInt() {
   return int++;
 }
 function factorial(x){
+  if(x==0)return 1
   if(x<3) return x
   return factorial(x-1)*x
 }
