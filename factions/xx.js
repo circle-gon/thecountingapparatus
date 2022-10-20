@@ -45,7 +45,7 @@ class XxFaction extends FactionBase {
     ) {
       if (lowerCaseCount.startsWith("enter")) {
         // space included
-        const num = lowerCaseCount.substring(7);
+        const num = lowerCaseCount.substring(6);
         try {
           this.enterChallenge(Number(num) - 1);
         } catch (e) {
@@ -63,7 +63,7 @@ class XxFaction extends FactionBase {
     const number = count.split("=")[0];
     if (Number(number) !== this.nextCount) return false;
     const actualCount = count.split("=")[1];
-    const amountOfX = actualCount.match(new RegExp(this.rawX, "g"));
+    const amountOfX = actualCount.match(new RegExp(this.rawX, "g"))?.length ?? 0
     if (amountOfX !== Math.ceil(this.rawX === "i" ? 1 : this.rawX))
       return false;
     const numbersUsed = actualCount.match(/\d+/g);
@@ -74,7 +74,7 @@ class XxFaction extends FactionBase {
     }
     return (
       // this.nextCount === this.parseCount(count)
-      Math.abs(this.nextCount - this.parseCount(actualCount)) < 0.00000001
+      Math.abs(this.nextCount - this.parseCount(actualCount)[0]) < 0.00000001
     );
   }
 
@@ -84,8 +84,8 @@ class XxFaction extends FactionBase {
 
   get rawX() {
     return this.inChallenge === null
-      ? this.challengeDetails[this.inChallenge]
-      : this.milestones + 1;
+      ? this.milestones + 1
+    : this.challengeDetails[this.inChallenge].x
   }
   get effectiveX() {
     return this.milestones + 1;
