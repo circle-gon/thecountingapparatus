@@ -1,15 +1,16 @@
 import { FunctionBase } from "./functionClass.js";
 import { gamma, integral } from "../utils/utils.js";
-function prime(x) { // the inefficient way
+function prime(x) {
+  // the inefficient way
   let p = 1;
   for (let i = 1; (i = 2 ** x); i++) {
     let s = 0;
     for (let j = 1; j <= i; j++) {
-      s += Math.floor((Math.cos(Math.PI * (1+gamma(j)) / j))**2)
+      s += Math.floor(Math.cos((Math.PI * (1 + gamma(j))) / j) ** 2);
     }
-    p += Math.floor((x / s) ** (1/x))
+    p += Math.floor((x / s) ** (1 / x));
   }
-  return p
+  return p;
 }
 //Subclasses
 class NChooseR extends FunctionBase {
@@ -219,7 +220,9 @@ export const FUNCTIONS = {
     (args) =>
       1 / (args.reduce((prev, curr) => prev + 1 / curr, 0), 1 / args.length)
   ),
-  HP: new Operator("Hyperprime", "HP", "hp(x)", (args)=>prime(prime(prime(args[0])))),
+  HP: new Operator("Hyperprime", "HP", "hp(x)", (args) =>
+    prime(prime(prime(args[0])))
+  ),
   IM: new Operator("Imaginary Part", "IM", "im(x)", (args) => 0),
 
   LF: new Left("Left Factorial", "LF", "¡", function (args) {
@@ -275,7 +278,9 @@ export const FUNCTIONS = {
   SI: new Operator("Sine Integral", "SI", "Si(x)", (args) =>
     integral((t) => Math.sin(t) / t, 0, args[0])
   ),
-  SP: new Operator("Superprime", "SP", "sp(x)", (args)=>prime(prime(args[0]))),
+  SP: new Operator("Superprime", "SP", "sp(x)", (args) =>
+    prime(prime(args[0]))
+  ),
   TF: new Right("Triple Factorial", "TF", "!!!", function (args) {
     let output = 1;
     for (let i = args[0]; i > 0; i -= 3) output *= i;
@@ -520,12 +525,12 @@ export const FUNCTIONS = {
   POW: new Bin("Power", "POW", "^", (args) => args[0] ** args[1]),
 
   PRE: new Right("Predecessor", "PRE", "--", (args) => --args[0]),
-  PRI: new Operator("Primorial", "PRI", "x#", (args)=>{
-  let result = 1
-  for(let i=1;i<=args[0];i++){
-    result *= prime(i)
-  }
-    return result
+  PRI: new Operator("Primorial", "PRI", "x#", (args) => {
+    let result = 1;
+    for (let i = 1; i <= args[0]; i++) {
+      result *= prime(i);
+    }
+    return result;
   }),
   RMS: new Operator("Root Mean Square", "RMS", "rms(...)", (args) =>
     Math.sqrt(args.reduce((prev, curr) => prev + curr ** 2, 0) / args.length)
@@ -588,13 +593,36 @@ export const FUNCTIONS = {
   ),
 
   CBRT: new Left("Cube Root", "CBRT", "³√", Math.cbrt),
-  
-  CEIL: new Wrap("Ceiling Function", "CEIL", "⌈⌉", Math.ceil),
-  
+
+  CEIL: new Wrap("Ceiling Function", "CEIL", "⌈x⌉", Math.ceil),
+
   COSH: new Operator("Hyperbolic Cosine", "COSH", "cosh(x)", Math.cosh),
 
-  COTH: new Operator("Hyperbolic Tangent", "COTH", "coth(x)", (args) => Math.sinh(args[0])/Math.cosh(args[1])),
+  COTH: new Operator(
+    "Hyperbolic Tangent",
+    "COTH",
+    "coth(x)",
+    (args) => Math.sinh(args[0]) / Math.cosh(args[1])
+  ),
+
+  CSQR: new Operator(
+    "Centered Square Numbers",
+    "CSQR",
+    "cs(n)",
+    (args) => args[0] ** 2 + (args[0] - 1) ** 2
+  ),
+
+  CSQR: new Operator(
+    "Centered Triangular Numbers",
+    "CTRI",
+    "ct(n)",
+    (args) => (3 * args[0] ** 2 + 3 * args[0] + 2) / 2
+  ),
   
+  CUBE: new Right("Cubes", "CUBE", "³", (args) => args[0]**3),
+  
+  EVEN: new Operator("Even Numbers", "EVEN", "even(n)", (args) => 2*args[0]),
+
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
