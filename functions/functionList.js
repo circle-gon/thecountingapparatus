@@ -646,9 +646,9 @@ export const FUNCTIONS = {
       ((-1) ** args[0] * gamma(args[0] + 1) * gamma(args[0])) /
       (gamma(args[1] + 1) * gamma(args[1]) * gamma(args[0] - args[1] + 1))
   ),
-  
+
   LEFT: new Bin("Bitshift Left", "LEFT", "<<", (args) => args[0] << args[1]),
-  
+
   LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
     let output = "";
     for (let i = 0; i < args[0].toString().length; i++) {
@@ -659,6 +659,8 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+  
+  LOBB: new Operator("Lobb Numbers", "LOBB", "lobb(a,b)", (args) => (2*args[0]+1)/(args[0]+args[1]+1)*gamma(2*args[1]+1)/gamma(args[0]+args[1]+1)/gamma(args[1]-args[0]+1)),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
 
