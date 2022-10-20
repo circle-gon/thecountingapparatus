@@ -28,7 +28,7 @@ function factorial(x){
   return factorial(x-1)*x
 }
 export function gamma(z) {
-  if(z==Math.floor(z))return factorial(z+1)
+  if(z==Math.floor(z))return factorial(z)
   const g = 7;
   const C = [
     0.99999999999980993, 676.5203681218851, -1259.1392167224028,

@@ -249,7 +249,7 @@ export const FUNCTIONS = {
     return output;
   }),
 
-  PI: new Right("Pi Function", "PI", "!", (args) => gamma(args[0] + 1)),
+  PI: new Right("Pi Function", "PI", "!", (args) => gamma(args[0])),
 
   QF: new Right(
     "Quad Factorial",
