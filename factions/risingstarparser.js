@@ -63,6 +63,11 @@ export function parse2(str) {
           throw new ParserError("no operation found but not finished");
         }
       }
+      
+      let direction = "right";
+      // right unary respect brackets
+      let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", null]], [Right]);
+      if (functionP)
       // left existence
       let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
       let foundFunction = functionProperties[0];
@@ -276,7 +281,7 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
       foundLength = distance;
     }
   }
-  return [foundFunction, foundLength, bracketsSkipped];
+  return foundFunction == null ? null : [foundFunction, foundLength, bracketsSkipped];
 }
 
 // function parse(str) {
