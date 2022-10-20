@@ -651,11 +651,12 @@ export const FUNCTIONS = {
 
   LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
     let output = [];
+    output.fill(0, 0, args[0].length);
     for (let i = 0; i < args[0].toString().length; i++) {
       for (let j = 0; j < args[1].toString().length; j++) {
         output[i] += Math.min(
           parseInt(args[0].toString().at(i)),
-          parseInt(args[1].toString().at(i))
+          parseInt(args[1].toString().at(j))
         ).toString();
       }
     }
