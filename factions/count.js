@@ -21,7 +21,7 @@ class CountFaction extends FactionBase {
 
   //Count & Milestones
   get nextCount() {
-    return this.count + Math.max(xxCount.effectiveX, 1);
+    return this.realCount + Math.max(xxCount.effectiveX, 1);
   }
 
   get milestoneRewards() {
@@ -46,8 +46,12 @@ class CountFaction extends FactionBase {
   }
   doCount(count) {
     if (this.isCorrectCount(count)) {
-      this.count = this.nextCount;
-      this.updateMilestones();
+      if (this.inChallenge !== null) {
+        this.challenges[this.inChallenge] = this.nextCount;
+      } else {
+        this.count = this.nextCount;
+        this.updateMilestones();
+      }
       this.updateGoals();
     } else if (
       count.startsWith("unban") &&

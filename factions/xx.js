@@ -27,28 +27,33 @@ class XxFaction extends FactionBase {
       () => this.avg >= 5000,
       () => this.rawX >= 10,
     ];
-    this.inChal = 0;
   }
 
   //Counting & Milestones
 
   isCorrectCount(count) {
-    if(count.toLowerCase().startsWith("enter") || count.toLowerCase().startsWith("exit")){
-      if(count.toLowerCase().startsWith("enter")){
-        if(!isNaN(Number(count[count.length-1]))){
-          this.inChal = (Number(count[count.length-1])+9)%10 + 1 //turning 0 into 10
-          this.rawX = this.challengeXs[Number(count[count.length-1])]
+    if (
+      count.toLowerCase().startsWith("enter") ||
+      count.toLowerCase().startsWith("exit")
+    ) {
+      if (count.toLowerCase().startsWith("enter")) {
+        if (!isNaN(Number(count[count.length - 1]))) {
+          this.inChal = ((Number(count[count.length - 1]) + 9) % 10) + 1; //turning 0 into 10
+          this.rawX = this.challengeXs[Number(count[count.length - 1])];
         }
-      }else {
+      } else {
         this.inChal = 0;
-        this.rawX = this.milestones+1;
+        this.rawX = this.milestones + 1;
       }
-      this.nextCount = (this.inChal == 0 ? this.count+1 : this.challenges[this.inChal-1]+1)
+      this.nextCount =
+        this.inChal == 0
+          ? this.count + 1
+          : this.challenges[this.inChal - 1] + 1;
       return true;
     }
     if (!count.includes("=")) return false;
     let number = count.split("=")[0];
-    if(Number(number) != this.nextCount)return false;
+    if (Number(number) != this.nextCount) return false;
     let actualCount = count.split("=")[1];
     let amountOfX = actualCount.match(new RegExp(this.rawX, "g"));
     let ruleFollowed = amountOfX == Math.ceil(this.rawX == "i" ? 1 : this.rawX);

@@ -25,7 +25,7 @@ class FactionTesting extends FactionBase {
     ])
   }
   get nextCount() {
-    return "anything"
+    return this.count + 1
   }
   isCorrectCount() {
     return true

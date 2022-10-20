@@ -22,9 +22,13 @@ class TreeFaction extends FactionBase {
 
   doCount(count) {
     if (this.isCorrectCount(count)) {
-      this.count = this.nextCount;
-      this.updateGrid();
-      this.updateMilestones();
+      if (this.inChallenge !== null) {
+        this.challenges[this.inChallenge] = this.nextCount;
+      } else {
+        this.count = this.nextCount;
+        this.updateMilestones();
+        this.updateGrid();
+      }
       this.updateGoals();
     }
   }

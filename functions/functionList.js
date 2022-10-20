@@ -588,7 +588,13 @@ export const FUNCTIONS = {
   ),
 
   CBRT: new Left("Cube Root", "CBRT", "³√", Math.cbrt),
+  
+  CEIL: new Wrap("Ceiling Function", "CEIL", "⌈⌉", Math.ceil),
+  
+  COSH: new Operator("Hyperbolic Cosine", "COSH", "cosh(x)", Math.cosh),
 
+  COTH: new Operator("Hyperbolic Tangent", "COTH", "coth(x)", (args) => Math.sinh(args[0])/Math.cosh(args[1])),
+  
   FIVE: new SingleNumSeq("All Fives Sequence", "FIVE", "five(x)", 5),
 
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
