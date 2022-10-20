@@ -35,7 +35,7 @@ class FactionTesting extends FactionBase {
   }
   doCount(count) {
     try {
-      super.doCount(count)
+      //super.doCount(count)
       this.textBox.sendMessage("Result: " + this.parseCount(count))
     } catch (e) {
       this.textBox.sendMessage("invalid");
