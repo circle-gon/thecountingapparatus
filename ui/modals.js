@@ -29,17 +29,32 @@ const exampleModals = {
     factionInstance.challengeDetails.forEach((i, ind) => {
       const selection = ce("div");
       const content = ce("div");
+      const label = ce("label")
+      const div = ce("div")
+      const input = ce("input")
       const int = randomInt();
+      
+      label.for = `check${int}`
+      label.title = i.title
+      label.classList.add("label")
+      
+      div.style.display = "flex"
+      div.style.alignItems = "center"
+      div.style.justifyContent = "space-between"
+      
+      input.type = "radio"
+      
 
-      selection.innerHTML = `<input type="checkbox"
-        id="check${int}" 
-        class="control" />
+      selection.innerHTML = `
+      <input type="checkbox" id="check${int}" class="control" /> 
       <label for="check${int}" title="${i.title}" class="label">
         <div style="display: flex; align-items: center; justify-content: space-between;">
           ${i.title}
           <input type="radio" name="challSelect${challengeInt}" value="${ind}" />
         </div>
       </label>`;
+      // good idea?
+      const input = selection.getElementById(`challSelect${challengeInt}`)
 
       content.innerHTML = `
         <div>${i.description}</div>
@@ -57,11 +72,13 @@ const exampleModals = {
         btn.disabled = false
       });
       selection.classList.add("container");
-      selection.disabled = !factionInstance.challengeDetails[ind].unlocked()
+      input.disabled = !factionInstance.challengeDetails[ind].unlocked()
       selection.append(content);
       challStuffs.append(selection);
       toPause.push(setInterval(() => {
-        selection.disabled = !factionInstance.challengeDetails[ind].unlocked()
+        console.log(!factionInstance.challengeDetails[ind].unlocked())
+        input.disabled = !factionInstance.challengeDetails[ind].unlocked()
+        count.innerText = factionInstance.challenges[ind]
       }, 50))
     });
 
