@@ -21,12 +21,7 @@ class XxFaction extends FactionBase {
         ].map((i, ind) => ({
           name: `XX Challenge ${ind}`,
           description: `X = ${i}`,
-          onStart() {
-            this.rawX = i
-          },
-          onExit() {
-            this.rawX = this.milestones + 1
-          }
+          x: i,
         }))
       )
     );
@@ -50,31 +45,33 @@ class XxFaction extends FactionBase {
     ) {
       if (lowerCaseCount.startsWith("enter")) {
         // space included
-        const num = count.toLowerCase.substring(7);
+        const num = lowerCaseCount.substring(7);
         try {
-          this.enterChallenge(Number(num))
+          this.enterChallenge(Number(num) - 1);
         } catch (e) {
-          this.textBox.sendMessage(`Challenge ${num} either does not exist or is not unlocked.`)
+          this.textBox.sendMessage(
+            `Challenge ${num} either does not exist or is not unlocked.`
+          );
           return false;
         }
       } else {
-        this.exitChallenge()
+        this.exitChallenge();
       }
       return true;
     }
     if (!count.includes("=")) return false;
-    let number = count.split("=")[0];
+    const number = count.split("=")[0];
     if (Number(number) !== this.nextCount) return false;
-    let actualCount = count.split("=")[1];
+    const actualCount = count.split("=")[1];
     const amountOfX = actualCount.match(new RegExp(this.rawX, "g"));
-    const ruleFollowed =
-      amountOfX === Math.ceil(this.rawX === "i" ? 1 : this.rawX);
-      let numbersUsed = actualCount.match(/\d+/g);
-      for (let i = 0; i < numbersUsed.length; i++) {
-        if (Number(numbersUsed[i]) !== this.rawX) {
-          return false;
-        }
+    if (amountOfX !== Math.ceil(this.rawX === "i" ? 1 : this.rawX))
+      return false;
+    const numbersUsed = actualCount.match(/\d+/g);
+    for (const numberUsed of numbersUsed) {
+      if (Number(numberUsed) !== this.rawX) {
+        return false;
       }
+    }
     return (
       // this.nextCount === this.parseCount(count)
       Math.abs(this.nextCount - this.parseCount(actualCount)) < 0.00000001
@@ -86,7 +83,9 @@ class XxFaction extends FactionBase {
   }
 
   get rawX() {
-    return this.milestones + 1;
+    return this.inChallenge === null
+      ? this.challengeDetails[this.inChallenge]
+      : this.milestones + 1;
   }
   get effectiveX() {
     return this.milestones + 1;
