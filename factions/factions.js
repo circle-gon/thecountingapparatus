@@ -5,7 +5,7 @@ import { FUNCTIONS } from "../functions/functionList.js";
 import { parse2 } from "./risingstarparser.js";
 
 //Factions Objects
-export const factions = window.factions = {};
+export const factions = (window.factions = {});
 
 // base class to differernate standard js errors vs compilation errors
 class ParserError extends Error {}
@@ -22,7 +22,7 @@ export class FactionBase {
     this.goalsCompleted = [];
     this.challengeDetails = challenges;
     this.inChallenge = null;
-    this.challenges = Array(challenges.length).fill(0)
+    this.challenges = Array(challenges.length).fill(0);
 
     //Text box logic
     this.textBox = new TextChannel(
@@ -75,24 +75,25 @@ export class FactionBase {
   get realCount() {
     return this.challenges[this.inChallenge] ?? this.count;
   }
-  
+
   isInChallenge(n) {
-    return this.inChallenge === n
+    return this.inChallenge === n;
   }
-  
+
   enterChallenge(i) {
-    if (!this.challengeDetails[i].unlocked()) {
-      throw new TypeError("Attempted to enter challenge that is not unlocked.")
-    }
-    this.inChallenge = i
-    this.textBox.switchToChat(this.challengeDetails[i].title)  
-    this.challengeDetails[i].onStart?.()
+    if (![...this.challengeDetails.keys()].includes(i))
+      throw new TypeError("Attempted to enter challenge that does not exist");
+    if (!this.challengeDetails[i].unlocked()) 
+      throw new TypeError("Attempted to enter challenge that is not unlocked.");
+    this.inChallenge = i;
+    this.textBox.switchToChat(this.challengeDetails[i].title);
+    this.challengeDetails[i].onStart?.();
   }
-  
+
   exitChallenge() {
-    this.textBox.switchToChat("default")
-    this.challengeDetails[this.inChallenge].onExit?.()
-    this.inChallenge = null
+    this.textBox.switchToChat("default");
+    this.challengeDetails[this.inChallenge].onExit?.();
+    this.inChallenge = null;
   }
 
   //Count & Milestones
@@ -102,7 +103,6 @@ export class FactionBase {
   }
 
   doCount(count) {
-
     if (this.isCorrectCount(count)) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;
@@ -245,7 +245,7 @@ class FactionDisplay extends HTMLElement {
     this.info.style.top = "0";
     this.info.style.right = "0";
     this.info.style.margin = "5px";
-    this.info.style.border = "1px solid black"
+    this.info.style.border = "1px solid black";
 
     const root = ce("div");
     const chatInstance = ce("text-box");
