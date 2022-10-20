@@ -89,8 +89,6 @@ export function parse2(str) {
           
           const result = foundFunction.evaluate(args);
           
-          updateLiterals(ref literals, ref literalsLengths, );
-          
           let removedLength = literalsLengths[i];
           literals[i] = result
           literalsLengths[i] = 1;
@@ -103,19 +101,20 @@ export function parse2(str) {
           }
           // collapse (remove right sided brackets as well) // equal to number of left brackets?
           literalsIndexes[i] -= foundLength;
-          adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/);
-          let bracketsBeGone = 0;
-          while (adaptedStr[literalsIndexes[i] + 1] === ")") {
-            adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
-            bracketsBeGone++;
-          }
+          const lastLength = adaptedStr.length;
+          adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength + functionProperties[2]/* till end*/); // removes right brackets, must be balanced
+          // let bracketsBeGone = 0;
+          // while (adaptedStr[literalsIndexes[i] + 1] === ")") {
+          //   adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
+          //   bracketsBeGone++;
+          // }
           // actually remove used literals
           literals = literals.filter((x) => x !== "remove");
           literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
           literalsLengths = literalsLengths.filter((x) => x !== "remove");
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
-            literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone;
+            literalsIndexes[k] -= lastLength - adaptedStr.length;
           }
           usedFunctions.push(foundFunction);
           break; // reset loop and avoid getting kicked out for reaching the end
