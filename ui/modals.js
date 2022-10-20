@@ -57,11 +57,11 @@ const exampleModals = {
         btn.disabled = false
       });
       selection.classList.add("container");
-      selection.style.display = factionInstance.challengeDetails[ind].unlocked() ? "block" : "none"
+      selection.disabled = !factionInstance.challengeDetails[ind].unlocked()
       selection.append(content);
       challStuffs.append(selection);
       toPause.push(setInterval(() => {
-        selection.style.display = factionInstance.challengeDetails[ind].unlocked() ? "block" : "none"
+        selection.disabled = !factionInstance.challengeDetails[ind].unlocked()
       }, 50))
     });
 

@@ -81,9 +81,11 @@ export class FactionBase {
   }
   
   enterChallenge(i) {
-    if (!this.challengeDetails[i].unlocked()) return
+    if (!this.challengeDetails[i].unlocked()) {
+      throw new TypeError("Attempted to enter challenge that is not unlocked.")
+    }
     this.inChallenge = i
-    this.textBox.switchToChat(this.challengeDetails[i].name)  
+    this.textBox.switchToChat(this.challengeDetails[i].title)  
     this.challengeDetails[i].onStart?.()
   }
   
