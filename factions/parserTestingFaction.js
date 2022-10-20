@@ -19,7 +19,7 @@ class FactionTesting extends FactionBase {
         title: "Another example",
         description: "Something...",
         unlocked() {
-          return true
+          return Math.random() > 0
         }
       })
     ])

@@ -13,9 +13,9 @@
   color: black;
   padding: 10px;
   padding-bottom: 15px;
-  overflow: auto;
   display: none;
   text-align: center;
+  overflow: auto;
 }
 
 #content {
@@ -59,13 +59,4 @@
 .fancy-btn:not(.fancy-btn:disabled):hover {
   color: #ffffff;
   background: #5ac467;
-}
-
-.columns {
-  height: 100%;
-  width: 100%;
-  display: flex; /* defines flexbox */
-  flex-direction: column; /* top to bottom */
-  justify-content: space-between; /* first item at start, last at end */
-  align-items: center;
 }

@@ -8,9 +8,9 @@ const close = document.getElementById("close");
 const exampleModals = {
   challengeSelector(factionInstance) {
     function realClose() {
-      toPause.forEach(i=>clearInterval())
+      toPause.forEach(i=>clearInterval(i))
+      hideModal()
     }
-    
     const toPause = []
     const div = ce("div");
     const buttonCollection = ce("div");
@@ -57,11 +57,11 @@ const exampleModals = {
         btn.disabled = false
       });
       selection.classList.add("container");
-      selection.style.display = factionInstance.challengeDetails[ind].unlocked()
+      selection.style.display = factionInstance.challengeDetails[ind].unlocked() ? "block" : "none"
       selection.append(content);
       challStuffs.append(selection);
       toPause.push(setInterval(() => {
-        selection.style.display = factionInstance.challengeDetails[ind].unlocked()
+        selection.style.display = factionInstance.challengeDetails[ind].unlocked() ? "block" : "none"
       }, 50))
     });
 
@@ -72,13 +72,13 @@ const exampleModals = {
       } else {
         factionInstance.exitChallenge();
       }
-      hideModal();
+      realClose();
     };
     btn.innerHTML = factionInstance.inChallenge !== null ? "Exit Challenge" : "Do this challenge!";
     btn.disabled = factionInstance.inChallenge === null;
 
     cancelBtn.classList.add("fancy-btn");
-    cancelBtn.onclick = hideModal;
+    cancelBtn.onclick = realClose;
     cancelBtn.innerHTML = "Go back to normal counting :(";
     cancelBtn.style.marginLeft = "20px";
 
