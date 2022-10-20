@@ -659,8 +659,18 @@ export const FUNCTIONS = {
     }
     return output;
   }),
+
+  LOBB: new Operator(
+    "Lobb Numbers",
+    "LOBB",
+    "lobb(a,b)",
+    (args) =>
+      (((2 * args[0] + 1) / (args[0] + args[1] + 1)) * gamma(2 * args[1] + 1)) /
+      gamma(args[0] + args[1] + 1) /
+      gamma(args[1] - args[0] + 1)
+  ),
   
-  LOBB: new Operator("Lobb Numbers", "LOBB", "lobb(a,b)", (args) => (2*args[0]+1)/(args[0]+args[1]+1)*gamma(2*args[1]+1)/gamma(args[0]+args[1]+1)/gamma(args[1]-args[0]+1)),
+  LOGN: new Operator("Logarithm", "LOGN", "log_n(x)", (args) => Math.log(args[1])/Math.log(args[0])),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
 
