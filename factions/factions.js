@@ -104,7 +104,7 @@ export class FactionBase {
   }
 
   doCount(count) {
-    if (this.textBox.currentMessges.at(-1).isCorrect) {
+    if (this.isCorrectCount(count)) {
       if (this.inChallenge !== null) {
         this.challenges[this.inChallenge] = this.nextCount;
       } else {

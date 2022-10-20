@@ -36,27 +36,6 @@ class XxFaction extends FactionBase {
   //Counting & Milestones
 
   isCorrectCount(count) {
-    const lowerCaseCount = count.toLowerCase();
-    if (
-      lowerCaseCount.startsWith("enter") ||
-      lowerCaseCount.startsWith("exit")
-    ) {
-      if (lowerCaseCount.startsWith("enter")) {
-        // space included
-        const num = lowerCaseCount.substring(6);
-        try {
-          this.enterChallenge(Number(num) - 1);
-        } catch (e) {
-          this.textBox.sendMessage(
-            `Challenge ${num} either does not exist or is not unlocked.`
-          );
-          return false;
-        }
-      } else {
-        this.exitChallenge();
-      }
-      return true;
-    }
     if (!count.includes("=")) return false;
     const number = count.split("=")[0];
     if (Number(number) !== this.nextCount) return false;
@@ -92,6 +71,33 @@ class XxFaction extends FactionBase {
 
   parseCount(count) {
     return FactionBase.parseFunction(count, this);
+  }
+
+  doCount(count) {
+    const lowerCaseCount = count.toLowerCase();
+    if (
+      lowerCaseCount.startsWith("enter") ||
+      lowerCaseCount.startsWith("exit")
+    ) {
+      if (lowerCaseCount.startsWith("enter")) {
+        // space included
+        const num = lowerCaseCount.substring(6);
+        try {
+          this.enterChallenge(Number(num) - 1);
+          this.textBox.sendMessage(`Entering challenge ${num}`);
+        } catch (e) {
+          this.textBox.sendMessage(
+            `Challenge ${num} either does not exist or is not unlocked.`
+          );
+        }
+      } else {
+        const chall = this.inChallenge;
+        this.exitChallenge();
+        this.textBox.sendMessage(`You exited challenge ${chall + 1}!`);
+      }
+    } else {
+      super.doCount(count);
+    }
   }
 
   get challengeReward() {
