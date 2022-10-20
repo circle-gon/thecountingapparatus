@@ -34,27 +34,25 @@ const exampleModals = {
       const input = ce("input")
       const int = randomInt();
       
+      // label
       label.for = `check${int}`
       label.title = i.title
       label.classList.add("label")
       
+      // label content
       div.style.display = "flex"
       div.style.alignItems = "center"
       div.style.justifyContent = "space-between"
+      div.innerHTML = factionInstance.challengeDetails[ind].title
       
+      // selector
       input.type = "radio"
-      
+      input.name = `challSelect${challengeInt}`
+      input.value = ind
 
       selection.innerHTML = `
-      <input type="checkbox" id="check${int}" class="control" /> 
-      <label for="check${int}" title="${i.title}" class="label">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          ${i.title}
-          <input type="radio" name="challSelect${challengeInt}" value="${ind}" />
-        </div>
-      </label>`;
+      <input type="checkbox" id="check${int}" class="control" />`;
       // good idea?
-      const input = selection.getElementById(`challSelect${challengeInt}`)
 
       content.innerHTML = `
         <div>${i.description}</div>
@@ -65,16 +63,21 @@ const exampleModals = {
       content.append(count);
       content.classList.add("content");
 
+      selection.classList.add("container");
+      input.disabled = !factionInstance.challengeDetails[ind].unlocked()
+      
+      div.append(input)
+      label.append(div)
+      selection.append(label, content);
+      challStuffs.append(selection);
+      
       const radio = selection.querySelector('input[type="radio"]');
       radio.addEventListener("change", function () {
         challSelected = Number(this.value);
         chalSelectedText.innerHTML = `Challenge selected: ${factionInstance.challengeDetails[challSelected].title}`;
         btn.disabled = false
       });
-      selection.classList.add("container");
-      input.disabled = !factionInstance.challengeDetails[ind].unlocked()
-      selection.append(content);
-      challStuffs.append(selection);
+      
       toPause.push(setInterval(() => {
         console.log(!factionInstance.challengeDetails[ind].unlocked())
         input.disabled = !factionInstance.challengeDetails[ind].unlocked()
