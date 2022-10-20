@@ -653,13 +653,13 @@ export const FUNCTIONS = {
     let output = [];
     for (let i = 0; i < args[0].toString().length; i++) {
       for (let j = 0; j < args[1].toString().length; j++) {
-        /*output += Math.min(
+        output[i] += Math.min(
           parseInt(args[0].toString().at(i)),
           parseInt(args[1].toString().at(i))
-        ).toString();*/
+        ).toString();
       }
     }
-    return output;
+    return output.reduce((prev, curr) => 10*prev + curr);
   }),
 
   LOBB: new Operator(
