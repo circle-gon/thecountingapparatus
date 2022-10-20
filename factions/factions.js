@@ -81,6 +81,7 @@ export class FactionBase {
   }
   
   enterChallenge(i) {
+    if (!this.challengeDetails[i].unlocked()) return
     this.inChallenge = i
     this.textBox.switchToChat(this.challengeDetails[i].name)  
     this.challengeDetails[i].onStart?.()

@@ -46,21 +46,21 @@ class XxFaction extends FactionBase {
         this.rawX = this.milestones + 1;
       }
       this.nextCount =
-        this.inChal == 0
+        this.inChal === 0
           ? this.count + 1
           : this.challenges[this.inChal - 1] + 1;
       return true;
     }
     if (!count.includes("=")) return false;
     let number = count.split("=")[0];
-    if (Number(number) != this.nextCount) return false;
+    if (Number(number) !== this.nextCount) return false;
     let actualCount = count.split("=")[1];
     let amountOfX = actualCount.match(new RegExp(this.rawX, "g"));
-    let ruleFollowed = amountOfX == Math.ceil(this.rawX == "i" ? 1 : this.rawX);
+    let ruleFollowed = amountOfX == Math.ceil(this.rawX === "i" ? 1 : this.rawX);
     if (ruleFollowed) {
       let numbersUsed = actualCount.match(/\d+/g);
       for (let i = 0; i < numbersUsed.length; i++) {
-        if (Number(numbersUsed[i]) != this.rawX) {
+        if (Number(numbersUsed[i]) !== this.rawX) {
           ruleFollowed = false;
         }
       }
