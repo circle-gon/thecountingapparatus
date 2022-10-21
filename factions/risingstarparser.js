@@ -13,6 +13,7 @@ import {
 class ParserError extends Error {}
 
 export function parse2(str) {
+  str = str.replaceAll(" ", "");
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
   let literals = str.match(/\d+/g); // this doesn't get index gwa
@@ -56,33 +57,27 @@ export function parse2(str) {
       break;
     }
     // check literals in order, if nothing happens, check next
-    for (let i = 0; i < literals.length + 1; i++) {
-      if (i === literals.length) {
+    for (let r = 0; r < (2 * literals.length) + 1; r++) {
+      if (r === literals.length * 2) {
         // nothing was found
         if (adaptedStr.length !== literalsLengths[0]) {
           throw new ParserError("no operation found but not finished");
         }
       }
+      let i = r % literals.length;
       
       let functionPropertiesList = [];
+      let ignoreBrackets = r >= literals.length;
       // respecting brackets
       // right unary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", null]], [Right]));
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", ignoreBrackets, [["x", null]], [Right]));
       // (right) binary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", false, [["x", "y"]], [Bin]));
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", ignoreBrackets, [["x", "y"]], [Bin]));
       // left unary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", false, [[0, "x"]], [Left]));
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", ignoreBrackets, [[0, "x"]], [Left]));
       // function
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", false, [[0, "("]], [Operator]));
-      // ignoring brackets
-      // right unary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null]], [Right]));
-      // (right) binary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", "y"]], [Bin]));
-      // left unary
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "x"]], [Left]));
-      // function
-      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("]], [Operator]));
+      functionPropertiesList.push(findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", ignoreBrackets, [[0, "("]], [Operator]));
+      
       let functionProperties = null;
       for (let j = 0; j < functionPropertiesList.length; j++) {
         if (functionPropertiesList[j] != null) {

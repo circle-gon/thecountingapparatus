@@ -80,11 +80,15 @@ export class FactionBase {
   isInChallenge(n) {
     return this.inChallenge === n;
   }
+  
+  challengeUnlocked(i) {
+    return !(this.challengeDetails[i].unlocked?.() ?? true)
+  }
 
   enterChallenge(i) {
     if (![...this.challengeDetails.keys()].includes(i))
       throw new TypeError("Attempted to enter challenge that does not exist");
-    if (!(this.challengeDetails[i].unlocked?.() ?? true))
+    if (this.challengeUnlocked(i))
       throw new TypeError("Attempted to enter challenge that is not unlocked.");
     this.inChallenge = i;
     this.textBox.switchToChat(this.challengeDetails[i].title);
@@ -93,7 +97,6 @@ export class FactionBase {
 
   exitChallenge() {
     this.textBox.switchToChat("default");
-    console.log(this.inChallenge, typeof this.inChallenge);
     this.challengeDetails[this.inChallenge].onExit?.();
     this.inChallenge = null;
   }
@@ -263,7 +266,7 @@ class FactionDisplay extends HTMLElement {
     if (this.faction.challengeDetails.length > 0) {
       const chalSelect = ce("button");
       chalSelect.innerHTML = "Challenge selector";
-      chalSelect.onclick = function () {
+      chalSelect.onclick = () => {
         showModal("challengeSelector", this.faction);
       };
       topRightData.append(chalSelect);

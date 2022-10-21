@@ -35,7 +35,7 @@ const exampleModals = {
       const int = randomInt();
       
       // label
-      label.for = `check${int}`
+      label.htmlFor = `check${int}`
       label.title = i.title
       label.classList.add("label")
       
@@ -64,12 +64,14 @@ const exampleModals = {
       content.classList.add("content");
 
       selection.classList.add("container");
-      input.disabled = !factionInstance.challengeDetails[ind].unlocked()
+      input.disabled = factionInstance.challengeUnlocked(ind)
       
       div.append(input)
       label.append(div)
       selection.append(label, content);
       challStuffs.append(selection);
+      
+      console.log(selection.innerHTML)
       
       const radio = selection.querySelector('input[type="radio"]');
       radio.addEventListener("change", function () {
@@ -79,8 +81,7 @@ const exampleModals = {
       });
       
       toPause.push(setInterval(() => {
-        console.log(!factionInstance.challengeDetails[ind].unlocked())
-        input.disabled = !factionInstance.challengeDetails[ind].unlocked()
+        input.disabled = factionInstance.challengeUnlocked(ind)
         count.innerText = factionInstance.challenges[ind]
       }, 50))
     });
