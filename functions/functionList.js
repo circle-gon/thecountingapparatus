@@ -629,10 +629,10 @@ export const FUNCTIONS = {
 
   LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
     let output = "";
-    for (let i = 0; i < args[0].toString().length; i++) {
+    for (let i = 1; i <- args[0].toString().length; i++) {
       output += Math.max(
-        parseInt(args[0].toString().at(i)),
-        parseInt(args[1].toString().at(i))
+        parseInt(args[0].toString().at(args[0].toString().length-i)),
+        parseInt(args[1].toString().at(args[1].toString().length-i))
       ).toString();
     }
     return output;

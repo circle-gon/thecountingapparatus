@@ -80,9 +80,9 @@ export class FactionBase {
   isInChallenge(n) {
     return this.inChallenge === n;
   }
-  
+
   challengeUnlocked(i) {
-    return !(this.challengeDetails[i].unlocked?.() ?? true)
+    return !(this.challengeDetails[i].unlocked?.() ?? true);
   }
 
   enterChallenge(i) {
@@ -93,12 +93,14 @@ export class FactionBase {
     this.inChallenge = i;
     this.textBox.switchToChat(this.challengeDetails[i].title);
     this.challengeDetails[i].onStart?.();
+    this.textBox.eventListener.emit("challChange", i);
   }
 
   exitChallenge() {
     this.textBox.switchToChat("default");
     this.challengeDetails[this.inChallenge].onExit?.();
     this.inChallenge = null;
+    this.textBox.eventListener.emit("challChange", null);
   }
 
   //Count & Milestones
@@ -199,7 +201,12 @@ class FactionDisplay extends HTMLElement {
     const c = (co) => this.faction.countToDisplay(co);
     this.info.innerHTML = `Count: ${c(this.faction.realCount)}<br>
     Next milestone: ${c(this.faction.milestoneNextAt)}<br>
-    Current amount of milestones: ${this.faction.milestones}`;
+    Current amount of milestones: ${this.faction.milestones}
+    ${
+      this.faction.inChallenge === null
+        ? ""
+        : `<br>You are in challenge ${this.faction.challengeDetails[this.faction.inChallenge]}`
+    }`;
     if (this.getAttribute("name") === "Tree") {
       const treeGridSize = factions.Tree.grid;
       this.c.style.display = this.faction.realCount === 0 ? "none" : "block";
@@ -260,7 +267,10 @@ class FactionDisplay extends HTMLElement {
     chatInstance.setAttribute("name", this.getAttribute("name"));
 
     // RE: why do we need setAttribute?
-    this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")];
+    this.stop = [
+      this.faction.textBox.on(() => this.updateHTML(), "message"),
+      this.faction.textBox.on(() => this.updateHTML(), "challChange"),
+    ];
 
     topRightData.append(this.info);
     if (this.faction.challengeDetails.length > 0) {

@@ -133,11 +133,22 @@ export function parse2(str) {
           } 
           else if (direction == "right") {
             literalsIndexes[i] -= bracketsRemoved;
+            if (foundFunction instanceof Right) {
+              foundLength = 0;
+            }
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/); // removes left brackets, must be balanced
           }
           literals = literals.filter((x) => x !== "remove");
           literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
           literalsLengths = literalsLengths.filter((x) => x !== "remove");
+          
+          // remove brackets around singular literals (so they can be found during arg search)
+          // yes bad i know gwa
+          while (adaptedStr[literalsIndexes[i] - 1] == "(" && adaptedStr[literalsIndexes[i] + 1] == ")") {
+            adaptedStr = adaptedStr.substring(0,literalsIndexes[i] - 1) + ';' + adaptedStr.substring(literalsIndexes[i] + 2);
+            literalsIndexes[i] -= 1;
+          }
+          
           // offset later remaining literals
           for (let k = i + 1; k < literals.length; k++) {
             literalsIndexes[k] -= lastLength - adaptedStr.length;

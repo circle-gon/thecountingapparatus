@@ -78,6 +78,7 @@ const exampleModals = {
         challSelected = Number(this.value);
         chalSelectedText.innerHTML = `Challenge selected: ${factionInstance.challengeDetails[challSelected].title}`;
         btn.disabled = false
+        btn.innerHTML = "Do this challenge!"
       });
       
       toPause.push(setInterval(() => {
