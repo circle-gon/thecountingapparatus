@@ -120,12 +120,13 @@ export function parse2(str) {
           console.log("result:");
           console.log(result);
           
-          let removedLength = literalsLengths[i];
+          // let removedLength = literalsLengths[i];
+          let removedLength = literalsIndexes[i + args.length - 1] - literalsIndexes[i] + literalsLengths[i + args.length - 1];
           literals[i] = result
           literalsLengths[i] = 1;
           // remove extra used literals
           for (let k = 1; k < args.length; k++) {
-            removedLength += literalsLengths[i + k];
+            // removedLength += literalsLengths[i + k];
             literals[i + k] = "remove";
             literalsIndexes[i + k] = "remove";
             literalsLengths[i + k] = "remove";
@@ -133,7 +134,7 @@ export function parse2(str) {
           const lastLength = adaptedStr.length;
           if (direction == "left") {
             literalsIndexes[i] -= foundLength;
-            adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength + functionProperties[2]/* till end*/); // removes right brackets, must be balanced
+            adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength + bracketsRemoved/* till end*/); // removes right brackets, must be balanced
           } 
           else if (direction == "right") {
             literalsIndexes[i] -= bracketsRemoved;

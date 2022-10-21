@@ -3,6 +3,7 @@ import { ce, TextChannel, addEmoji } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import { FUNCTIONS } from "../functions/functionList.js";
 import { parse2 } from "./risingstarparser.js";
+import { showModal } from "../ui/modals.js";
 
 //Factions Objects
 export const factions = (window.factions = {});
@@ -83,7 +84,7 @@ export class FactionBase {
   enterChallenge(i) {
     if (![...this.challengeDetails.keys()].includes(i))
       throw new TypeError("Attempted to enter challenge that does not exist");
-    if (!(this.challengeDetails[i].unlocked?.() ?? true)) 
+    if (!(this.challengeDetails[i].unlocked?.() ?? true))
       throw new TypeError("Attempted to enter challenge that is not unlocked.");
     this.inChallenge = i;
     this.textBox.switchToChat(this.challengeDetails[i].title);
@@ -92,7 +93,7 @@ export class FactionBase {
 
   exitChallenge() {
     this.textBox.switchToChat("default");
-    console.log(this.inChallenge, typeof this.inChallenge)
+    console.log(this.inChallenge, typeof this.inChallenge);
     this.challengeDetails[this.inChallenge].onExit?.();
     this.inChallenge = null;
   }
@@ -241,12 +242,15 @@ class FactionDisplay extends HTMLElement {
     const name = this.getAttribute("name");
     this.faction = factions[this.getAttribute("name")];
 
+    const topRightData = ce("div");
+
+    topRightData.style.position = "absolute";
+    topRightData.style.top = "0";
+    topRightData.style.right = "0";
+    topRightData.style.margin = "5px";
+    topRightData.style.textAlign = "center";
+
     this.info = ce("div");
-    this.info.style.position = "absolute";
-    this.info.style.top = "0";
-    this.info.style.right = "0";
-    this.info.style.margin = "5px";
-    this.info.style.border = "1px solid black";
 
     const root = ce("div");
     const chatInstance = ce("text-box");
@@ -254,7 +258,17 @@ class FactionDisplay extends HTMLElement {
 
     // RE: why do we need setAttribute?
     this.stop = [this.faction.textBox.on(() => this.updateHTML(), "message")];
-    root.append(chatInstance, this.info);
+
+    topRightData.append(this.info);
+    if (this.faction.challengeDetails.length > 0) {
+      const chalSelect = ce("button");
+      chalSelect.innerHTML = "Challenge selector";
+      chalSelect.onclick = function () {
+        showModal("challengeSelector", this.faction);
+      };
+      topRightData.append(chalSelect);
+    }
+    root.append(chatInstance, topRightData);
     //root.style.position = "relative"
     if (name === "Tree") {
       this.c = ce("canvas");

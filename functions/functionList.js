@@ -651,7 +651,7 @@ export const FUNCTIONS = {
 
   LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
     let output = [];
-    output.length = args[0].length;
+    output.length = args[0].toString().length;
     output.fill("", 0, args[0].length);
     for (let i = 0; i < args[0].toString().length; i++) {
       for (let j = 0; j < args[1].toString().length; j++) {
@@ -661,7 +661,16 @@ export const FUNCTIONS = {
         ).toString();
       }
     }
-    return output.reduce((prev, curr) => 10*prev + curr);
+    return output.reduce(function (prev, curr) {
+      let output = "";
+      for (let i = 0; i < args[0].toString().length; i++) {
+        output += Math.max(
+          10 * parseInt(prev.toString().at(i)),
+          parseInt(curr.toString().at(i))
+        ).toString();
+      }
+      return output;
+    });
   }),
 
   LOBB: new Operator(
