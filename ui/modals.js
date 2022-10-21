@@ -71,8 +71,6 @@ const exampleModals = {
       selection.append(label, content);
       challStuffs.append(selection);
       
-      console.log(selection.innerHTML)
-      
       const radio = selection.querySelector('input[type="radio"]');
       radio.addEventListener("change", function () {
         challSelected = Number(this.value);

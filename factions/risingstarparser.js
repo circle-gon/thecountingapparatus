@@ -17,7 +17,8 @@ export function parse2(str) {
   console.log("start parse of " + str);
   // find all the actual numbers and their indexes
   let literals = str.match(/\d+/g); // this doesn't get index gwa
-  if (literals === undefined) {
+  if (literals === undefined || literals.length == 0) {
+    throw new ParserError("no inputs found");
     return false;
   }
   let literalsIndexes = [];
@@ -133,7 +134,7 @@ export function parse2(str) {
           } 
           else if (direction == "right") {
             literalsIndexes[i] -= bracketsRemoved;
-            if (foundFunction instanceof Right) {
+            if (foundFunction instanceof Bin) {
               foundLength = 0;
             }
             adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end*/); // removes left brackets, must be balanced
@@ -157,127 +158,6 @@ export function parse2(str) {
           break; // reset loop and avoid getting kicked out for reaching the end
         }
       }
-      // left existence
-      // let functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "left", true, [[0, "("], [0, "x"]], [FunctionBase]);
-//       let foundFunction = functionProperties[0];
-//       let foundLength = functionProperties[1];
-//       if (foundFunction !== null) {
-//         console.log(foundFunction);
-//         // look for other args
-//         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-//         console.log("args:");
-//         console.log(args);
-//         if (args !== null) {
-//           // check extra args don't have a unary operator to go through first
-//           let testForUnary = [null];
-//           for (let l = 1; l < args.length; l++) {
-//             testForUnary = findFunction(adaptedStr, literalsIndexes[i + l], literalsLengths[i + l], "right", false, [["x", null]], [Right]);
-//             if (testForUnary[0] !== null) {
-//               break;
-//             }
-//           }
-//           if (testForUnary[0] !== null) {
-//             // arg has a right unary, so wait
-//             continue;
-//           }
-          
-//           const result = foundFunction.evaluate(args);
-//           console.log("result:");
-//           console.log(result);
-          
-//           let removedLength = literalsLengths[i];
-//           literals[i] = result
-//           literalsLengths[i] = 1;
-//           // remove extra used literals
-//           for (let k = 1; k < args.length; k++) {
-//             removedLength += literalsLengths[i + k] + 1;
-//             literals[i + k] = "remove";
-//             literalsIndexes[i + k] = "remove";
-//             literalsLengths[i + k] = "remove";
-//           }
-//           // collapse (remove right sided brackets as well) // equal to number of left brackets?
-//           literalsIndexes[i] -= foundLength;
-//           const lastLength = adaptedStr.length;
-//           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength + functionProperties[2]/* till end*/); // removes right brackets, must be balanced
-//           // let bracketsBeGone = 0;
-//           // while (adaptedStr[literalsIndexes[i] + 1] === ")") {
-//           //   adaptedStr = adaptedStr.substr(0,literalsIndexes[i] + 1) + adaptedStr.substr(literalsIndexes[i] + 2);
-//           //   bracketsBeGone++;
-//           // }
-//           // actually remove used literals
-//           literals = literals.filter((x) => x !== "remove");
-//           literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
-//           literalsLengths = literalsLengths.filter((x) => x !== "remove");
-//           // offset later remaining literals
-//           for (let k = i + 1; k < literals.length; k++) {
-//             literalsIndexes[k] -= lastLength - adaptedStr.length;
-//           }
-//           usedFunctions.push(foundFunction);
-//           break; // reset loop and avoid getting kicked out for reaching the end
-//         }
-//       }
-      
-//       // right existence
-//       functionProperties = findFunction(adaptedStr, literalsIndexes[i], literalsLengths[i], "right", true, [["x", null], ["x", "y"]], [Bin, Right]);
-//       foundFunction = functionProperties[0];
-//       foundLength = functionProperties[1];
-      
-//       if (foundFunction !== null) {
-//         console.log(foundFunction);
-//         // look for other args
-//         // const expectedArgs = foundFunction.syntax.split(",");
-//         let args = gatherArgs(adaptedStr, i, literals, literalsLengths, literalsIndexes, foundFunction, foundLength);
-//         console.log("args:");
-//         console.log(args);
-//         if (args !== null) {
-//           // check extra args don't have a unary operator to go through first
-//           let testForUnary = [null];
-//           for (let l = 1; l < args.length; l++) {
-//             testForUnary = findFunction(adaptedStr, literalsIndexes[i + l], literalsLengths[i + l], "right", false, [["x", null]], [Right]);
-//             if (testForUnary[0] !== null) {
-//               break;
-//             }
-//           }
-//           if (testForUnary[0] !== null) {
-//             // arg has a right unary, so wait
-//             continue;
-//           }
-//           const result = foundFunction.evaluate(args);
-//           console.log("result:");
-//           console.log(result);
-//           let removedLength = literalsLengths[i];
-//           literals[i] = result
-//           literalsLengths[i] = 1;
-//           // remove extra used literals
-//           for (let k = 1; k < args.length; k++) {
-//             removedLength += literalsLengths[i + k];
-//             literals[i + k] = "remove";
-//             literalsIndexes[i + k] = "remove";
-//             literalsLengths[i + k] = "remove";
-//           }
-//           // collapse (remove left sided brackets as well) // equal to number of right brackets?
-//           // literalsIndexes[i] -= foundLength;
-//           adaptedStr = adaptedStr.substr(0,literalsIndexes[i]) + ";" + adaptedStr.substr(literalsIndexes[i] + foundLength + removedLength/* till end, dunno about the -1*/);
-//           let bracketsBeGone = 0;
-//           while (adaptedStr[literalsIndexes[i] - 1] === "(") {
-//             adaptedStr = adaptedStr.substr(0,literalsIndexes[i] - 1) + adaptedStr.substr(literalsIndexes[i]);
-//             bracketsBeGone++;
-//           }
-//           literalsIndexes[i] -= bracketsBeGone;
-//           // actually remove used literals
-//           literals = literals.filter((x) => x !== "remove");
-//           literalsIndexes = literalsIndexes.filter((x) => x !== "remove");
-//           literalsLengths = literalsLengths.filter((x) => x !== "remove");
-//           // offset later remaining literals
-//           for (let k = i + 1; k < literals.length; k++) {
-//             literalsIndexes[k] -= foundLength + removedLength + bracketsBeGone - 1;
-//           }
-//           usedFunctions.push(foundFunction);
-//           break; // reset loop and avoid getting kicked out for reaching the end
-//         }
-//       }
-      // enclosing existance trol
-      
     }
   }
   console.log([literals[0], usedFunctions, originalLiterals]);
@@ -374,74 +254,3 @@ function findFunction(str, startIndex, startLength, direction, ignoreBrackets, d
   }
   return foundFunction == null ? null : [foundFunction, foundLength, bracketsSkipped, direction];
 }
-
-// function parse(str) {
-//   // ASSUMES FULL BRACKETING
-//   // ALSO ASSUMES EVERYTHING IS A FUNCTION (very easy if things are suggested/selected from a list client side)
-//   // ALSO ASSUMES MORE STUFF AND ISN'T FINISHED
-//   // ALSO GWA
-  
-//   // split into a full arrawy of just functions and their arguments
-//   const splitStr = str.split(/[()]+/);
-//   // look for literals (the base case)
-//   let literals = [];
-//   let literalsIndexes = [];
-//   for (let i = 0; i < splitStr.length(); i++) {
-//     // check if literal and add to list - maybe have it add index as well?
-//     if (/[0123456789]/.test(splitStr[i])) {
-//       literals.push(splitStr[i]);
-//       literalsIndexes.push(i);
-//     }
-//   }
-//   while (splitStr.length() > 1) {
-//     for (let i = 0; i < literals.length(); i++) {
-//       let value = literals[i][0];
-//       let index = literals[i][1];
-//       let leftFunc = splitStr[index - 1];
-//       // rightFunc should be either nonexistant or a comma
-//       //let rightFunc = splitStr[index + 1]; // stop this checking oob
-//       if (leftFunc == ',') {
-//         // ignore it
-//         continue;
-//       }
-//       // find number of arguments (work out arbitrary args later, may need to keep brackets in split)
-//       if (!(leftFunc in Functions) || !Functions[leftFunc].unlocked) {
-//         // tell them they're a fool
-//       }
-//       if (Functions[leftFunc].isBanned || Functions[leftFunc].isStunned) {
-//         // special stuff
-//       }
-//       let expectedArgs = Functions[leftFunc].expectedArgs;
-//       let args = [];
-//       let argsIndexes = [];
-//       for (let j = 0; j < expectedArgs.length(); j++) {
-//         // has arg been calculated to literal already
-//         if (splitStr[index + 1] == ',' && literalsIndexes.includes(index + 2)) {
-//           args.push(literals[index + 2]);
-//           argsIndexes.push(literalsIndexes.indexOf(index + 2));
-//         }
-//       }
-//       if (args.length == expectedArgs.length()) {
-//         let result = Functions[leftFunc].evaluate(args);
-//         // update literals lists
-//         for (let k = 0; k < expectedArgs.length(); k++) {
-//           literals[argsIndexes[k]] = 'test'; // to avoid resizing while deleting
-//           literalsIndexes[argsIndexes[k]] = 'test';
-//         }
-//         literals.removeAll('test');
-//         literalsIndexes.removeAll('test');
-//         literals.push(result);
-//         literalsIndexes.push(index - 1);
-//         // update splitStr
-//         splitStr[index - 1] = result
-//           // remove calculated stuff
-//         for (let j = 0; j < expectedArgs.length() * 2 - 1; j++) {
-//           splitStr.removeAt(index);
-//         }
-//         // reset the literals search
-//         break;
-//       }
-//     }
-//   }
-//   return splitStr[0]; // gwa
-// }

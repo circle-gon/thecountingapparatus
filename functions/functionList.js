@@ -629,11 +629,16 @@ export const FUNCTIONS = {
 
   LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
     let output = "";
-    for (let i = 1; i <- args[0].toString().length; i++) {
-      output += Math.max(
-        parseInt(args[0].toString().at(args[0].toString().length-i)),
-        parseInt(args[1].toString().at(args[1].toString().length-i))
-      ).toString();
+    for (
+      let i = 1;
+      i <= Math.min(args[0].toString().length, args[1].toString().length);
+      i++
+    ) {
+      output =
+        Math.max(
+          parseInt(args[0].toString().at(args[0].toString().length - i)),
+          parseInt(args[1].toString().at(args[1].toString().length - i))
+        ).toString() + output;
     }
     return output;
   }),
@@ -651,23 +656,28 @@ export const FUNCTIONS = {
 
   LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
     let output = [];
-    output.length = args[0].toString().length;
-    output.fill("", 0, args[0].length);
-    for (let i = 0; i < args[0].toString().length; i++) {
-      for (let j = 0; j < args[1].toString().length; j++) {
-        output[i] += Math.min(
-          parseInt(args[0].toString().at(i)),
-          parseInt(args[1].toString().at(j))
-        ).toString();
+    output.fill("", 0, Math.max(args[0].toString().length,args[1].toString.length));
+    for (let i = 0; i < args[1].toString().length; i++) {
+      for (let j = 0; j < args[0].toString().length; j++) {
+        output[i] = Math.min(
+          parseInt(args[1].toString().at(i)),
+          parseInt(args[0].toString().at(j))
+        ).toString() + output[i];
       }
+      output[i] += "0".repeat(args[1].toString().length-i)
     }
-    return output.reduce(function (prev, curr) {
+    return output.reduce(function (args) {
       let output = "";
-      for (let i = 0; i < args[0].toString().length; i++) {
-        output += Math.max(
-          10 * parseInt(prev.toString().at(i)),
-          parseInt(curr.toString().at(i))
-        ).toString();
+      for (
+        let i = 1;
+        i <= Math.min(args[0].toString().length, args[1].toString().length);
+        i++
+      ) {
+        output =
+          Math.max(
+            parseInt(args[0].toString().at(args[0].toString().length - i)),
+            parseInt(args[1].toString().at(args[1].toString().length - i))
+          ).toString() + output;
       }
       return output;
     });

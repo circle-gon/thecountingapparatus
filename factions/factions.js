@@ -205,7 +205,7 @@ class FactionDisplay extends HTMLElement {
     ${
       this.faction.inChallenge === null
         ? ""
-        : `<br>You are in challenge ${this.faction.challengeDetails[this.faction.inChallenge]}`
+        : `<br>You are in challenge ${this.faction.challengeDetails[this.faction.inChallenge].title}`
     }`;
     if (this.getAttribute("name") === "Tree") {
       const treeGridSize = factions.Tree.grid;

@@ -141,7 +141,6 @@ class TextChannelDisp extends HTMLElement {
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
-    // console.log(this.getAttribute("name"), channels.Chat, this.textInstance);
 
     this.textInstance = channels[this.getAttribute("name")];
 
@@ -202,16 +201,4 @@ class TextChannelDisp extends HTMLElement {
   }
 }
 
-//console.log("ping", channels);
-/*const txt = new TextChannel("Chat", 10)
-txt.onMessage(i=> {
-  if (i === "gwa") {
-    txt.sendMessage("This channel is locked!")
-    txt.freeze()
-    setTimeout(() => {
-      txt.sendMessage("You got trolled, it is unfrozen :trol:")
-      txt.unFreeze()
-    }, 10000*Math.random())
-  }
-})*/
 customElements.define("text-box", TextChannelDisp);
