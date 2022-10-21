@@ -18,7 +18,7 @@ class XxFaction extends FactionBase {
         3.359885666243177553,
         "i",
       ].map((i, ind) => ({
-        title: `XX Challenge ${ind}`,
+        title: `XX Challenge ${ind+1}`,
         description: `X = ${i}`,
         x: i,
       }))
