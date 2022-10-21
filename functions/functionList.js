@@ -627,7 +627,7 @@ export const FUNCTIONS = {
 
   FOUR: new SingleNumSeq("All Fours Sequence", "FOUR", "four(x)", 4),
 
-  LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
+  /*LADD: new Bin("Lunar Addition", "LADD", "(L+)", function (args) {
     let output = "";
     for (
       let i = 1;
@@ -641,7 +641,7 @@ export const FUNCTIONS = {
         ).toString() + output;
     }
     return output;
-  }),
+  }),*/
 
   LAHS: new Operator(
     "Signed Lah Numbers",
@@ -654,7 +654,7 @@ export const FUNCTIONS = {
 
   LEFT: new Bin("Bitshift Left", "LEFT", "<<", (args) => args[0] << args[1]),
 
-  LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
+  /*LMLT: new Bin("Lunar Multiplication", "LMLT", "(L*)", function (args) {
     let output = [];
     output.fill("", 0, Math.max(args[0].toString().length,args[1].toString.length));
     for (let i = 0; i < args[1].toString().length; i++) {
@@ -681,7 +681,7 @@ export const FUNCTIONS = {
       }
       return output;
     });
-  }),
+  }),*/
 
   LOBB: new Operator(
     "Lobb Numbers",
@@ -699,6 +699,8 @@ export const FUNCTIONS = {
     "log_n(x)",
     (args) => Math.log(args[1]) / Math.log(args[0])
   ),
+  
+  LTRI: new Operator("Lunar Triangle Numbers", "LTRI", "L∆(n)", (args) => args),
 
   NINE: new SingleNumSeq("All Nines Sequence", "NINE", "nine(x)", 9),
 
