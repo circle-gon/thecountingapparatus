@@ -21,7 +21,8 @@ class XxFaction extends FactionBase {
         title: `XX Challenge ${ind+1}`,
         description: `X = ${i}`,
         x: i,
-      }))
+      })),
+      "grey"
     );
     this.hasChal = true;
     this.goals = [

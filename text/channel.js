@@ -11,7 +11,7 @@ export class TextChannel {
     maxLength,
     extraData,
     toHTML,
-    inType
+     color = "black"
   ) {
     this.realName = realName;
     this.max = maxMessages; //int
@@ -20,11 +20,11 @@ export class TextChannel {
       default: []
     }; //array,string
     this.currentChat = "default"
-    this.inputType = inType ?? "text"; //string
     this.msgCounter = 0; //int
     this.eventListener = new EventListener();
     this.isFrozen = false; //bool
     this.isVisible = true;
+      this.color = color
     // force update
     this.updateText = () => {}; //function
     this.extraData = extraData ?? (() => ({})); //function
@@ -71,7 +71,7 @@ export class TextChannel {
     this.eventListener.emit("show", false);
   }
   freeze() {
-    this.eventListner.emit("freeze", true);
+    this.eventListener.emit("freeze", true);
     this.isFrozen = true;
   }
   unFreeze() {
@@ -151,14 +151,14 @@ class TextChannelDisp extends HTMLElement {
     const btn = ce("button");
     const txtLength = ce("div");
 
-    this.titleEle.textAlign = "center";
+    this.titleEle.style.textAlign = "center";
     this.titleEle.innerHTML = this.textInstance.realName;
 
     this.input.onkeydown = (e) => {
       if (e.key === "Enter") this.sendText();
     };
     this.input.style.width = "calc(100% -  85px)";
-    this.input.type = this.textInstance.inputType;
+    this.input.type = "text"
 
     this.stop = [
       this.textInstance.on((d) => {

@@ -3,7 +3,7 @@ import { ce, TextChannel, addEmoji } from "../text/channel.js";
 import { escapeHtml, randomColor } from "../utils/utils.js";
 import { FUNCTIONS } from "../functions/functionList.js";
 import { parse2 } from "./risingstarparser.js";
-import { showModal } from "../ui/modals.js";
+import { switchScreen } from "../ui/cutscreen.js";
 
 //Factions Objects
 export const factions = (window.factions = {});
@@ -13,7 +13,7 @@ class ParserError extends Error {}
 
 //Faction superclass
 export class FactionBase {
-  constructor(name, msReq, challenges = []) {
+  constructor(name, msReq, challenges = [], color = "black") {
     //Constant data
     this.name = name;
     this.msReq = msReq;
@@ -30,7 +30,7 @@ export class FactionBase {
       name,
       name,
       100,
-      1000,
+      1000000, // char lim
       (msg) => {
         return {
           isCorrect: this.isCorrectCount(msg),
@@ -44,8 +44,16 @@ export class FactionBase {
         ele.append(txt);
         ele.style.color = i.isCorrect ? "green" : "red";
         return ele;
-      }
+      },
+      color
     );
+    
+    this.chatBox = new TextChannel(
+      name + "Chat",
+      name + " Chat",
+      100,
+      100
+    )
     this.textBox.on((i, type) => {
       if (type) return;
       this.doCount(i);
@@ -82,13 +90,13 @@ export class FactionBase {
   }
 
   challengeUnlocked(i) {
-    return !(this.challengeDetails[i].unlocked?.() ?? true);
+    return this.challengeDetails[i].unlocked?.() ?? true
   }
 
   enterChallenge(i) {
     if (![...this.challengeDetails.keys()].includes(i))
       throw new TypeError("Attempted to enter challenge that does not exist");
-    if (this.challengeUnlocked(i))
+    if (!this.challengeUnlocked(i))
       throw new TypeError("Attempted to enter challenge that is not unlocked.");
     this.inChallenge = i;
     this.textBox.switchToChat(this.challengeDetails[i].title);
@@ -265,6 +273,9 @@ class FactionDisplay extends HTMLElement {
     const root = ce("div");
     const chatInstance = ce("text-box");
     chatInstance.setAttribute("name", this.getAttribute("name"));
+    
+    const chat = ce("text-box")
+    chat.setAttribute("name", this.getAttribute("name") + "Chat")
 
     // RE: why do we need setAttribute?
     this.stop = [
@@ -277,11 +288,14 @@ class FactionDisplay extends HTMLElement {
       const chalSelect = ce("button");
       chalSelect.innerHTML = "Challenge selector";
       chalSelect.onclick = () => {
-        showModal("challengeSelector", this.faction);
+        switchScreen("challengeScreen", this.faction);
       };
       topRightData.append(chalSelect);
     }
-    root.append(chatInstance, topRightData);
+    
+    root.style.display = "grid"
+    root.style.gridTemplateColumns = "50% 50%"
+    root.append(chatInstance, chat, topRightData);
     //root.style.position = "relative"
     if (name === "Tree") {
       this.c = ce("canvas");
