@@ -9,7 +9,8 @@ class LetterFaction extends FactionBase {
     super("Letter", (x) =>
       Math.ceil(
         (Math.pow(26, Math.pow(x + 2, xxCount.milestoneReduction)) - 1) / 25 - 1
-      )
+      ),
+          [], "#3498DB"
     );
     this.count = [0];
     this.hasChal = false;

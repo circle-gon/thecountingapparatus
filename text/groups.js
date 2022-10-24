@@ -19,9 +19,13 @@ class TextGroup {
 }
 
 class TextGroupDisplay extends HTMLElement {
+  disconnectedCallback() {
+    this.stop.forEach(i=>i())
+  }
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
+    this.stop = []
     const name = this.getAttribute("name");
     this.textGroup = textGroups[name];
     const wrapper = ce("div");
@@ -47,10 +51,11 @@ class TextGroupDisplay extends HTMLElement {
       ele.onclick = () => {
         switchTab(i, this.textGroup.type);
       };
+      ele.style.color = channels[i].color
       ele.title = channels[i].realName
-      channels[i].on((i) => {
+      this.stop.push(channels[i].on((i) => {
         ele.style.display = i ? "block" : "none"
-      }, "show")
+      }, "show"))
       names.append(ele);
     });
     style.rel = "stylesheet";

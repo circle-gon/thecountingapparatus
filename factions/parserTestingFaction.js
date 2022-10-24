@@ -6,6 +6,7 @@ class FactionTesting extends FactionBase {
       {
         title: "An example",
         description: "Nothing special here...",
+        requirementDesc: "Nothing",
         onStart() {
           alert("Challenge started!")
         },
@@ -18,8 +19,9 @@ class FactionTesting extends FactionBase {
       }, ...Array(20).fill({
         title: "Another example",
         description: "Something...",
+        requirementDesc: "Nothing",
         unlocked() {
-          return true
+          return false
         }
       })
     ])

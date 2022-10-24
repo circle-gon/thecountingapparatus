@@ -10,6 +10,9 @@ export function switchTab(tab, newType) {
 }
 
 class TabsMain extends HTMLElement {
+  disconnectedCallback() {
+    this.stop.forEach(i=>clearInterval(i))
+  }
   connectedCallback() {
     if (!this.isConnected) return;
     this.attachShadow({ mode: "open" });
@@ -25,7 +28,7 @@ class TabsMain extends HTMLElement {
       group.setAttribute("name", i);
       selection.append(group);
     });
-    setInterval(() => {
+    this.stop = [setInterval(() => {
       if (currTab !== lastTab) {
         main.remove();
         main = ce(type === "faction" ? "faction-disp" : "text-box");
@@ -33,7 +36,7 @@ class TabsMain extends HTMLElement {
         wrapper.append(main);
       }
       lastTab = currTab;
-    }, 50);
+    }, 50)]
 
     selection.style.border = "1px solid grey";
     selection.style.height = "100%";
